@@ -8,6 +8,7 @@
 import Foundation
 
 /// Воркер предназначенный для работы с консольным ссодом на MacOS.
+@available(macOS 11, *)
 final class TerminalWorker {
 	private var fileName: String?
 	var heuristic: Heuristic = .manhattan

@@ -84,11 +84,11 @@ final class Puzzle {
         }
     }
     
-    /// Создает начальное состояние пазлов на основе считанных данных.
+    /// Создает начальное состояние пазлов на основе строки данных.
     private func creationBouard(text: String) throws -> Board {
         let lines = text.split() { $0 == "\n" }.map{ String($0) }
         var size: Int?
-        var arr = [[UInt8]]()
+        var matrix = [[UInt8]]()
         for line in lines {
             let data = getData(line: line)
             let words = try getWords(data: data)
@@ -98,7 +98,7 @@ final class Puzzle {
             case 1 where size == nil:
                 size = Int(words[0])
             case 2... where words.count == size:
-                arr.append(words)
+                matrix.append(words)
             default:
                 throw Exception(massage: "Invalid data: \(line) in \(lines)")
             }
@@ -106,10 +106,10 @@ final class Puzzle {
         guard let sizeBoard = size else {
             throw Exception(massage: "Invalid data.")
         }
-        if arr.count != sizeBoard || arr.count <= 2 {
+        if matrix.count != sizeBoard || matrix.count <= 2 {
             throw Exception(massage: "The board size is set incorrectly.")
         }
-        let board = try Board(size: sizeBoard, matrix: arr)
+        let board = try Board(size: sizeBoard, matrix: matrix)
 		return board
     }
     
