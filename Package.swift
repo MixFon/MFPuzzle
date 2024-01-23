@@ -3,21 +3,36 @@
 
 import PackageDescription
 
+fileprivate let packageName = "MFPuzzle"
+fileprivate let testTarget = packageName + "Tests"
+fileprivate let swiftSettings = packageName + "_SPM"
+
 let package = Package(
-    name: "MFPuzzle",
-    products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "MFPuzzle",
-            targets: ["MFPuzzle"]),
-    ],
-    targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        .target(
-            name: "MFPuzzle"),
-        .testTarget(
-            name: "MFPuzzleTests",
-            dependencies: ["MFPuzzle"]),
-    ]
+	name: packageName,
+	defaultLocalization: "ru",
+	platforms: [
+		.iOS(.v13),
+		.macOS(.v11)
+	],
+	products: [
+		.library(
+			name: packageName,
+			targets: [packageName]),
+	],
+	dependencies: [
+		.package(url: "git@github.com:MixFon/MFStructs.git", from: "0.0.1")
+	],
+	targets: [
+		.target(
+			name: packageName,
+			dependencies: [
+				.product(name: "MFStructs", package: "mfstructs"),
+			],
+			//resources: [.process("Resources")],
+			swiftSettings: [.define(swiftSettings)]),
+		.testTarget(
+			name: testTarget,
+			dependencies: [.init(stringLiteral: packageName)]),
+	]
 )
+
