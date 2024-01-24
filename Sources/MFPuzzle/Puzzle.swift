@@ -10,16 +10,16 @@ import Foundation
 
 final class Puzzle {
     
-    private var close = Set<Int>()
 	private var heuristic: Heuristic = .manhattan
     
     func run() {
         do {
             let terminalWorker = try TerminalWorker()
 			let text = try terminalWorker.textBoard
-            let board = try creationBouard(text: text)
+            let matrix = try creationMatrix(text: text)
+			let board = try Board(matrix: matrix)
             try checkSolution(board: board)
-            searchSolutionWithHeap(board: board)
+            try searchSolutionWithHeap(board: board)
         } catch let exception as Exception {
             systemError(massage: exception.massage)
         } catch {
@@ -28,48 +28,42 @@ final class Puzzle {
     }
     
     /// Поиск решения, используя алгоритм A*
-	private func searchSolutionWithHeap(board: Board) {
+	@discardableResult
+	func searchSolutionWithHeap(board: Board) throws -> Board {
 		let boardTarget = Board(size: board.size)
 		let heap = MFHeap<Board>(priorityFunction: {$0.f < $1.f})
-        var complexityTime = 0
         board.setF(heuristic: self.heuristic.getHeuristic(coordinats: board.coordinats, coordinatsTarget: boardTarget.coordinats))
 		heap.insert(board)
+		var visited = Set<Int>()
 		while let board = heap.extract() {
             if board == boardTarget {
-                printPath(board: board)
-                print("Complexity in time:", complexityTime)
-                print("Complexity in size:", self.close.count)
-                print("States to solution:", board.g)
-                return
+                return board
             }
 			let children = board.getChildrens()
             for board in children {
-				if !self.close.contains(board.matrix.hashValue) {
+				if !visited.contains(board.matrix.hashValue) {
 					let heuristic = self.heuristic.getHeuristic(coordinats: board.coordinats, coordinatsTarget: boardTarget.coordinats)
 					board.setF(heuristic: heuristic)
 					heap.insert(board)
-					complexityTime += 1
 				}
             }
-            self.close.insert(board.matrix.hashValue)
+            visited.insert(board.matrix.hashValue)
         }
-        print("The Pazzle has no solution.")
+		throw Exception(massage: "The Pazzle has no solution.")
     }
     
     /// Проверяет существет ли решение головоломки.
-    private func checkSolution(board: Board) throws {
+    func checkSolution(board: Board) throws {
 		let summa = board.getSummInversion()
 		let boardTarget = Board(size: board.size)
 		let summaTarget = boardTarget.getSummInversion()
         let coordinateZeroBoard = Int(board.coordinats[0]!.x) + summa + 1
         let coordinateZeroBoardTarget = Int(boardTarget.coordinats[0]!.x) + summaTarget + 1
         if board.size % 2 == 0 {
-            print("Invariants: ", coordinateZeroBoard, coordinateZeroBoardTarget)
             if coordinateZeroBoard % 2 != coordinateZeroBoardTarget % 2 {
                 throw Exception(massage: "The Pazzle has no solution.")
             }
         } else {
-            print("Invariants: ", summa, summaTarget)
             if summa % 2 != summaTarget % 2 {
                 throw Exception(massage: "The Pazzle has no solution.")
             }
@@ -85,7 +79,7 @@ final class Puzzle {
     }
     
     /// Создает начальное состояние пазлов на основе строки данных.
-    private func creationBouard(text: String) throws -> Board {
+    func creationMatrix(text: String) throws -> [[UInt8]] {
         let lines = text.split() { $0 == "\n" }.map{ String($0) }
         var size: Int?
         var matrix = [[UInt8]]()
@@ -109,8 +103,7 @@ final class Puzzle {
         if matrix.count != sizeBoard || matrix.count <= 2 {
             throw Exception(massage: "The board size is set incorrectly.")
         }
-        let board = try Board(size: sizeBoard, matrix: matrix)
-		return board
+		return matrix
     }
     
     /// Создает на основе строки массив целочисленных элементов.
