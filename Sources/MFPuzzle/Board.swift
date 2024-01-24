@@ -13,16 +13,16 @@ struct BoardPoint: Equatable {
 }
 
 final class Board: Equatable {
-	var size: Int
-	var matrix: [[UInt8]]
-	var coordinats = [UInt8: BoardPoint]()
-	var f: Int
-	var g: Int
-	var parent: Board?
+	private(set) var size: Int
+	private(set) var matrix: [[UInt8]]
+	private(set) var coordinats = [UInt8: BoardPoint]()
+	private(set) var f: Int
+	private(set) var g: Int
+	private(set) var parent: Board?
     
     /// Создание доски на основе матрицы и размера
-    init(size: Int, matrix: [[UInt8]]) throws {
-        self.size = size
+    init(matrix: [[UInt8]]) throws {
+		self.size = matrix.count
         self.matrix = matrix
         self.f = 0
         self.g = 0
