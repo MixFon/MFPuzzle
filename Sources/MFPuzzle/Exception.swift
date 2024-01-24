@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct Exception: Error {
+struct Exception: Error, Equatable{
     var massage: String
 }

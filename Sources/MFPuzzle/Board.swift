@@ -21,22 +21,11 @@ final class Board: Equatable {
 	private(set) var parent: Board?
     
     /// Создание доски на основе матрицы и размера
-    init(matrix: [[UInt8]]) throws {
+    init(matrix: [[UInt8]]) {
 		self.size = matrix.count
         self.matrix = matrix
         self.f = 0
         self.g = 0
-        try checkMatrix()
-        setCoordinats()
-    }
-    
-    /// Создание доски-решения boardTarget.
-    init(size: Int) {
-        self.size = size
-        self.matrix = Array(repeating: Array(repeating: 0, count: size), count: size)
-        self.f = 0
-        self.g = 0
-        fillBoardInSpiral()
         setCoordinats()
     }
     
@@ -94,97 +83,6 @@ final class Board: Equatable {
 		}
 		return childrens
 	}
-    
-    /// Заполняет доску по спирали.
-    private func fillBoardInSpiral() {
-        var filler: UInt8 = 1
-        for i in 0..<self.size {
-            self.matrix[0][i] = filler
-            filler += 1
-        }
-        for i in 1..<self.size {
-            self.matrix[i][self.size - 1] = filler
-            filler += 1
-        }
-        var y = self.size - 2
-        while y >= 0 {
-            self.matrix[self.size - 1][y] = filler
-            filler += 1
-            y -= 1
-        }
-        var x = self.size - 2
-        while x > 0 {
-            self.matrix[x][0] = filler
-            filler += 1
-            x -= 1
-        }
-        fillSquare(filler: filler)
-    }
-    
-    /// Заполняет внутренюю часть квадрата.
-    private func fillSquare(filler: UInt8) {
-        var filler = filler
-        let end = self.size * self.size
-        var x = 1
-        var y = 1
-        while filler < end {
-            while self.matrix[x][y + 1] == 0 {
-                self.matrix[x][y] = filler
-                y += 1
-                filler += 1
-            }
-            while self.matrix[x + 1][y] == 0 {
-                self.matrix[x][y] = filler
-                x += 1
-                filler += 1
-            }
-            while self.matrix[x - 1][y] == 0 {
-                self.matrix[x][y] = filler
-                x -= 1
-                filler += 1
-            }
-            while self.matrix[x][y - 1] == 0 {
-                self.matrix[x][y] = filler
-                y -= 1
-                filler += 1
-            }
-        }
-    }
-	
-	/// Возвращает количество инвариантов.
-	func getSummInversion() -> Int {
-		var summ = 0
-		var arry = [UInt8]()
-		for row in self.matrix {
-			for elem in row {
-				if elem != 0 {
-					arry.append(elem)
-				}
-			}
-		}
-		for (i, elem) in arry.enumerated() {
-			for elemIter in arry[(i+1)...] {
-				if elem > elemIter {
-					summ += 1
-				}
-			}
-		}
-		return summ
-	}
-    
-    /// Производит проверку доски. Элементы должны быть уникальны.
-    private func checkMatrix() throws {
-        let elements = Set<Int>(0..<(self.size * self.size))
-        var elementsBoard = Set<Int>()
-        for row in matrix {
-            for elem in row {
-                elementsBoard.insert(Int(elem))
-            }
-        }
-        if elements != elementsBoard {
-            throw Exception(massage: "Incorrect numbers on the board.")
-        }
-    }
     
     /// Печатает доску.
     func print() {
