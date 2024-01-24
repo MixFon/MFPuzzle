@@ -6,24 +6,61 @@
 //
 
 import XCTest
+@testable import MFPuzzle
 
 final class PuzzleTest: XCTestCase {
+	
+	private var puzzle: Puzzle?
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+		self.puzzle = Puzzle()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+		self.puzzle = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+	func testCreateMatrix3x3() throws {
+		let matrix3x3 =
+		"""
+		# This puzzle is solvable
+		3
+		6 2 1
+		4 0 5
+		7 3 8
+		"""
+		let matrix = try self.puzzle?.creationMatrix(text: matrix3x3)
+		XCTAssertEqual(matrix?.count, 3)
+		XCTAssertEqual(matrix?[0][0], 6)
+		XCTAssertEqual(matrix?[0][1], 2)
+		XCTAssertEqual(matrix?[0][2], 1)
+		XCTAssertEqual(matrix?[1][0], 4)
+		XCTAssertEqual(matrix?[1][1], 0)
+		XCTAssertEqual(matrix?[1][2], 5)
+		XCTAssertEqual(matrix?[2][0], 7)
+		XCTAssertEqual(matrix?[2][1], 3)
+		XCTAssertEqual(matrix?[2][2], 8)
+		
     }
+	
+	func testCreateMatrix4x4() throws {
+		let matrix4x4 =
+		"""
+		# This puzzle is solvable
+		4
+		8 15  6  5
+		2  9  3 10
+		14 11  4  7
+		12  1  0 13
+		"""
+		let uint8Matrix4x4: [[UInt8]] =
+		[[8, 15,  6,  5],
+		[2,   9,  3, 10],
+		[14, 11,  4,  7],
+		[12,  1,  0, 13]]
+		let newMatrix4x4 = try self.puzzle?.creationMatrix(text: matrix4x4)
+		XCTAssertEqual(uint8Matrix4x4, newMatrix4x4)
+	}
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
