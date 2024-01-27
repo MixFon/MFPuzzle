@@ -110,12 +110,65 @@ final class PuzzleTest: XCTestCase {
 	
 	// MARK: Test check solution.
 	
-	func testCheckSolution() throws {
-		let matrix3x3: [[UInt8]] =
+	func testCheckSolution3x3() throws {
+		let matrixTarget3x3: [[UInt8]] =
+		[[1, 2, 3],
+		 [8, 0, 4],
+		 [7, 6, 5]]
+		var matrix3x3: [[UInt8]] =
 		[[6, 3, 4],
 		 [5, 1, 2],
 		 [7, 8, 0]]
-		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix3x3) == true)
+		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix3x3, matrixTarget: matrixTarget3x3) == true)
+		matrix3x3 =
+		[[8, 6, 0],
+		 [2, 4, 7],
+		 [5, 3, 1]]
+		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix3x3, matrixTarget: matrixTarget3x3) == true)
+		matrix3x3 =
+		[[4, 3, 1],
+		 [7, 6, 2],
+		 [0, 8, 5]]
+		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix3x3, matrixTarget: matrixTarget3x3) == true)
+	}
+	
+	
+	func testCheckSolution4x4() throws {
+		let matrixTarget4x4: [[UInt8]] =
+		[[ 1, 2,  3,  4],
+		 [12, 13, 14, 5],
+		 [11,  0, 15, 6],
+		 [10,  9, 8,  7]]
+		var matrix4x4: [[UInt8]] =
+		[[12, 15, 13,  5],
+		 [ 3,  9,  6,  2],
+		 [ 1, 11,  7, 10],
+		 [ 8, 14,  0,  4]]
+		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
+		matrix4x4 =
+		[[12, 13, 11,  4],
+		 [ 6,  7,  9,  8],
+		 [ 3,  0,  1, 14],
+		 [ 5, 10,  2, 15]]
+		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
+		matrix4x4 =
+		[[11,  4,  6,  5],
+		 [ 9,  1,  0,  3],
+		 [15,  8, 13, 12],
+		 [10,  2,  7, 14]]
+		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
+	}
+
+	func testCheckNotSolution() throws {
+		let matrix3x3: [[UInt8]] =
+		[[4, 6, 7],
+		 [3, 0, 1],
+		 [2, 8, 5]]
+		let matrixTarget3x3: [[UInt8]] =
+		[[1, 2, 3],
+		 [8, 0, 4],
+		 [7, 6, 5]]
+		XCTAssertFalse(self.puzzle?.checkSolution(matrix: matrix3x3, matrixTarget: matrixTarget3x3) == true)
 	}
 
     func testPerformanceExample() throws {
