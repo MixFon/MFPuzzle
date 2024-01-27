@@ -19,9 +19,9 @@ final class Puzzle {
 			let text = try terminalWorker.textBoard
             let matrix = try creationMatrix(text: text)
 			if !checkUniqueElementsMatrix(matrix: matrix) { return }
-			if !checkSolution(matrix: matrix) { return }
-			let board = Board(matrix: matrix)
 			let matrixTarget = createMatrixTarget(size: matrix.count)
+			if !checkSolution(matrix: matrix, matrixTarget: matrixTarget) { return }
+			let board = Board(matrix: matrix)
 			let boardTarget = Board(matrix: matrixTarget)
             try searchSolutionWithHeap(board: board, boardTarget: boardTarget)
         } catch let exception as Exception {
@@ -56,9 +56,8 @@ final class Puzzle {
     }
     
     /// Проверяет существет ли решение головоломки.
-    func checkSolution(matrix: Matrix) -> Bool {
+	func checkSolution(matrix: Matrix, matrixTarget: Matrix) -> Bool {
 		let summa = getSummInversion(matrix: matrix)
-		let matrixTarget = createMatrixTarget(size: matrix.count)
 		let summaTarget = getSummInversion(matrix: matrixTarget)
         let coordinateZeroBoard = getCoordinateXZero(matrix: matrix)! + summa + 1
         let coordinateZeroBoardTarget = getCoordinateXZero(matrix: matrixTarget)! + summaTarget + 1
