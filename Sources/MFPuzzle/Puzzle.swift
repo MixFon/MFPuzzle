@@ -9,31 +9,36 @@ import MFStructs
 import Foundation
 
 final class Puzzle {
-	typealias Matrix = [[UInt8]]
     
 	private var heuristic: Heuristic = .manhattan
+	private let checker: _Checker
+	
+	init(heuristic: Heuristic, checker: _Checker) {
+		self.heuristic = heuristic
+		self.checker = checker
+	}
     
     func run() {
         do {
             let terminalWorker = try TerminalWorker()
 			let text = try terminalWorker.textBoard
             let matrix = try creationMatrix(text: text)
-			if !checkUniqueElementsMatrix(matrix: matrix) { return }
-			let matrixTarget = createMatrixTarget(size: matrix.count)
-			if !checkSolution(matrix: matrix, matrixTarget: matrixTarget) { return }
+			if !self.checker.checkUniqueElementsMatrix(matrix: matrix) { return }
+			let matrixTarget = createMatrixSpiral(size: matrix.count)
+			if !self.checker.checkSolution(matrix: matrix, matrixTarget: matrixTarget) { return }
 			let board = Board(matrix: matrix)
 			let boardTarget = Board(matrix: matrixTarget)
-            try searchSolutionWithHeap(board: board, boardTarget: boardTarget)
+			searchSolutionWithHeap(board: board, boardTarget: boardTarget)
         } catch let exception as Exception {
-            systemError(massage: exception.massage)
+			print(exception.massage)
         } catch {
-            systemError(massage: "Unknown error.")
+			print("Unknown error.")
         }
     }
     
     /// Поиск решения, используя алгоритм A*
 	@discardableResult
-	func searchSolutionWithHeap(board: Board, boardTarget: Board) throws -> Board {
+	func searchSolutionWithHeap(board: Board, boardTarget: Board) -> Board? {
 		let heap = MFHeap<Board>(priorityFunction: {$0.f < $1.f})
         board.setF(heuristic: self.heuristic.getHeuristic(coordinats: board.coordinats, coordinatsTarget: boardTarget.coordinats))
 		heap.insert(board)
@@ -52,54 +57,11 @@ final class Puzzle {
             }
             visited.insert(board.matrix.hashValue)
         }
-		throw Exception(massage: "The Pazzle has no solution.")
-    }
-    
-    /// Проверяет существет ли решение головоломки.
-	func checkSolution(matrix: Matrix, matrixTarget: Matrix) -> Bool {
-		let summa = getSummInversion(matrix: matrix)
-		let summaTarget = getSummInversion(matrix: matrixTarget)
-        let coordinateZeroBoard = getCoordinateXZero(matrix: matrix)! + summa + 1
-        let coordinateZeroBoardTarget = getCoordinateXZero(matrix: matrixTarget)! + summaTarget + 1
-        if matrix.count % 2 == 0 {
-			return coordinateZeroBoard % 2 == coordinateZeroBoardTarget % 2
-        } else {
-			return summa % 2 == summaTarget % 2
-        }
-    }
-	
-	func getCoordinateXZero(matrix: Matrix) -> Int? {
-		for row in matrix {
-			for (j, element) in row.enumerated() {
-				if element == 0 { return j }
-			}
-		}
 		return nil
-	}
-	
-	/// Возвращает количество инвариантов.
-	func getSummInversion(matrix: Matrix) -> Int {
-		var summ = 0
-		var arry = [UInt8]()
-		for row in matrix {
-			for elem in row {
-				if elem != 0 {
-					arry.append(elem)
-				}
-			}
-		}
-		for (i, elem) in arry.enumerated() {
-			for elemIter in arry[(i + 1)...] {
-				if elem > elemIter {
-					summ += 1
-				}
-			}
-		}
-		return summ
-	}
+    }
 	
 	/// Создание матрицы результата
-	func createMatrixTarget(size: Int) -> Matrix {
+	func createMatrixSpiral(size: Int) -> Matrix {
 		var matrix = Array(repeating: Array(repeating: UInt8(0), count: size), count: size)
 		fillBoardInSpiral(matrix: &matrix)
 		return matrix
@@ -162,13 +124,6 @@ final class Puzzle {
 			}
 		}
 	}
-	
-	/// Производит проверку доски. Элементы должны быть уникальны.
-	func checkUniqueElementsMatrix(matrix: [[UInt8]]) -> Bool {
-		let arr = matrix.flatMap({$0})
-		let elementsMatrix = Set<UInt8>(arr)
-		return elementsMatrix.count != arr.count
-	}
     
     private func printPath(board: Board) {
         var next: Board? = board
@@ -185,10 +140,8 @@ final class Puzzle {
         var matrix = [[UInt8]]()
         for line in lines {
             let data = getData(line: line)
-            let words = try getWords(data: data)
+			guard let words = try getWords(data: data) else { continue }
             switch words.count {
-            case 0:
-                break
             case 1 where size == nil:
                 size = Int(words[0])
             case 2... where words.count == size:
@@ -207,15 +160,15 @@ final class Puzzle {
     }
     
     /// Создает на основе строки массив целочисленных элементов.
-    private func getWords(data: String) throws -> [UInt8] {
+    private func getWords(data: String) throws -> [UInt8]? {
         let words = data.split() { $0 == " "}.map { String($0) }
         if words.isEmpty {
-            return [UInt8]()
+            return nil
         }
         var numbers = [UInt8]()
         for word in words {
             guard let number = UInt8(word) else {
-                throw Exception(massage: "Invalid data: \(word)")
+                throw Exception(massage: "The number \(word) does not match the size of UInt8.")
             }
             numbers.append(number)
         }
@@ -234,11 +187,4 @@ final class Puzzle {
         }
         return data
     }
-    
-    /// Вывод сообщения об ошибке в поток ошибок
-    private func systemError(massage: String) {
-        fputs(massage + "\n", stderr)
-        exit(-1)
-    }
-
 }

@@ -1,6 +1,6 @@
 //
 //  Board.swift
-//  N_Puzzle
+//  MFPuzzle
 //
 //  Created by Михаил Фокин on 21.04.2021.
 //
@@ -13,19 +13,19 @@ struct BoardPoint: Equatable {
 }
 
 final class Board: Equatable {
-	private(set) var size: Int
-	private(set) var matrix: [[UInt8]]
-	private(set) var coordinats = [UInt8: BoardPoint]()
 	private(set) var f: Int
-	private(set) var g: Int
+	private(set) var size: Int
+	private(set) var lavel: Int
+	private(set) var matrix: Matrix
 	private(set) var parent: Board?
+	private(set) var coordinats = [UInt8: BoardPoint]()
     
     /// Создание доски на основе матрицы и размера
-    init(matrix: [[UInt8]]) {
+    init(matrix: Matrix) {
 		self.size = matrix.count
         self.matrix = matrix
         self.f = 0
-        self.g = 0
+        self.lavel = 0
         setCoordinats()
     }
     
@@ -34,7 +34,7 @@ final class Board: Equatable {
         self.size = board.size
         self.matrix = board.matrix
         self.f = board.f
-        self.g = board.g + 1
+        self.lavel = board.lavel + 1
         self.parent = board
         self.coordinats = board.coordinats
     }
@@ -42,7 +42,7 @@ final class Board: Equatable {
     /// Устанавливает значение f
     func setF(heuristic: Int) {
         if self.size == 3 {
-            self.f = self.g + heuristic
+            self.f = self.lavel + heuristic
         } else {
 			self.f = heuristic
         }
@@ -86,7 +86,7 @@ final class Board: Equatable {
     
     /// Печатает доску.
     func print() {
-        Swift.print("State: ", self.g)
+        Swift.print("State: ", self.lavel)
         Swift.print("Weight:", self.f)
         for row in matrix {
             var line = String()

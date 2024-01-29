@@ -13,16 +13,18 @@ final class PuzzleTest: XCTestCase {
 	private var puzzle: Puzzle?
 
     override func setUpWithError() throws {
-		self.puzzle = Puzzle()
+		let checker = Checker()
+		self.puzzle = Puzzle(heuristic: .manhattan, checker: checker)
     }
 
     override func tearDownWithError() throws {
 		self.puzzle = nil
     }
-
 	
 	// MARK: Test create matrix.
+
 	func testCreateMatrix3x3() throws {
+		// Arrange
 		let matrix3x3 =
 		"""
 		# This puzzle is solvable
@@ -35,12 +37,16 @@ final class PuzzleTest: XCTestCase {
 		[[6, 2, 1],
 		[4, 0, 5],
 		[7, 3, 8]]
-		let newMatrix3x3 = try self.puzzle?.creationMatrix(text: matrix3x3)
-		XCTAssertEqual(uint8Matrix3x3, newMatrix3x3)
 		
+		// Act
+		let newMatrix3x3 = try self.puzzle?.creationMatrix(text: matrix3x3)
+		
+		// Assert
+		XCTAssertEqual(uint8Matrix3x3, newMatrix3x3)
     }
 	
 	func testErrorNumberCreateMatrix3x3() throws {
+		// Arrange
 		let matrix3x3 =
 		"""
 		# This puzzle is solvable
@@ -49,25 +55,59 @@ final class PuzzleTest: XCTestCase {
 		4 0 5
 		7 3 8
 		"""
+		
+		// Assert
 		XCTAssertThrowsError(try self.puzzle?.creationMatrix(text: matrix3x3)) { error in
-			XCTAssertEqual(error as! Exception, Exception(massage: "Invalid data: a6"))
+			XCTAssertEqual(error as! Exception, Exception(massage: "The number a6 does not match the size of UInt8."))
 		}
 	}
 	
 	func testErrorSizeCreateMatrix3x3() throws {
-		let matrix3x3 =
+		// Arrange
+		var matrix3x3 =
 		"""
 		# This puzzle is solvable
 		3
 		6 2 1
 		4 0 5
 		"""
+		
+		// Assert
 		XCTAssertThrowsError(try self.puzzle?.creationMatrix(text: matrix3x3)) { error in
 			XCTAssertEqual(error as! Exception, Exception(massage: "The board size is set incorrectly."))
+		}
+		matrix3x3 =
+		"""
+		3
+		3
+		"""
+		XCTAssertThrowsError(try self.puzzle?.creationMatrix(text: matrix3x3)) { error in
+			XCTAssertEqual(error as! Exception, Exception(massage: "Invalid data: 3"))
+		}
+		XCTAssertThrowsError(try self.puzzle?.creationMatrix(text: "")) { error in
+			XCTAssertEqual(error as! Exception, Exception(massage: "Invalid data."))
+		}
+	}
+	
+	func testErrorUInt8CreateMatrix3x3() throws {
+		// Arrange
+		let matrix3x3 =
+		"""
+		# This puzzle is solvable
+		3
+		6 2 1
+		4 0 5
+		7 3 512
+		"""
+		
+		// Assert
+		XCTAssertThrowsError(try self.puzzle?.creationMatrix(text: matrix3x3)) { error in
+			XCTAssertEqual(error as! Exception, Exception(massage: "The number 512 does not match the size of UInt8."))
 		}
 	}
 	
 	func testCreateMatrix4x4() throws {
+		// Arrange
 		let matrix4x4 =
 		"""
 		# This puzzle is solvable
@@ -82,11 +122,16 @@ final class PuzzleTest: XCTestCase {
 		[2, 9, 3, 10],
 		[14, 11, 4, 7],
 		[12, 1, 0, 13]]
+		
+		// Act
 		let newMatrix4x4 = try self.puzzle?.creationMatrix(text: matrix4x4)
+		
+		// Assert
 		XCTAssertEqual(uint8Matrix4x4, newMatrix4x4)
 	}
 	
 	func testCreateMatrix5x5() throws {
+		// Arrange
 		let matrix5x5 =
 		"""
 		# This puzzle is solvable
@@ -104,173 +149,218 @@ final class PuzzleTest: XCTestCase {
 			[2, 13, 17, 20, 21],
 			[7, 10, 5, 8, 9]
 		]
+		
+		// Act
 		let newMatrix5x5 = try self.puzzle?.creationMatrix(text: matrix5x5)
+		
+		// Assert
 		XCTAssertEqual(uint8Matrix5x5, newMatrix5x5)
 	}
 	
-	// MARK: Test check solution.
+	// MARK: Testing the filling of the board in a spiral.
 	
-	func testCheckSolution3x3() throws {
-		let matrixTarget3x3: [[UInt8]] =
+	func testFillBoardSpiral3x3() {
+		// Arrange
+		let size = 3
+		var matrix: Matrix = Array(repeating: Array(repeating: UInt8(), count: size), count: size)
+		
+		// Act
+		self.puzzle?.fillBoardInSpiral(matrix: &matrix)
+		
+		// Assert
+		let matrixSpiral3x3: [[UInt8]] =
 		[[1, 2, 3],
 		 [8, 0, 4],
 		 [7, 6, 5]]
-		var matrix3x3: [[UInt8]] =
-		[[6, 3, 4],
-		 [5, 1, 2],
-		 [7, 8, 0]]
-		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix3x3, matrixTarget: matrixTarget3x3) == true)
-		matrix3x3 =
-		[[8, 6, 0],
-		 [2, 4, 7],
-		 [5, 3, 1]]
-		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix3x3, matrixTarget: matrixTarget3x3) == true)
-		matrix3x3 =
-		[[4, 3, 1],
-		 [7, 6, 2],
-		 [0, 8, 5]]
-		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix3x3, matrixTarget: matrixTarget3x3) == true)
+		XCTAssertEqual(matrix, matrixSpiral3x3)
 	}
 	
-	
-	func testCheckSolution4x4() throws {
-		let matrixTarget4x4: [[UInt8]] =
-		[[ 1, 2,  3,  4],
-		 [12, 13, 14, 5],
-		 [11,  0, 15, 6],
-		 [10,  9, 8,  7]]
-		var matrix4x4: [[UInt8]] =
-		[[12, 15, 13,  5],
-		 [ 3,  9,  6,  2],
-		 [ 1, 11,  7, 10],
-		 [ 8, 14,  0,  4]]
-		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
-		matrix4x4 =
-		[[12, 13, 11,  4],
-		 [ 6,  7,  9,  8],
-		 [ 3,  0,  1, 14],
-		 [ 5, 10,  2, 15]]
-		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
-		matrix4x4 =
-		[[11,  4,  6,  5],
-		 [ 9,  1,  0,  3],
-		 [15,  8, 13, 12],
-		 [10,  2,  7, 14]]
-		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
+	func testFillBoardSpiral4x4() {
+		// Arrange
+		let size = 4
+		var matrix: Matrix = Array(repeating: Array(repeating: UInt8(), count: size), count: size)
+		
+		// Act
+		self.puzzle?.fillBoardInSpiral(matrix: &matrix)
+		
+		// Assert
+		let matrixSpiral3x3: [[UInt8]] =
+		[[ 1,  2,  3,  4],
+		 [12, 13, 14,  5],
+		 [11,  0, 15,  6],
+		 [10,  9,  8,  7]]
+		
+		// Assert
+		XCTAssertEqual(matrix, matrixSpiral3x3)
 	}
 	
-	func testCheckSolution5x5() throws {
-		let matrixTarget5x5: [[UInt8]] =
+	func testFillBoardSpiral5x5() {
+		// Arrange
+		let size = 5
+		var matrix: Matrix = Array(repeating: Array(repeating: UInt8(), count: size), count: size)
+		
+		// Act
+		self.puzzle?.fillBoardInSpiral(matrix: &matrix)
+		
+		// Assert
+		let matrixSpiral3x3: [[UInt8]] =
 		[[ 1,  2,  3,  4,  5],
 		 [16, 17, 18, 19,  6],
 		 [15, 24,  0, 20,  7],
 		 [14, 23, 22, 21,  8],
 		 [13, 12, 11, 10,  9]]
-		var matrix5x5: [[UInt8]] =
-		[[14,  4, 19, 18,  0],
-		 [20, 16, 15,  2,  9],
-		 [ 8,  1, 23, 22, 10],
-		 [ 3,  6, 11,  5, 17],
-		 [ 7, 24, 13, 21, 12]]
-		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix5x5, matrixTarget: matrixTarget5x5) == true)
-		matrix5x5 =
-		[[ 2, 15,  6,  7, 11],
-		 [19, 17, 10,  3, 21],
-		 [18,  9, 24, 20, 12],
-		 [23,  0, 14,  8, 22],
-		 [ 5,  4,  1, 13, 16]]
-		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix5x5, matrixTarget: matrixTarget5x5) == true)
-		matrix5x5 =
-		[[ 5, 14, 17, 11,  6],
-		 [24,  0, 13, 20, 22],
-		 [10,  1,  3,  7,  8],
-		 [19, 23, 15, 21,  2],
-		 [16,  4,  9, 12, 18]]
-		XCTAssertTrue(self.puzzle?.checkSolution(matrix: matrix5x5, matrixTarget: matrixTarget5x5) == true)
+		XCTAssertEqual(matrix, matrixSpiral3x3)
 	}
 	
-	// MARK: Test check not solution.
-	
-	func testCheckNotSolution3x3() throws {
-		let matrixTarget3x3: [[UInt8]] =
+	func testCreateMatrixSpiral3x3() {
+		// Arrange
+		let size = 3
+		let matrix: Matrix?
+		let matrixSpiral: Matrix =
 		[[1, 2, 3],
 		 [8, 0, 4],
 		 [7, 6, 5]]
-		var matrix3x3: [[UInt8]] =
-		[[1, 6, 3],
-		 [4, 0, 2],
-		 [7, 8, 5]]
-		XCTAssertFalse(self.puzzle?.checkSolution(matrix: matrix3x3, matrixTarget: matrixTarget3x3) == true)
-		matrix3x3 =
-		[[8, 1, 4],
-		 [2, 3, 5],
-		 [7, 6, 0]]
-		XCTAssertFalse(self.puzzle?.checkSolution(matrix: matrix3x3, matrixTarget: matrixTarget3x3) == true)
-		matrix3x3 =
-		[[5, 6, 0],
-		 [4, 1, 2],
-		 [7, 3, 8]]
-		XCTAssertFalse(self.puzzle?.checkSolution(matrix: matrix3x3, matrixTarget: matrixTarget3x3) == true)
+		
+		// Act
+		matrix = self.puzzle?.createMatrixSpiral(size: size)
+		
+		// Assert
+		XCTAssertEqual(matrix, matrixSpiral)
 	}
 	
-	
-	func testCheckNotSolution4x4() throws {
-		let matrixTarget4x4: [[UInt8]] =
-		[[ 1, 2,  3,  4],
-		 [12, 13, 14, 5],
-		 [11,  0, 15, 6],
-		 [10,  9, 8,  7]]
-		var matrix4x4: [[UInt8]] =
-		[[ 6,  8,  2,  3],
-		 [ 0, 10, 13,  9],
-		 [ 5, 11,  7,  1],
-		 [14, 15, 12,  4]]
-		XCTAssertFalse(self.puzzle?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
-		matrix4x4 =
-		[[ 6,  3, 13,  5],
-		 [ 4, 12,  0,  8],
-		 [ 2, 15, 10,  7],
-		 [ 1, 14,  9, 11]]
-		XCTAssertFalse(self.puzzle?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
-		matrix4x4 =
-		[[12,  3,  7,  4],
-		 [ 6, 14,  0, 10],
-		 [ 8, 15,  2,  9],
-		 [ 5,  1, 11, 13]]
-		XCTAssertFalse(self.puzzle?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
+	func testCreateMatrixSpiral4x4() {
+		// Arrange
+		let size = 4
+		let matrix: Matrix?
+		let matrixSpiral: Matrix =
+		[[ 1,  2,  3,  4],
+		 [12, 13, 14,  5],
+		 [11,  0, 15,  6],
+		 [10,  9,  8,  7]]
+		
+		// Act
+		matrix = self.puzzle?.createMatrixSpiral(size: size)
+		
+		// Assert
+		XCTAssertEqual(matrix, matrixSpiral)
 	}
 	
-	func testCheckNotSolution5x5() throws {
-		let matrixTarget5x5: [[UInt8]] =
+	func testCreateMatrixSpiral5x5() {
+		// Arrange
+		let size = 5
+		let matrix: Matrix?
+		let matrixSpiral: Matrix =
 		[[ 1,  2,  3,  4,  5],
 		 [16, 17, 18, 19,  6],
 		 [15, 24,  0, 20,  7],
 		 [14, 23, 22, 21,  8],
 		 [13, 12, 11, 10,  9]]
-		var matrix5x5: [[UInt8]] =
-		[[ 0, 12, 22, 17,  1],
-		 [19,  4,  2,  7, 11],
-		 [23, 15, 21, 13,  3],
-		 [ 9,  6,  5,  10, 18],
-		 [ 8, 16, 24, 20, 14]]
-		XCTAssertFalse(self.puzzle?.checkSolution(matrix: matrix5x5, matrixTarget: matrixTarget5x5) == true)
-		matrix5x5 =
-		[[24, 23, 17,  6,  0],
-		 [ 5, 12,  4, 13,  3],
-		 [ 2, 11, 19,  1, 18],
-		 [10, 21, 22, 16, 15],
-		 [14, 20,  7,  8,  9]]
-		XCTAssertFalse(self.puzzle?.checkSolution(matrix: matrix5x5, matrixTarget: matrixTarget5x5) == true)
-		matrix5x5 =
-		[[12,  1, 22,  8, 13],
-		 [17, 24, 14, 10, 21],
-		 [18, 23,  5, 20,  0],
-		 [ 2, 19, 16,  6,  9],
-		 [ 4, 11,  7,  3, 15]]
-		XCTAssertFalse(self.puzzle?.checkSolution(matrix: matrix5x5, matrixTarget: matrixTarget5x5) == true)
+		
+		// Act
+		matrix = self.puzzle?.createMatrixSpiral(size: size)
+		
+		// Assert
+		XCTAssertEqual(matrix, matrixSpiral)
 	}
 	
-
+	// MARK: Testing solution
+	
+	func testSolution4Iteration3x3() throws {
+		// Arrange
+		let size = 3
+		let lavel = 4
+		let board: Board?
+		let matrix3x3 =
+		"""
+		# This puzzle is solvable 4 iteration
+		3
+		0 2 3
+		1 6 4
+		8 7 5
+		"""
+		guard let newMatrix3x3 = try self.puzzle?.creationMatrix(text: matrix3x3) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let startBoard = Board(matrix: newMatrix3x3)
+		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let targetBoard = Board(matrix: targetMatrix)
+		
+		// Act
+		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+		
+		// Assert
+		XCTAssertNotNil(board)
+		XCTAssertEqual(board?.lavel, lavel)
+	}
+	
+	func testSolution18Iteration3x3() throws {
+		// Arrange
+		let size = 3
+		let lavel = 18
+		let board: Board?
+		let matrix3x3 =
+		"""
+		# This puzzle is solvable
+		3
+		0 3 2
+		8 7 5
+		6 4 1
+		"""
+		guard let newMatrix3x3 = try self.puzzle?.creationMatrix(text: matrix3x3) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let startBoard = Board(matrix: newMatrix3x3)
+		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let targetBoard = Board(matrix: targetMatrix)
+		
+		// Act
+		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+		
+		// Assert
+		XCTAssertNotNil(board)
+		XCTAssertEqual(board?.lavel, lavel)
+	}
+	
+	func testSolution23Iteration3x3() throws {
+		// Arrange
+		let size = 3
+		let lavel = 24
+		let board: Board?
+		let matrix3x3 =
+		"""
+		# This puzzle is solvable
+		3
+		7 6 2
+		5 8 4
+		3 1 0
+		"""
+		guard let newMatrix3x3 = try self.puzzle?.creationMatrix(text: matrix3x3) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let startBoard = Board(matrix: newMatrix3x3)
+		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let targetBoard = Board(matrix: targetMatrix)
+		
+		// Act
+		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+		
+		// Assert
+		XCTAssertNotNil(board)
+		XCTAssertEqual(board?.lavel, lavel)
+	}
+	
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
