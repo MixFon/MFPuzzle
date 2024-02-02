@@ -8,5 +8,5 @@
 import Foundation
 
 struct Exception: Error, Equatable{
-    var massage: String
+	var massage: String
 }

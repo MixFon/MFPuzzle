@@ -33,7 +33,7 @@ final class PuzzleTest: XCTestCase {
 		4 0 5
 		7 3 8
 		"""
-		let uint8Matrix3x3: [[UInt8]] =
+		let uint8Matrix3x3: Matrix =
 		[[6, 2, 1],
 		[4, 0, 5],
 		[7, 3, 8]]
@@ -117,7 +117,7 @@ final class PuzzleTest: XCTestCase {
 		14 11  4  7
 		12  1  0 13
 		"""
-		let uint8Matrix4x4: [[UInt8]] =
+		let uint8Matrix4x4: Matrix =
 		[[8, 15, 6, 5],
 		[2, 9, 3, 10],
 		[14, 11, 4, 7],
@@ -142,7 +142,7 @@ final class PuzzleTest: XCTestCase {
 		 2 13 17 20 21
 		 7 10  5  8  9
 		"""
-		let uint8Matrix5x5: [[UInt8]] = [
+		let uint8Matrix5x5: Matrix = [
 			[22, 16, 19, 18, 12],
 			[1, 3, 4, 14, 15],
 			[6, 23, 0, 11, 24],
@@ -168,7 +168,7 @@ final class PuzzleTest: XCTestCase {
 		self.puzzle?.fillBoardInSpiral(matrix: &matrix)
 		
 		// Assert
-		let matrixSpiral3x3: [[UInt8]] =
+		let matrixSpiral3x3: Matrix =
 		[[1, 2, 3],
 		 [8, 0, 4],
 		 [7, 6, 5]]
@@ -184,14 +184,14 @@ final class PuzzleTest: XCTestCase {
 		self.puzzle?.fillBoardInSpiral(matrix: &matrix)
 		
 		// Assert
-		let matrixSpiral3x3: [[UInt8]] =
+		let matrixSpiral4x4: Matrix =
 		[[ 1,  2,  3,  4],
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
 		
 		// Assert
-		XCTAssertEqual(matrix, matrixSpiral3x3)
+		XCTAssertEqual(matrix, matrixSpiral4x4)
 	}
 	
 	func testFillBoardSpiral5x5() {
@@ -203,13 +203,13 @@ final class PuzzleTest: XCTestCase {
 		self.puzzle?.fillBoardInSpiral(matrix: &matrix)
 		
 		// Assert
-		let matrixSpiral3x3: [[UInt8]] =
+		let matrixSpiral5x5: Matrix =
 		[[ 1,  2,  3,  4,  5],
 		 [16, 17, 18, 19,  6],
 		 [15, 24,  0, 20,  7],
 		 [14, 23, 22, 21,  8],
 		 [13, 12, 11, 10,  9]]
-		XCTAssertEqual(matrix, matrixSpiral3x3)
+		XCTAssertEqual(matrix, matrixSpiral5x5)
 	}
 	
 	func testCreateMatrixSpiral3x3() {
