@@ -221,6 +221,44 @@ final class CheckerTest: XCTestCase {
 		// Assert
 		XCTAssertFalse(answer == true)
 	}
+	
+	func testGetCoordingateXZero() {
+		// Arrange
+		var matrix: Matrix =
+		[[10, 2, 3],
+		 [9, 1, 4],
+		 [7, 6, 5]]
+		
+		// Act
+		var prev = (0, 0)
+		for j in 0..<matrix.count {
+			for i in 1..<matrix.count {
+				matrix[prev.0][prev.1] = matrix[j][i]
+				matrix[j][i] = 0
+				let zeroX = self.checker?.getCoordinateXZero(matrix: matrix)
+				XCTAssertNotNil(zeroX)
+				XCTAssertEqual(zeroX, i)
+				XCTAssertEqual(matrix[j][i], 0)
+				prev = (j, i)
+			}
+		}
+	
+		// Assert
+	}
+	
+	func testGetCoordingateXZeroNil() {
+		// Arrange
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [9, 10, 4],
+		 [7, 6, 5]]
+		
+		// Act
+		let zeroX = self.checker?.getCoordinateXZero(matrix: matrix)
+	
+		// Assert
+		XCTAssertNil(zeroX)
+	}
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.

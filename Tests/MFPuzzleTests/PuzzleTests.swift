@@ -119,7 +119,7 @@ final class PuzzleTest: XCTestCase {
 		"""
 		let uint8Matrix4x4: Matrix =
 		[[8, 15, 6, 5],
-		[2, 9, 3, 10],
+		[ 2, 9, 3, 10],
 		[14, 11, 4, 7],
 		[12, 1, 0, 13]]
 		
@@ -144,10 +144,10 @@ final class PuzzleTest: XCTestCase {
 		"""
 		let uint8Matrix5x5: Matrix = [
 			[22, 16, 19, 18, 12],
-			[1, 3, 4, 14, 15],
-			[6, 23, 0, 11, 24],
-			[2, 13, 17, 20, 21],
-			[7, 10, 5, 8, 9]
+			[ 1,  3,  4, 14, 15],
+			[ 6, 23,  0, 11, 24],
+			[ 2, 13, 17, 20, 21],
+			[ 7, 10,  5,  8,  9]
 		]
 		
 		// Act
@@ -361,11 +361,174 @@ final class PuzzleTest: XCTestCase {
 		XCTAssertEqual(board?.lavel, lavel)
 	}
 	
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
+	func testSolutionIteration4x4() throws {
+		// Arrange
+		let size = 4
+		let lavel = 220
+		let board: Board?
+		let matrix =
+		"""
+		# This puzzle is solvable
+		4
+		14  2  9  1
+		11  4  6  8
+		12 10 13  3
+		15  5  0  7
+		"""
+		guard let newMatrix = try self.puzzle?.creationMatrix(text: matrix) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let startBoard = Board(matrix: newMatrix)
+		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let targetBoard = Board(matrix: targetMatrix)
+		
+		// Act
+		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+		
+		// Assert
+		XCTAssertNotNil(board)
+		XCTAssertEqual(board?.lavel, lavel)
+	}
+	
+	
+	func testSolutionIteration5x5() throws {
+		// Arrange
+		let size = 5
+		let lavel = 384
+		let board: Board?
+		let matrix =
+		"""
+		# This puzzle is solvable
+		5
+		15 18 11 10 24
+		12 13  1  7 14
+		 9 22 17  2  0
+		 8  6 16  5  4
+		23  3 20 21 19
+		"""
+		guard let newMatrix = try self.puzzle?.creationMatrix(text: matrix) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let startBoard = Board(matrix: newMatrix)
+		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let targetBoard = Board(matrix: targetMatrix)
+		
+		// Act
+		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+		
+		// Assert
+		XCTAssertNotNil(board)
+		XCTAssertEqual(board?.lavel, lavel)
+	}
+	
+    func testPerformanceSearchSolution3x3() throws {
+		// Arrange
+		let size = 3
+		let matrix =
+		"""
+		# This puzzle is solvable
+		3
+		7 6 2
+		5 8 4
+		3 1 0
+		"""
+		guard let newMatrix = try self.puzzle?.creationMatrix(text: matrix) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let startBoard = Board(matrix: newMatrix)
+		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let targetBoard = Board(matrix: targetMatrix)
+		
+		// Act
+		
+		// Assert
         self.measure {
-            // Put the code you want to measure the time of here.
+			self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
         }
+    }
+	
+	func testPerformanceSearchSolution4x4() throws {
+		// Arrange
+		let size = 4
+		let lavel = 210
+		let matrix =
+		"""
+		# This puzzle is solvable
+		4
+		1 10 11 15
+		12 13  6  8
+		4  2  7 14
+		0  5  3  9
+		"""
+		guard let newMatrix = try self.puzzle?.creationMatrix(text: matrix) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let startBoard = Board(matrix: newMatrix)
+		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let targetBoard = Board(matrix: targetMatrix)
+		
+		// Assert
+		var board: Board? = nil
+		self.measure {
+			board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+		}
+		
+		XCTAssertNotNil(board)
+		XCTAssertEqual(board?.lavel, lavel)
+	}
+	
+    func testPerformanceSearchSolution5x5() throws {
+		// Arrange
+		let size = 5
+		let lavel = 434
+		let matrix =
+		"""
+		# This puzzle is solvable
+		5
+		17  3 10 12  4
+		20  9  1 14 22
+		23  2  8 21  5
+		18  6  7  0 16
+		15 11 24 13 19
+		"""
+		guard let newMatrix = try self.puzzle?.creationMatrix(text: matrix) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let startBoard = Board(matrix: newMatrix)
+		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
+			XCTFail("Puzzle nil")
+			return
+		}
+		let targetBoard = Board(matrix: targetMatrix)
+		
+		// Act
+		
+		// Assert
+		var board: Board?
+        self.measure {
+			board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+        }
+		
+		// Assert
+		XCTAssertNotNil(board)
+		XCTAssertEqual(board?.lavel, lavel)
     }
 
 }

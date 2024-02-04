@@ -61,7 +61,7 @@ final class Checker: _Checker {
 		return summ
 	}
 	
-	
+	/// Возвращает коодинату x у нуля
 	func getCoordinateXZero(matrix: Matrix) -> Int? {
 		for row in matrix {
 			for (j, element) in row.enumerated() {
