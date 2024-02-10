@@ -18,29 +18,12 @@ final class Puzzle {
 		self.checker = checker
 	}
 	
-	func run() {
-		do {
-			let terminalWorker = try TerminalWorker()
-			let text = try terminalWorker.textBoard
-			let matrix = try creationMatrix(text: text)
-			if !self.checker.checkUniqueElementsMatrix(matrix: matrix) { return }
-			let matrixTarget = createMatrixSpiral(size: matrix.count)
-			if !self.checker.checkSolution(matrix: matrix, matrixTarget: matrixTarget) { return }
-			let board = Board(matrix: matrix)
-			let boardTarget = Board(matrix: matrixTarget)
-			searchSolutionWithHeap(board: board, boardTarget: boardTarget)
-		} catch let exception as Exception {
-			print(exception.massage)
-		} catch {
-			print("Unknown error.")
-		}
-	}
-	
 	/// Поиск решения, используя алгоритм A*
 	@discardableResult
 	func searchSolutionWithHeap(board: Board, boardTarget: Board) -> Board? {
 		let heap = MFHeap<Board>(priorityFunction: {$0.f < $1.f})
-		board.setF(heuristic: self.heuristic.getHeuristic(coordinats: board.coordinats, coordinatsTarget: boardTarget.coordinats))
+		let heuristic = self.heuristic.getHeuristic(coordinats: board.coordinats, coordinatsTarget: boardTarget.coordinats)
+		board.setF(heuristic: heuristic)
 		heap.insert(board)
 		var visited = Set<Int>()
 		while let board = heap.extract() {
@@ -122,14 +105,6 @@ final class Puzzle {
 				y -= 1
 				filler += 1
 			}
-		}
-	}
-	
-	private func printPath(board: Board) {
-		var next: Board? = board
-		while next != nil {
-			next?.print()
-			next = next?.parent
 		}
 	}
 	

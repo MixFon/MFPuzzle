@@ -86,20 +86,6 @@ final class Board {
 		return childrens
 	}
 	
-	/// Печатает доску.
-	func print() {
-		Swift.print("State: ", self.lavel)
-		Swift.print("Weight:", self.f)
-		for row in matrix {
-			var line = String()
-			for col in row {
-				line.append(String(format: "%02d ", col))
-			}
-			Swift.print(line)
-		}
-		Swift.print()
-	}
-	
 	/// Возврат словаря с координатами ячеек. Используется с для матрицы содержащей ответ.
 	private func setCoordinats() {
 		for (i, row) in self.matrix.enumerated() {
