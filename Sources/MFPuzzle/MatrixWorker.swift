@@ -14,6 +14,8 @@ public protocol _MatrixWorker {
 
 open class MatrixWorker: _MatrixWorker {
     
+    public init() { }
+    
     /// Создание матрицы результата
     public func createMatrixSpiral(size: Int) -> Matrix {
         var matrix = Array(repeating: Array(repeating: UInt8(0), count: size), count: size)
