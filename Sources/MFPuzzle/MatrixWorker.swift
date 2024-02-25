@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  MatrixWorker.swift
+//
 //
 //  Created by Михаил Фокин on 24.02.2024.
 //
@@ -10,6 +10,7 @@ public typealias Matrix = [[UInt8]]
 public protocol _MatrixWorker {
     func creationMatrix(text: String) throws -> Matrix
     func fillBoardInSpiral(matrix: inout Matrix)
+    func createMatrixSpiral(size: Int) -> Matrix
 }
 
 open class MatrixWorker: _MatrixWorker {
