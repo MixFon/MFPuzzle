@@ -27,7 +27,7 @@ final class PuzzleTest: XCTestCase {
 		let size = 3
 		let lavel = 4
 		let board: Board?
-		let matrix3x3 =
+		let matrix =
 		"""
 		# This puzzle is solvable 4 iteration
 		3
@@ -35,24 +35,15 @@ final class PuzzleTest: XCTestCase {
 		1 6 4
 		8 7 5
 		"""
-		guard let newMatrix3x3 = try self.puzzle?.creationMatrix(text: matrix3x3) else {
-			XCTFail("Puzzle nil")
-			return
-		}
-		let grid = Grid(matrix: newMatrix3x3)
-		let startBoard = Board(grid: grid)
-		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
-			XCTFail("Puzzle nil")
-			return
-		}
+		let worker = MatrixWorker()
+		
+		let newMatrix = try worker.creationMatrix(text: matrix)
+		let newGrid = Grid(matrix: newMatrix)
+		let startBoard = Board(grid: newGrid)
+		
+		let targetMatrix = worker.createMatrixSpiral(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
-        let worker = MatrixWorker()
-		let newMatrix3x3 = try worker.creationMatrix(text: matrix3x3)
-		let startBoard = Board(matrix: newMatrix3x3)
-        
-		let targetMatrix = worker.createMatrixSpiral(size: size)
-		let targetBoard = Board(matrix: targetMatrix)
 		
 		// Act
 		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
@@ -67,7 +58,7 @@ final class PuzzleTest: XCTestCase {
 		let size = 3
 		let lavel = 18
 		let board: Board?
-		let matrix3x3 =
+		let matrix =
 		"""
 		# This puzzle is solvable
 		3
@@ -75,23 +66,15 @@ final class PuzzleTest: XCTestCase {
 		8 7 5
 		6 4 1
 		"""
-		guard let newMatrix3x3 = try self.puzzle?.creationMatrix(text: matrix3x3) else {
-			XCTFail("Puzzle nil")
-			return
-		}
-		let grid = Grid(matrix: newMatrix3x3)
-		let startBoard = Board(grid: grid)
-		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
-			XCTFail("Puzzle nil")
-			return
-		}
+		let worker = MatrixWorker()
+		
+		let newMatrix = try worker.creationMatrix(text: matrix)
+		let newGrid = Grid(matrix: newMatrix)
+		let startBoard = Board(grid: newGrid)
+		
+		let targetMatrix = worker.createMatrixSpiral(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
-        let worker = MatrixWorker()
-		let newMatrix3x3 = try worker.creationMatrix(text: matrix3x3)
-		let startBoard = Board(matrix: newMatrix3x3)
-		let targetMatrix = worker.createMatrixSpiral(size: size)
-		let targetBoard = Board(matrix: targetMatrix)
 		
 		// Act
 		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
@@ -106,7 +89,7 @@ final class PuzzleTest: XCTestCase {
 		let size = 3
 		let lavel = 24
 		let board: Board?
-		let matrix3x3 =
+		let matrix =
 		"""
 		# This puzzle is solvable
 		3
@@ -114,23 +97,15 @@ final class PuzzleTest: XCTestCase {
 		5 8 4
 		3 1 0
 		"""
-		guard let newMatrix3x3 = try self.puzzle?.creationMatrix(text: matrix3x3) else {
-			XCTFail("Puzzle nil")
-			return
-		}
-		let grid = Grid(matrix: newMatrix3x3)
-		let startBoard = Board(grid: grid)
-		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
-			XCTFail("Puzzle nil")
-			return
-		}
+		let worker = MatrixWorker()
+		
+		let newMatrix = try worker.creationMatrix(text: matrix)
+		let newGrid = Grid(matrix: newMatrix)
+		let startBoard = Board(grid: newGrid)
+		
+		let targetMatrix = worker.createMatrixSpiral(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
-        let worker = MatrixWorker()
-		let newMatrix3x3 = try worker.creationMatrix(text: matrix3x3)
-		let startBoard = Board(matrix: newMatrix3x3)
-		let targetMatrix = worker.createMatrixSpiral(size: size)
-		let targetBoard = Board(matrix: targetMatrix)
 		
 		// Act
 		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
@@ -154,23 +129,15 @@ final class PuzzleTest: XCTestCase {
 		12 10 13  3
 		15  5  0  7
 		"""
-		guard let newMatrix = try self.puzzle?.creationMatrix(text: matrix) else {
-			XCTFail("Puzzle nil")
-			return
-		}
+		let worker = MatrixWorker()
+		
+		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid(matrix: newMatrix)
 		let startBoard = Board(grid: newGrid)
-		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
-			XCTFail("Puzzle nil")
-			return
-		}
+		
+		let targetMatrix = worker.createMatrixSpiral(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
-        let worker = MatrixWorker()
-		let newMatrix = try worker.creationMatrix(text: matrix)
-		let startBoard = Board(matrix: newMatrix)
-		let targetMatrix = worker.createMatrixSpiral(size: size)
-		let targetBoard = Board(matrix: targetMatrix)
 		
 		// Act
 		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
@@ -196,23 +163,15 @@ final class PuzzleTest: XCTestCase {
 		 8  6 16  5  4
 		23  3 20 21 19
 		"""
-		guard let newMatrix = try self.puzzle?.creationMatrix(text: matrix) else {
-			XCTFail("Puzzle nil")
-			return
-		}
+		let worker = MatrixWorker()
+		
+		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid(matrix: newMatrix)
 		let startBoard = Board(grid: newGrid)
-		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
-			XCTFail("Puzzle nil")
-			return
-		}
+		
+		let targetMatrix = worker.createMatrixSpiral(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
-        let worker = MatrixWorker()
-		let newMatrix = try worker.creationMatrix(text: matrix)
-		let startBoard = Board(matrix: newMatrix)
-		let targetMatrix = worker.createMatrixSpiral(size: size)
-		let targetBoard = Board(matrix: targetMatrix)
 		
 		// Act
 		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
@@ -233,23 +192,15 @@ final class PuzzleTest: XCTestCase {
 		5 8 4
 		3 1 0
 		"""
-		guard let newMatrix = try self.puzzle?.creationMatrix(text: matrix) else {
-			XCTFail("Puzzle nil")
-			return
-		}
+		let worker = MatrixWorker()
+		
+		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid(matrix: newMatrix)
 		let startBoard = Board(grid: newGrid)
-		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
-			XCTFail("Puzzle nil")
-			return
-		}
+		
+		let targetMatrix = worker.createMatrixSpiral(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
-        let worker = MatrixWorker()
-		let newMatrix = try worker.creationMatrix(text: matrix)
-		let startBoard = Board(matrix: newMatrix)
-		let targetMatrix = worker.createMatrixSpiral(size: size)
-		let targetBoard = Board(matrix: targetMatrix)
 		
 		// Act
 		
@@ -273,23 +224,16 @@ final class PuzzleTest: XCTestCase {
 		4  2  7 14
 		0  5  3  9
 		"""
-		guard let newMatrix = try self.puzzle?.creationMatrix(text: matrix) else {
-			XCTFail("Puzzle nil")
-			return
-		}
+		
+		let worker = MatrixWorker()
+		
+		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid(matrix: newMatrix)
 		let startBoard = Board(grid: newGrid)
-		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
-			XCTFail("Puzzle nil")
-			return
-		}
+		
+		let targetMatrix = worker.createMatrixSpiral(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
-        let worker = MatrixWorker()
-		let newMatrix = try worker.creationMatrix(text: matrix)
-		let startBoard = Board(matrix: newMatrix)
-		let targetMatrix = worker.createMatrixSpiral(size: size)
-		let targetBoard = Board(matrix: targetMatrix)
 		
 		// Assert
 		var board: Board? = nil
@@ -316,23 +260,15 @@ final class PuzzleTest: XCTestCase {
 		18  6  7  0 16
 		15 11 24 13 19
 		"""
-		guard let newMatrix = try self.puzzle?.creationMatrix(text: matrix) else {
-			XCTFail("Puzzle nil")
-			return
-		}
+		let worker = MatrixWorker()
+		
+		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid(matrix: newMatrix)
 		let startBoard = Board(grid: newGrid)
-		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
-			XCTFail("Puzzle nil")
-			return
-		}
+		
+		let targetMatrix = worker.createMatrixSpiral(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
-        let worker = MatrixWorker()
-		let newMatrix = try worker.creationMatrix(text: matrix)
-		let startBoard = Board(matrix: newMatrix)
-		let targetMatrix = worker.createMatrixSpiral(size: size)
-		let targetBoard = Board(matrix: targetMatrix)
 		
 		// Act
 		
