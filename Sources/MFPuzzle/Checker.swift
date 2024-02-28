@@ -7,8 +7,6 @@
 
 import Foundation
 
-typealias Matrix = [[UInt8]]
-
 protocol _Checker {
 	func checkUniqueElementsMatrix(matrix: Matrix) -> Bool
 	func checkSolution(matrix: Matrix, matrixTarget: Matrix) -> Bool
