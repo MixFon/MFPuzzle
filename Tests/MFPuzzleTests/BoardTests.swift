@@ -18,14 +18,14 @@ final class BoardTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-
 	func testSetF3x3() {
 		// Arrange
 		let matrix: Matrix =
 		[[1, 2, 3],
 		 [9, 0, 4],
 		 [7, 6, 5]]
-		let board = Board(matrix: matrix)
+		let grid = Grid(matrix: matrix)
+		let board = Board(grid: grid)
 		
 		// Act
 		board.setF(heuristic: 10)
@@ -40,12 +40,13 @@ final class BoardTests: XCTestCase {
 		[[1, 2, 3],
 		 [9, 0, 4],
 		 [7, 6, 5]]
-		var board = Board(matrix: matrix)
+		let grid = Grid(matrix: matrix)
+		let board = Board(grid: grid)
 		
 		// Act
 		for i in 1...100 {
 			let randomElement = Int.random(in: 0...100)
-			board = Board(board: board)
+			board.lavel = i
 			board.setF(heuristic: randomElement)
 			XCTAssertEqual(board.f, randomElement + i)
 		}
@@ -58,7 +59,8 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		let board = Board(matrix: matrix)
+		let grid = Grid(matrix: matrix)
+		let board = Board(grid: grid)
 		
 		// Act
 		board.setF(heuristic: 10)
@@ -74,209 +76,16 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		var board = Board(matrix: matrix)
+		let grid = Grid(matrix: matrix)
+		
 		
 		// Act
 		for _ in 1...100 {
 			let randomElement = Int.random(in: 0...100)
-			board = Board(board: board)
+			let board = Board(grid: grid)
 			board.setF(heuristic: randomElement)
 			XCTAssertEqual(board.f, randomElement)
 		}
-	}
-	
-	func testGetNeighbors() {
-		// Arrange
-		let matrix: Matrix =
-		[[ 1,  2,  3,  4],
-		 [12, 13, 14,  5],
-		 [11,  0, 15,  6],
-		 [10,  9,  8,  7]]
-		let board = Board(matrix: matrix)
-		
-		// Act
-		let neighbors = board.getNeighbors()
-		
-		// Assert
-		XCTAssertNotNil(neighbors)
-		XCTAssertEqual(neighbors?.contains(13), true)
-		XCTAssertEqual(neighbors?.contains(11), true)
-		XCTAssertEqual(neighbors?.contains(15), true)
-		XCTAssertEqual(neighbors?.contains(9), true)
-		XCTAssertEqual(neighbors?.count, 4)
-	}
-	
-	func testGetNeighborsLeft() {
-		// Arrange
-		let matrix: Matrix =
-		[[ 1,  2,  3,  4],
-		 [12, 13, 14,  5],
-		 [0,  11, 15,  6],
-		 [10,  9,  8,  7]]
-		let board = Board(matrix: matrix)
-		
-		// Act
-		let neighbors = board.getNeighbors()
-		
-		// Assert
-		XCTAssertNotNil(neighbors)
-		XCTAssertEqual(neighbors?.contains(12), true)
-		XCTAssertEqual(neighbors?.contains(11), true)
-		XCTAssertEqual(neighbors?.contains(10), true)
-		XCTAssertEqual(neighbors?.count, 3)
-	}
-	
-	
-	func testGetNeighborsRiht() {
-		// Arrange
-		let matrix: Matrix =
-		[[ 1,  2,  3,  4],
-		 [12, 13, 14,  5],
-		 [11,  6, 15,  0],
-		 [10,  9,  8,  7]]
-		let board = Board(matrix: matrix)
-		
-		// Act
-		let neighbors = board.getNeighbors()
-		
-		// Assert
-		XCTAssertNotNil(neighbors)
-		XCTAssertEqual(neighbors?.contains(5), true)
-		XCTAssertEqual(neighbors?.contains(7), true)
-		XCTAssertEqual(neighbors?.contains(15), true)
-		XCTAssertEqual(neighbors?.count, 3)
-	}
-
-	func testGetNeighborsUp() {
-		// Arrange
-		let matrix: Matrix =
-		[[ 1,  0,  3,  4],
-		 [12, 13, 14,  5],
-		 [11,  2, 15,  6],
-		 [10,  9,  8,  7]]
-		let board = Board(matrix: matrix)
-		
-		// Act
-		let neighbors = board.getNeighbors()
-		
-		// Assert
-		XCTAssertNotNil(neighbors)
-		XCTAssertEqual(neighbors?.contains(13), true)
-		XCTAssertEqual(neighbors?.contains(1), true)
-		XCTAssertEqual(neighbors?.contains(3), true)
-		XCTAssertEqual(neighbors?.count, 3)
-	}
-	
-	func testGetNeighborsBottom() {
-		// Arrange
-		let matrix: Matrix =
-		[[ 1,  2,  3,  4],
-		 [12, 13, 14,  5],
-		 [11,  9, 15,  6],
-		 [10,  0,  8,  7]]
-		let board = Board(matrix: matrix)
-		
-		// Act
-		let neighbors = board.getNeighbors()
-		
-		// Assert
-		XCTAssertNotNil(neighbors)
-		XCTAssertEqual(neighbors?.contains(8), true)
-		XCTAssertEqual(neighbors?.contains(10), true)
-		XCTAssertEqual(neighbors?.contains(9), true)
-		XCTAssertEqual(neighbors?.count, 3)
-	}
-
-	func testGetNeighborsUpLeft() {
-		// Arrange
-		let matrix: Matrix =
-		[[ 0,  2,  3,  4],
-		 [12, 13, 14,  5],
-		 [11,  1, 15,  6],
-		 [10,  9,  8,  7]]
-		let board = Board(matrix: matrix)
-		
-		// Act
-		let neighbors = board.getNeighbors()
-		
-		// Assert
-		XCTAssertNotNil(neighbors)
-		XCTAssertEqual(neighbors?.contains(12), true)
-		XCTAssertEqual(neighbors?.contains(2), true)
-		XCTAssertEqual(neighbors?.count, 2)
-	}
-
-	func testGetNeighborsUpRight() {
-		// Arrange
-		let matrix: Matrix =
-		[[ 1,  2,  3,  0],
-		 [12, 13, 14,  5],
-		 [11,  4, 15,  6],
-		 [10,  9,  8,  7]]
-		let board = Board(matrix: matrix)
-		
-		// Act
-		let neighbors = board.getNeighbors()
-		
-		// Assert
-		XCTAssertNotNil(neighbors)
-		XCTAssertEqual(neighbors?.contains(3), true)
-		XCTAssertEqual(neighbors?.contains(5), true)
-		XCTAssertEqual(neighbors?.count, 2)
-	}
-	
-	func testGetNeighborsBottomRight() {
-		// Arrange
-		let matrix: Matrix =
-		[[ 1,  2,  3,  4],
-		 [12, 13, 14,  5],
-		 [11,  7, 15,  6],
-		 [10,  9,  8,  0]]
-		let board = Board(matrix: matrix)
-		
-		// Act
-		let neighbors = board.getNeighbors()
-		
-		// Assert
-		XCTAssertNotNil(neighbors)
-		XCTAssertEqual(neighbors?.contains(6), true)
-		XCTAssertEqual(neighbors?.contains(8), true)
-		XCTAssertEqual(neighbors?.count, 2)
-	}
-
-	func testGetNeighborsBottomLeft() {
-		// Arrange
-		let matrix: Matrix =
-		[[ 1,  2,  3,  4],
-		 [12, 13, 14,  5],
-		 [11, 10, 15,  6],
-		 [ 0,  9,  8,  7]]
-		let board = Board(matrix: matrix)
-		
-		// Act
-		let neighbors = board.getNeighbors()
-		
-		// Assert
-		XCTAssertNotNil(neighbors)
-		XCTAssertEqual(neighbors?.contains(11), true)
-		XCTAssertEqual(neighbors?.contains(9), true)
-		XCTAssertEqual(neighbors?.count, 2)
-	}
-	
-	func testGetNeighborsNil() {
-		// Arrange
-		let matrix: Matrix =
-		[[ 1,  2,  3,  4],
-		 [12, 13, 14,  5],
-		 [11, 10, 15,  6],
-		 [16,  9,  8,  7]]
-		let board = Board(matrix: matrix)
-		
-		// Act
-		let neighbors = board.getNeighbors()
-		
-		// Assert
-		XCTAssertNil(neighbors)
 	}
 	
 	func testGetChildrens() {
@@ -284,44 +93,50 @@ final class BoardTests: XCTestCase {
 		let matrix: Matrix =
 		[[ 1,  2,  3,  4],
 		 [12, 13, 14,  5],
-		 [11, 0, 15,  6],
+		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		let board = Board(matrix: matrix)
+		let grid = Grid(matrix: matrix)
+		let board = Board(grid: grid)
 		
 		let matrixUp: Matrix =
 		[[ 1,  2,  3,  4],
 		 [12,  0, 14,  5],
 		 [11, 13, 15,  6],
 		 [10,  9,  8,  7]]
-		let boardUp = Board(matrix: matrixUp)
+		let gridUp = Grid(matrix: matrixUp)
+		let boardUp = Board(grid: gridUp)
 		
 		let matrixLeft: Matrix =
 		[[ 1,  2,  3,  4],
 		 [12, 13, 14,  5],
 		 [ 0, 11, 15,  6],
 		 [10,  9,  8,  7]]
-		let boardLeft = Board(matrix: matrixLeft)
+		let gridLeft = Grid(matrix: matrixLeft)
+		let boardLeft = Board(grid: gridLeft)
 		
 		let matrixRight: Matrix =
 		[[ 1,  2,  3,  4],
 		 [12, 13, 14,  5],
-		 [11, 15, 0,  6],
+		 [11, 15,  0,  6],
 		 [10,  9,  8,  7]]
-		let boardRight = Board(matrix: matrixRight)
+		let gridRight = Grid(matrix: matrixRight)
+		let boardRight = Board(grid: gridRight)
 		
 		let matrixBottom: Matrix =
 		[[ 1,  2,  3,  4],
 		 [12, 13, 14,  5],
 		 [11,  9, 15,  6],
 		 [10,  0,  8,  7]]
-		let boardBottom = Board(matrix: matrixBottom)
+		let gridBottom = Grid(matrix: matrixBottom)
+		let boardBottom = Board(grid: gridBottom)
 		
 		let matrixError: Matrix =
 		[[ 1,  2,  3,  4],
 		 [12, 13, 14,  5],
 		 [11,  7, 15,  6],
 		 [10,  9,  8,  0]]
-		let boardError = Board(matrix: matrixError)
+		let gridError = Grid(matrix: matrixError)
+		let boardError = Board(grid: gridError)
 		
 		// Act
 		let childrens = board.getChildrens()
@@ -344,7 +159,8 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11, 16, 15,  6],
 		 [10,  9,  8,  7]]
-		let board = Board(matrix: matrix)
+		let grid = Grid(matrix: matrix)
+		let board = Board(grid: grid)
 		
 		// Act
 		let childrens = board.getChildrens()
@@ -360,14 +176,16 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		let boardOne = Board(matrix: matrixOne)
+		let gridOne = Grid(matrix: matrixOne)
+		let boardOne = Board(grid: gridOne)
 		
 		let matrixTwo: Matrix =
 		[[ 1,  2,  3,  4],
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		let boardTwo = Board(matrix: matrixTwo)
+		let gridTwo = Grid(matrix: matrixTwo)
+		let boardTwo = Board(grid: gridTwo)
 		
 		// Assert
 		XCTAssertTrue(boardOne == boardTwo)
@@ -380,24 +198,19 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11, 15,  0,  6],
 		 [10,  9,  8,  7]]
-		let boardOne = Board(matrix: matrixOne)
+		let gridOne = Grid(matrix: matrixOne)
+		let boardOne = Board(grid: gridOne)
 		
 		let matrixTwo: Matrix =
 		[[ 1,  2,  3,  4],
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		let boardTwo = Board(matrix: matrixTwo)
+		let gridTwo = Grid(matrix: matrixTwo)
+		let boardTwo = Board(grid: gridTwo)
 		
 		// Assert
 		XCTAssertTrue(boardOne != boardTwo)
 	}
-	
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
 
 }

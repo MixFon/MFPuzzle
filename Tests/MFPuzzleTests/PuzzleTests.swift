@@ -282,12 +282,14 @@ final class PuzzleTest: XCTestCase {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let startBoard = Board(matrix: newMatrix3x3)
+		let grid = Grid(matrix: newMatrix3x3)
+		let startBoard = Board(grid: grid)
 		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let targetBoard = Board(matrix: targetMatrix)
+		let gridTarget = Grid(matrix: targetMatrix)
+		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
 		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
@@ -314,12 +316,14 @@ final class PuzzleTest: XCTestCase {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let startBoard = Board(matrix: newMatrix3x3)
+		let grid = Grid(matrix: newMatrix3x3)
+		let startBoard = Board(grid: grid)
 		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let targetBoard = Board(matrix: targetMatrix)
+		let gridTarget = Grid(matrix: targetMatrix)
+		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
 		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
@@ -346,12 +350,14 @@ final class PuzzleTest: XCTestCase {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let startBoard = Board(matrix: newMatrix3x3)
+		let grid = Grid(matrix: newMatrix3x3)
+		let startBoard = Board(grid: grid)
 		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let targetBoard = Board(matrix: targetMatrix)
+		let gridTarget = Grid(matrix: targetMatrix)
+		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
 		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
@@ -379,12 +385,14 @@ final class PuzzleTest: XCTestCase {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let startBoard = Board(matrix: newMatrix)
+		let newGrid = Grid(matrix: newMatrix)
+		let startBoard = Board(grid: newGrid)
 		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let targetBoard = Board(matrix: targetMatrix)
+		let gridTarget = Grid(matrix: targetMatrix)
+		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
 		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
@@ -414,12 +422,14 @@ final class PuzzleTest: XCTestCase {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let startBoard = Board(matrix: newMatrix)
+		let newGrid = Grid(matrix: newMatrix)
+		let startBoard = Board(grid: newGrid)
 		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let targetBoard = Board(matrix: targetMatrix)
+		let gridTarget = Grid(matrix: targetMatrix)
+		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
 		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
@@ -444,17 +454,20 @@ final class PuzzleTest: XCTestCase {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let startBoard = Board(matrix: newMatrix)
+		let newGrid = Grid(matrix: newMatrix)
+		let startBoard = Board(grid: newGrid)
 		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let targetBoard = Board(matrix: targetMatrix)
+		let gridTarget = Grid(matrix: targetMatrix)
+		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
 		
 		// Assert
         self.measure {
+			// Executed 1 test, with 0 failures (0 unexpected) in 0.960 (0.961) seconds
 			self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
         }
     }
@@ -476,16 +489,19 @@ final class PuzzleTest: XCTestCase {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let startBoard = Board(matrix: newMatrix)
+		let newGrid = Grid(matrix: newMatrix)
+		let startBoard = Board(grid: newGrid)
 		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let targetBoard = Board(matrix: targetMatrix)
+		let gridTarget = Grid(matrix: targetMatrix)
+		let targetBoard = Board(grid: gridTarget)
 		
 		// Assert
 		var board: Board? = nil
 		self.measure {
+			// Executed 1 test, with 0 failures (0 unexpected) in 1.933 (1.934) seconds
 			board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
 		}
 		
@@ -511,18 +527,21 @@ final class PuzzleTest: XCTestCase {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let startBoard = Board(matrix: newMatrix)
+		let newGrid = Grid(matrix: newMatrix)
+		let startBoard = Board(grid: newGrid)
 		guard let targetMatrix = self.puzzle?.createMatrixSpiral(size: size) else {
 			XCTFail("Puzzle nil")
 			return
 		}
-		let targetBoard = Board(matrix: targetMatrix)
+		let gridTarget = Grid(matrix: targetMatrix)
+		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
 		
 		// Assert
 		var board: Board?
         self.measure {
+			// Executed 50 tests, with 0 failures (0 unexpected) in 6.732 (6.741) seconds
 			board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
         }
 		
