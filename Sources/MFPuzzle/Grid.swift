@@ -7,30 +7,30 @@
 
 import Foundation
 
-struct GridPoint: Equatable {
+public struct GridPoint: Equatable {
 	let x: Int8
 	let y: Int8
 }
 
 /// Класс для работы с матрицей
-final class Grid {
+open class Grid {
 	private var matrix: Matrix
 	private(set) var size: Int
 	private(set) var coordinats = [UInt8: GridPoint]()
 	
-	var hashValue: Int {
+	public var hashValue: Int {
 		self.matrix.hashValue
 	}
 	
 	/// Создание доски на основе матрицы и размера
-	init(matrix: Matrix) {
+	public init(matrix: Matrix) {
 		self.size = matrix.count
 		self.matrix = matrix
 		setCoordinats()
 	}
 	
 	/// Конструктор копирования
-	init(from: Grid) {
+	public init(from: Grid) {
 		self.size = from.size
 		self.matrix = from.matrix
 		self.coordinats = from.coordinats
@@ -46,12 +46,12 @@ final class Grid {
 	}
 	
 	/// Возвращает координаты ячейки с номером.
-	func getCoordinatsNumber(number: UInt8) -> GridPoint? {
+	public func getCoordinatsNumber(number: UInt8) -> GridPoint? {
 		return self.coordinats[number]
 	}
 	
 	/// Меняет местами номер и пустую клетку местами.
-	func swapNumber(number: UInt8) {
+	public func swapNumber(number: UInt8) {
 		guard let coordinatsNumber = getCoordinatsNumber(number: number) else { return }
 		guard let coordinatsZero = getCoordinatsNumber(number: 0) else { return }
 		self.matrix[Int(coordinatsNumber.x)][Int(coordinatsNumber.y)] = 0
@@ -61,7 +61,7 @@ final class Grid {
 	}
 	
 	/// Возвращает номера соседних ячеек с нулевой.
-	func getNeighbors() -> [UInt8]? {
+	public func getNeighbors() -> [UInt8]? {
 		var result = [UInt8]()
 		guard let coordinats = self.coordinats[0] else { return nil }
 		let x = Int(coordinats.x)
@@ -84,11 +84,11 @@ final class Grid {
 
 extension Grid: Equatable {
 	
-	static func == (left: Grid, right: Grid) -> Bool {
+	public static func == (left: Grid, right: Grid) -> Bool {
 		return left.matrix == right.matrix
 	}
 	
-	static func != (left: Grid, right: Grid) -> Bool {
+	public static func != (left: Grid, right: Grid) -> Bool {
 		return !(left == right)
 	}
 }
