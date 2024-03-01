@@ -14,9 +14,12 @@ public struct GridPoint: Equatable {
 
 /// Класс для работы с матрицей
 open class Grid {
-	private var matrix: Matrix
-	private(set) var size: Int
+	public private(set) var matrix: Matrix
 	private(set) var coordinats = [UInt8: GridPoint]()
+	
+	public var size: Int {
+		self.matrix.count
+	}
 	
 	public var hashValue: Int {
 		self.matrix.hashValue
@@ -24,14 +27,12 @@ open class Grid {
 	
 	/// Создание доски на основе матрицы и размера
 	public init(matrix: Matrix) {
-		self.size = matrix.count
 		self.matrix = matrix
 		setCoordinats()
 	}
 	
 	/// Конструктор копирования
 	public init(from: Grid) {
-		self.size = from.size
 		self.matrix = from.matrix
 		self.coordinats = from.coordinats
 	}
