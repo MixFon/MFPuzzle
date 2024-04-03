@@ -36,7 +36,7 @@ final class Board {
 	
 	/// Возвращает список смежных состояний. Состояний, в которые можно перейти
 	func getChildrens() -> [Board]? {
-		guard let neighbors = self.grid.getNeighbors() else { return nil }
+		guard let neighbors = self.grid.getNeighbors(number: 0) else { return nil }
 		var childrens = [Board]()
 		for number in neighbors {
 			let newGrid = Grid(from: self.grid)
