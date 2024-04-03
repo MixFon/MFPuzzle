@@ -8,8 +8,8 @@
 import Foundation
 
 public struct GridPoint: Equatable {
-	let x: Int8
-	let y: Int8
+	public let x: Int8
+	public let y: Int8
 }
 
 /// Класс для работы с матрицей
