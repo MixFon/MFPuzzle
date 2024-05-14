@@ -15,7 +15,7 @@ public struct GridPoint: Equatable {
 /// Класс для работы с матрицей
 open class Grid {
 	public private(set) var matrix: Matrix
-	private(set) var coordinats = [UInt8: GridPoint]()
+	private(set) var coordinats = [MatrixElement: GridPoint]()
 	
 	public var size: Int {
 		self.matrix.count
@@ -47,12 +47,12 @@ open class Grid {
 	}
 	
 	/// Возвращает координаты ячейки с номером.
-	public func getPoint(number: UInt8) -> GridPoint? {
+	public func getPoint(number: MatrixElement) -> GridPoint? {
 		return self.coordinats[number]
 	}
 	
 	/// Меняет местами номер и пустую клетку местами.
-	public func swapNumber(number: UInt8) {
+	public func swapNumber(number: MatrixElement) {
 		guard let coordinatsNumber = getPoint(number: number) else { return }
 		guard let coordinatsZero = getPoint(number: 0) else { return }
 		self.matrix[Int(coordinatsNumber.x)][Int(coordinatsNumber.y)] = 0
@@ -62,8 +62,8 @@ open class Grid {
 	}
 	
 	/// Возвращает номера соседних ячеек.
-	public func getNeighbors(number: UInt8) -> [UInt8]? {
-		var result = [UInt8]()
+	public func getNeighbors(number: MatrixElement) -> [MatrixElement]? {
+		var result = [MatrixElement]()
 		guard let coordinats = self.coordinats[number] else { return nil }
 		let x = Int(coordinats.x)
 		let y = Int(coordinats.y)
@@ -83,7 +83,7 @@ open class Grid {
 	}
 	
 	/// Определяет, являются ли два номера соседними
-	public func isNeighbors(one: UInt8, two: UInt8) -> Bool? {
+	public func isNeighbors(one: MatrixElement, two: MatrixElement) -> Bool? {
 		if self.coordinats[one] == nil || self.coordinats[two] == nil { return nil }
 		let neighbors = getNeighbors(number: one)
 		return neighbors?.contains(two)

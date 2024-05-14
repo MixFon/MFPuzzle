@@ -21,11 +21,11 @@ final class CheckerTest: XCTestCase {
 	}
 
 	func testCheckSolution3x3() throws {
-		let matrixTarget3x3: [[UInt8]] =
+		let matrixTarget3x3: [[MatrixElement]] =
 		[[1, 2, 3],
 		 [8, 0, 4],
 		 [7, 6, 5]]
-		var matrix3x3: [[UInt8]] =
+		var matrix3x3: [[MatrixElement]] =
 		[[6, 3, 4],
 		 [5, 1, 2],
 		 [7, 8, 0]]
@@ -44,12 +44,12 @@ final class CheckerTest: XCTestCase {
 	
 	
 	func testCheckSolution4x4() throws {
-		let matrixTarget4x4: [[UInt8]] =
+		let matrixTarget4x4: [[MatrixElement]] =
 		[[ 1, 2,  3,  4],
 		 [12, 13, 14, 5],
 		 [11,  0, 15, 6],
 		 [10,  9, 8,  7]]
-		var matrix4x4: [[UInt8]] =
+		var matrix4x4: [[MatrixElement]] =
 		[[12, 15, 13,  5],
 		 [ 3,  9,  6,  2],
 		 [ 1, 11,  7, 10],
@@ -70,13 +70,13 @@ final class CheckerTest: XCTestCase {
 	}
 	
 	func testCheckSolution5x5() throws {
-		let matrixTarget5x5: [[UInt8]] =
+		let matrixTarget5x5: [[MatrixElement]] =
 		[[ 1,  2,  3,  4,  5],
 		 [16, 17, 18, 19,  6],
 		 [15, 24,  0, 20,  7],
 		 [14, 23, 22, 21,  8],
 		 [13, 12, 11, 10,  9]]
-		var matrix5x5: [[UInt8]] =
+		var matrix5x5: [[MatrixElement]] =
 		[[14,  4, 19, 18,  0],
 		 [20, 16, 15,  2,  9],
 		 [ 8,  1, 23, 22, 10],
@@ -102,11 +102,11 @@ final class CheckerTest: XCTestCase {
 	// MARK: Test check not solution.
 	
 	func testCheckNotSolution3x3() throws {
-		let matrixTarget3x3: [[UInt8]] =
+		let matrixTarget3x3: [[MatrixElement]] =
 		[[1, 2, 3],
 		 [8, 0, 4],
 		 [7, 6, 5]]
-		var matrix3x3: [[UInt8]] =
+		var matrix3x3: [[MatrixElement]] =
 		[[1, 6, 3],
 		 [4, 0, 2],
 		 [7, 8, 5]]
@@ -125,12 +125,12 @@ final class CheckerTest: XCTestCase {
 	
 	
 	func testCheckNotSolution4x4() throws {
-		let matrixTarget4x4: [[UInt8]] =
+		let matrixTarget4x4: [[MatrixElement]] =
 		[[ 1,  2,   3,  4],
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		var matrix4x4: [[UInt8]] =
+		var matrix4x4: [[MatrixElement]] =
 		[[ 6,  8,  2,  3],
 		 [ 0, 10, 13,  9],
 		 [ 5, 11,  7,  1],
@@ -151,13 +151,13 @@ final class CheckerTest: XCTestCase {
 	}
 	
 	func testCheckNotSolution5x5() throws {
-		let matrixTarget5x5: [[UInt8]] =
+		let matrixTarget5x5: [[MatrixElement]] =
 		[[ 1,  2,  3,  4,  5],
 		 [16, 17, 18, 19,  6],
 		 [15, 24,  0, 20,  7],
 		 [14, 23, 22, 21,  8],
 		 [13, 12, 11, 10,  9]]
-		var matrix5x5: [[UInt8]] =
+		var matrix5x5: [[MatrixElement]] =
 		[[ 0, 12, 22, 17,  1],
 		 [19,  4,  2,  7, 11],
 		 [23, 15, 21, 13,  3],

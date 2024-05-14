@@ -32,7 +32,7 @@ final class MatrixWorkerTests: XCTestCase {
         4 0 5
         7 3 8
         """
-        let uint8Matrix3x3: Matrix =
+        let MatrixElementMatrix3x3: Matrix =
         [[6, 2, 1],
         [4, 0, 5],
         [7, 3, 8]]
@@ -41,7 +41,7 @@ final class MatrixWorkerTests: XCTestCase {
         let newMatrix3x3 = try self.worker?.creationMatrix(text: matrix3x3)
         
         // Assert
-        XCTAssertEqual(uint8Matrix3x3, newMatrix3x3)
+        XCTAssertEqual(MatrixElementMatrix3x3, newMatrix3x3)
     }
     
     func testErrorNumberCreateMatrix3x3() throws {
@@ -57,7 +57,7 @@ final class MatrixWorkerTests: XCTestCase {
         
         // Assert
         XCTAssertThrowsError(try self.worker?.creationMatrix(text: matrix3x3)) { error in
-            XCTAssertEqual(error as! Exception, Exception(massage: "The number a6 does not match the size of UInt8."))
+            XCTAssertEqual(error as! Exception, Exception(massage: "The number a6 does not match the size of MatrixElement."))
         }
     }
     
@@ -88,7 +88,7 @@ final class MatrixWorkerTests: XCTestCase {
         }
     }
     
-    func testErrorUInt8CreateMatrix3x3() throws {
+    func testErrorMatrixElementCreateMatrix3x3() throws {
         // Arrange
         let matrix3x3 =
         """
@@ -101,7 +101,7 @@ final class MatrixWorkerTests: XCTestCase {
         
         // Assert
         XCTAssertThrowsError(try self.worker?.creationMatrix(text: matrix3x3)) { error in
-            XCTAssertEqual(error as! Exception, Exception(massage: "The number 512 does not match the size of UInt8."))
+            XCTAssertEqual(error as! Exception, Exception(massage: "The number 512 does not match the size of MatrixElement."))
         }
     }
     
@@ -116,7 +116,7 @@ final class MatrixWorkerTests: XCTestCase {
         14 11  4  7
         12  1  0 13
         """
-        let uint8Matrix4x4: Matrix =
+        let MatrixElementMatrix4x4: Matrix =
         [[8, 15, 6, 5],
         [ 2, 9, 3, 10],
         [14, 11, 4, 7],
@@ -126,7 +126,7 @@ final class MatrixWorkerTests: XCTestCase {
         let newMatrix4x4 = try self.worker?.creationMatrix(text: matrix4x4)
         
         // Assert
-        XCTAssertEqual(uint8Matrix4x4, newMatrix4x4)
+        XCTAssertEqual(MatrixElementMatrix4x4, newMatrix4x4)
     }
     
     func testCreateMatrix5x5() throws {
@@ -141,7 +141,7 @@ final class MatrixWorkerTests: XCTestCase {
          2 13 17 20 21
          7 10  5  8  9
         """
-        let uint8Matrix5x5: Matrix = [
+        let MatrixElementMatrix5x5: Matrix = [
             [22, 16, 19, 18, 12],
             [ 1,  3,  4, 14, 15],
             [ 6, 23,  0, 11, 24],
@@ -153,7 +153,7 @@ final class MatrixWorkerTests: XCTestCase {
         let newMatrix5x5 = try self.worker?.creationMatrix(text: matrix5x5)
         
         // Assert
-        XCTAssertEqual(uint8Matrix5x5, newMatrix5x5)
+        XCTAssertEqual(MatrixElementMatrix5x5, newMatrix5x5)
     }
     
     // MARK: Testing the filling of the board in a spiral.
@@ -161,7 +161,7 @@ final class MatrixWorkerTests: XCTestCase {
     func testFillBoardSpiral3x3() {
         // Arrange
         let size = 3
-        var matrix: Matrix = Array(repeating: Array(repeating: UInt8(), count: size), count: size)
+        var matrix: Matrix = Array(repeating: Array(repeating: MatrixElement(), count: size), count: size)
         
         // Act
         self.worker?.fillBoardInSpiral(matrix: &matrix)
@@ -177,7 +177,7 @@ final class MatrixWorkerTests: XCTestCase {
     func testFillBoardSpiral4x4() {
         // Arrange
         let size = 4
-        var matrix: Matrix = Array(repeating: Array(repeating: UInt8(), count: size), count: size)
+        var matrix: Matrix = Array(repeating: Array(repeating: MatrixElement(), count: size), count: size)
         
         // Act
         self.worker?.fillBoardInSpiral(matrix: &matrix)
@@ -196,7 +196,7 @@ final class MatrixWorkerTests: XCTestCase {
     func testFillBoardSpiral5x5() {
         // Arrange
         let size = 5
-        var matrix: Matrix = Array(repeating: Array(repeating: UInt8(), count: size), count: size)
+        var matrix: Matrix = Array(repeating: Array(repeating: MatrixElement(), count: size), count: size)
         
         // Act
         self.worker?.fillBoardInSpiral(matrix: &matrix)
@@ -262,5 +262,23 @@ final class MatrixWorkerTests: XCTestCase {
         XCTAssertEqual(matrix, matrixSpiral)
     }
     
+	// MARK: Test create matrix random
+	
+	func testCreateMatrixRandom() {
+		let matrixWorker = MatrixWorker()
+		for size in 3...15 {
+			// Act
+			let matrixOne = matrixWorker.createMatrixRandom(size: size)
+			let matrixTwo = matrixWorker.createMatrixRandom(size: size)
+			
+			let setOne = Set<MatrixElement>(matrixOne.flatMap({$0}))
+			let setTwo = Set<MatrixElement>(matrixTwo.flatMap({$0}))
+			
+			// Assert
+			XCTAssertEqual(setOne.count, size * size)
+			XCTAssertEqual(setTwo.count, size * size)
+			XCTAssertNotEqual(matrixOne, matrixTwo)
+		}
+	}
 
 }

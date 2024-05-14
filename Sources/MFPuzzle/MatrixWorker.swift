@@ -5,12 +5,15 @@
 //  Created by Михаил Фокин on 24.02.2024.
 //
 
-public typealias Matrix = [[UInt8]]
+public typealias Matrix = [[MatrixElement]]
+public typealias MatrixElement = UInt8
 
 public protocol _MatrixWorker {
     func creationMatrix(text: String) throws -> Matrix
     func fillBoardInSpiral(matrix: inout Matrix)
     func createMatrixSpiral(size: Int) -> Matrix
+	/// Создание матрицы случайных элементов размерности size
+    func createMatrixRandom(size: Int) -> Matrix
 }
 
 open class MatrixWorker: _MatrixWorker {
@@ -19,14 +22,14 @@ open class MatrixWorker: _MatrixWorker {
     
     /// Создание матрицы результата
     public func createMatrixSpiral(size: Int) -> Matrix {
-        var matrix = Array(repeating: Array(repeating: UInt8(0), count: size), count: size)
+        var matrix = Array(repeating: Array(repeating: MatrixElement(0), count: size), count: size)
         fillBoardInSpiral(matrix: &matrix)
         return matrix
     }
     
     /// Заполняет доску по спирали.
     public func fillBoardInSpiral(matrix: inout Matrix) {
-        var filler: UInt8 = 1
+        var filler: MatrixElement = 1
         let size = matrix.count
         for i in 0..<size {
             matrix[0][i] = filler
@@ -52,7 +55,7 @@ open class MatrixWorker: _MatrixWorker {
     }
     
     /// Заполняет внутренюю часть квадрата.
-    private func fillSquare(filler: UInt8, matrix: inout Matrix) {
+    private func fillSquare(filler: MatrixElement, matrix: inout Matrix) {
         let size = matrix.count
         var filler = filler
         let end = size * size
@@ -86,7 +89,7 @@ open class MatrixWorker: _MatrixWorker {
     public func creationMatrix(text: String) throws -> Matrix {
         let lines = text.split() { $0 == "\n" }.map{ String($0) }
         var size: Int?
-        var matrix = [[UInt8]]()
+        var matrix = [[MatrixElement]]()
         for line in lines {
             let data = getData(line: line)
             guard let words = try getWords(data: data) else { continue }
@@ -107,17 +110,30 @@ open class MatrixWorker: _MatrixWorker {
         }
         return matrix
     }
+	
+	public func createMatrixRandom(size: Int) -> Matrix {
+		var elements = (0...(size * size)).map({ MatrixElement($0) })
+		var matrix = Array(repeating: Array(repeating: MatrixElement(0), count: size), count: size)
+		for i in 0..<size {
+			for j in 0..<size {
+				let randomIndex = Int.random(in: 0..<elements.count)
+				let element = elements.remove(at: randomIndex)
+				matrix[i][j] = element
+			}
+		}
+		return matrix
+	}
     
     /// Создает на основе строки массив целочисленных элементов.
-    private func getWords(data: String) throws -> [UInt8]? {
+    private func getWords(data: String) throws -> [MatrixElement]? {
         let words = data.split() { $0 == " "}.map { String($0) }
         if words.isEmpty {
             return nil
         }
-        var numbers = [UInt8]()
+        var numbers = [MatrixElement]()
         for word in words {
-            guard let number = UInt8(word) else {
-                throw Exception(massage: "The number \(word) does not match the size of UInt8.")
+            guard let number = MatrixElement(word) else {
+                throw Exception(massage: "The number \(word) does not match the size of MatrixElement.")
             }
             numbers.append(number)
         }

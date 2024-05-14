@@ -28,7 +28,7 @@ enum Heuristic: String {
 	}
 	
 	/// Вычисляет эвристику на основе переданной функции-формулы.
-	private func getDistance(coordinats: [UInt8: GridPoint], coordinatsTarget: [UInt8: GridPoint], distance: (GridPoint, GridPoint) -> Int) -> Int {
+	private func getDistance(coordinats: [MatrixElement: GridPoint], coordinatsTarget: [MatrixElement: GridPoint], distance: (GridPoint, GridPoint) -> Int) -> Int {
 		var result = 0
 		for element in coordinats {
 			let targetCoordinats = coordinatsTarget[element.key]!

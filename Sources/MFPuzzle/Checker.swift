@@ -17,8 +17,8 @@ final class Checker: _Checker {
 	/// Производит проверку доски. Элементы должны быть уникальны.
 	func checkUniqueElementsMatrix(matrix: Matrix) -> Bool {
 		let arr = matrix.flatMap({$0})
-		let elementsMatrix = Set<UInt8>(arr)
-		var maxElem: UInt8 = 0
+		let elementsMatrix = Set<MatrixElement>(arr)
+		var maxElem: MatrixElement = 0
 		for elem in elementsMatrix {
 			if elem > maxElem { maxElem = elem }
 		}
@@ -41,7 +41,7 @@ final class Checker: _Checker {
 	/// Возвращает количество инвариантов.
 	func getSummInversion(matrix: Matrix) -> Int {
 		var summ = 0
-		var arry = [UInt8]()
+		var arry = [MatrixElement]()
 		for row in matrix {
 			for elem in row {
 				if elem != 0 {
