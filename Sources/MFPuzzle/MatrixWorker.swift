@@ -112,7 +112,7 @@ open class MatrixWorker: _MatrixWorker {
     }
 	
 	public func createMatrixRandom(size: Int) -> Matrix {
-		var elements = (0...(size * size)).map({ MatrixElement($0) })
+		var elements = (0..<(size * size)).map({ MatrixElement($0) })
 		var matrix = Array(repeating: Array(repeating: MatrixElement(0), count: size), count: size)
 		for i in 0..<size {
 			for j in 0..<size {

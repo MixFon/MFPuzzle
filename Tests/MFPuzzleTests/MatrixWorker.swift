@@ -267,6 +267,10 @@ final class MatrixWorkerTests: XCTestCase {
 	func testCreateMatrixRandom() {
 		let matrixWorker = MatrixWorker()
 		for size in 3...15 {
+			// Arrange
+			let n = size * size - 1
+			let summ = n * (n + 1) / 2
+			
 			// Act
 			let matrixOne = matrixWorker.createMatrixRandom(size: size)
 			let matrixTwo = matrixWorker.createMatrixRandom(size: size)
@@ -274,9 +278,14 @@ final class MatrixWorkerTests: XCTestCase {
 			let setOne = Set<MatrixElement>(matrixOne.flatMap({$0}))
 			let setTwo = Set<MatrixElement>(matrixTwo.flatMap({$0}))
 			
+			let summOne = setOne.reduce(0, {Int($0) + Int($1)})
+			let summTwo = setTwo.reduce(0, {Int($0) + Int($1)})
+			
 			// Assert
 			XCTAssertEqual(setOne.count, size * size)
 			XCTAssertEqual(setTwo.count, size * size)
+			XCTAssertEqual(summOne, summ)
+			XCTAssertEqual(summTwo, summ)
 			XCTAssertNotEqual(matrixOne, matrixTwo)
 		}
 	}
