@@ -14,6 +14,10 @@ public protocol _MatrixWorker {
     func createMatrixSpiral(size: Int) -> Matrix
 	/// Создание матрицы случайных элементов размерности size
     func createMatrixRandom(size: Int) -> Matrix
+	/// Изменяет четность инварианта. Меняет метами 2-е соседние ячеки
+	func changesParityInvariant(matrix: inout Matrix)
+	/// Определяет является ли матрица квадратной
+	func isSquereMatrix(matrix: [[MatrixElement]]) -> Bool
 }
 
 open class MatrixWorker: _MatrixWorker {
@@ -122,6 +126,27 @@ open class MatrixWorker: _MatrixWorker {
 			}
 		}
 		return matrix
+	}
+	
+	public func changesParityInvariant(matrix: inout Matrix) {
+		if matrix.count < 3 { return }
+		if !isSquereMatrix(matrix: matrix) { return }
+		if matrix[0][0] != 0 && matrix[1][0] != 0 {
+			(matrix[0][0], matrix[1][0]) = (matrix[1][0], matrix[0][0])
+		} else {
+			(matrix[1][1], matrix[2][1]) = (matrix[2][1], matrix[1][1])
+		}
+	}
+	
+	public func isSquereMatrix(matrix: [[MatrixElement]]) -> Bool {
+		if matrix.isEmpty { return false}
+		let count = matrix.count
+		for row in matrix {
+			if row.count != count {
+				return false
+			}
+		}
+		return true
 	}
     
     /// Создает на основе строки массив целочисленных элементов.

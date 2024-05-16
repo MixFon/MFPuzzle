@@ -7,15 +7,17 @@
 
 import Foundation
 
-protocol _Checker {
+public protocol _Checker {
 	func checkUniqueElementsMatrix(matrix: Matrix) -> Bool
 	func checkSolution(matrix: Matrix, matrixTarget: Matrix) -> Bool
 }
 
-final class Checker: _Checker {
+open class Checker: _Checker {
+	
+	public init() { }
 	
 	/// Производит проверку доски. Элементы должны быть уникальны.
-	func checkUniqueElementsMatrix(matrix: Matrix) -> Bool {
+	public func checkUniqueElementsMatrix(matrix: Matrix) -> Bool {
 		let arr = matrix.flatMap({$0})
 		let elementsMatrix = Set<MatrixElement>(arr)
 		var maxElem: MatrixElement = 0
@@ -26,7 +28,7 @@ final class Checker: _Checker {
 	}
 	
 	/// Проверяет существет ли решение головоломки.
-	func checkSolution(matrix: Matrix, matrixTarget: Matrix) -> Bool {
+	public func checkSolution(matrix: Matrix, matrixTarget: Matrix) -> Bool {
 		let summa = getSummInversion(matrix: matrix)
 		let summaTarget = getSummInversion(matrix: matrixTarget)
 		let coordinateZeroBoard = getCoordinateXZero(matrix: matrix)! + summa + 1

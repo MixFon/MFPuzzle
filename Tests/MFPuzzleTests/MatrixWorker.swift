@@ -289,5 +289,49 @@ final class MatrixWorkerTests: XCTestCase {
 			XCTAssertNotEqual(matrixOne, matrixTwo)
 		}
 	}
+	
+	func testIsSquereMatrix() {
+		// Arrange
+		let matrixWorker = MatrixWorker()
+		let matrix1: [[MatrixElement]] = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+		let matrix2: [[MatrixElement]] = [[1, 2, 3], [4, 5], [7, 8, 9]]
+		let matrix3: [[MatrixElement]] = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
+		let matrix4: [[MatrixElement]] = [[]]
+		
+		// Act
+		let result1 = matrixWorker.isSquereMatrix(matrix: matrix1)
+		let result2 = matrixWorker.isSquereMatrix(matrix: matrix2)
+		let result3 = matrixWorker.isSquereMatrix(matrix: matrix3)
+		let result4 = matrixWorker.isSquereMatrix(matrix: matrix4)
+		
+		// Assert
+		XCTAssertEqual(result1, true)
+		XCTAssertEqual(result2, false)
+		XCTAssertEqual(result3, false)
+		XCTAssertEqual(result4, false)
+	}
+	
+	func testChangesParityInvariant() {
+		// Arrange
+		let matrixWorker = MatrixWorker()
+		var matrix1: [[MatrixElement]] = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+		var matrix2: [[MatrixElement]] = [[0, 2, 3], [4, 5, 6], [7, 8, 9]]
+		var matrix3: [[MatrixElement]] = [[1, 2, 3], [0, 5, 6], [7, 8, 9]]
+		
+		// Act
+		matrixWorker.changesParityInvariant(matrix: &matrix1)
+		matrixWorker.changesParityInvariant(matrix: &matrix2)
+		matrixWorker.changesParityInvariant(matrix: &matrix3)
+		
+		// Assert
+		XCTAssertEqual(matrix1[0][0], 4)
+		XCTAssertEqual(matrix1[1][0], 1)
+		
+		XCTAssertEqual(matrix2[1][1], 8)
+		XCTAssertEqual(matrix2[2][1], 5)
+		
+		XCTAssertEqual(matrix3[1][1], 8)
+		XCTAssertEqual(matrix3[2][1], 5)
+	}
 
 }
