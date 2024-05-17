@@ -11,7 +11,12 @@ public typealias MatrixElement = UInt8
 public protocol _MatrixWorker {
     func creationMatrix(text: String) throws -> Matrix
     func fillBoardInSpiral(matrix: inout Matrix)
-    func createMatrixSpiral(size: Int) -> Matrix
+	/// Создание классической игры. Каждый ряд начинается слева
+    func createMatrixClassic(size: Int) -> Matrix
+	/// Создание матрицы улиткой, по спирали
+    func createMatrixSnail(size: Int) -> Matrix
+	/// Создание S-образной матрицы
+    func createMatrixSnake(size: Int) -> Matrix
 	/// Создание матрицы случайных элементов размерности size
     func createMatrixRandom(size: Int) -> Matrix
 	/// Изменяет четность инварианта. Меняет метами 2-е соседние ячеки
@@ -25,7 +30,7 @@ open class MatrixWorker: _MatrixWorker {
     public init() { }
     
     /// Создание матрицы результата
-    public func createMatrixSpiral(size: Int) -> Matrix {
+    public func createMatrixSnail(size: Int) -> Matrix {
         var matrix = Array(repeating: Array(repeating: MatrixElement(0), count: size), count: size)
         fillBoardInSpiral(matrix: &matrix)
         return matrix
@@ -147,6 +152,34 @@ open class MatrixWorker: _MatrixWorker {
 			}
 		}
 		return true
+	}
+	
+	public func createMatrixClassic(size: Int) -> Matrix {
+		var matrix = Array(repeating: Array(repeating: MatrixElement(0), count: size), count: size)
+		var elem: MatrixElement = 1
+		for i in 0..<size {
+			for j in 0..<size {
+				matrix[i][j] = elem
+				elem += 1
+			}
+		}
+		matrix[size - 1][size - 1] = 0
+		return matrix
+	}
+	
+	public func createMatrixSnake(size: Int) -> Matrix {
+		var matrix = Array(repeating: Array(repeating: MatrixElement(0), count: size), count: size)
+		var elem: MatrixElement = 1
+		for i in 0..<size {
+			for j in 0..<size {
+				let k = i % 2 == 0 ? j : size - j - 1
+				matrix[i][k] = elem
+				elem += 1
+			}
+		}
+		let k = size % 2 == 0 ? 0 : size - 1
+		matrix[size - 1][k] = 0
+		return matrix
 	}
     
     /// Создает на основе строки массив целочисленных элементов.

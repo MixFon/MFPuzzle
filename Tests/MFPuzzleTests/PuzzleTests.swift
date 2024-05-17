@@ -41,7 +41,7 @@ final class PuzzleTest: XCTestCase {
 		let newGrid = Grid(matrix: newMatrix)
 		let startBoard = Board(grid: newGrid)
 		
-		let targetMatrix = worker.createMatrixSpiral(size: size)
+		let targetMatrix = worker.createMatrixSnail(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
 		
@@ -72,7 +72,7 @@ final class PuzzleTest: XCTestCase {
 		let newGrid = Grid(matrix: newMatrix)
 		let startBoard = Board(grid: newGrid)
 		
-		let targetMatrix = worker.createMatrixSpiral(size: size)
+		let targetMatrix = worker.createMatrixSnail(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
 		
@@ -103,7 +103,7 @@ final class PuzzleTest: XCTestCase {
 		let newGrid = Grid(matrix: newMatrix)
 		let startBoard = Board(grid: newGrid)
 		
-		let targetMatrix = worker.createMatrixSpiral(size: size)
+		let targetMatrix = worker.createMatrixSnail(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
 		
@@ -135,7 +135,7 @@ final class PuzzleTest: XCTestCase {
 		let newGrid = Grid(matrix: newMatrix)
 		let startBoard = Board(grid: newGrid)
 		
-		let targetMatrix = worker.createMatrixSpiral(size: size)
+		let targetMatrix = worker.createMatrixSnail(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
 		
@@ -169,7 +169,7 @@ final class PuzzleTest: XCTestCase {
 		let newGrid = Grid(matrix: newMatrix)
 		let startBoard = Board(grid: newGrid)
 		
-		let targetMatrix = worker.createMatrixSpiral(size: size)
+		let targetMatrix = worker.createMatrixSnail(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
 		
@@ -198,7 +198,7 @@ final class PuzzleTest: XCTestCase {
 		let newGrid = Grid(matrix: newMatrix)
 		let startBoard = Board(grid: newGrid)
 		
-		let targetMatrix = worker.createMatrixSpiral(size: size)
+		let targetMatrix = worker.createMatrixSnail(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
 		
@@ -231,7 +231,7 @@ final class PuzzleTest: XCTestCase {
 		let newGrid = Grid(matrix: newMatrix)
 		let startBoard = Board(grid: newGrid)
 		
-		let targetMatrix = worker.createMatrixSpiral(size: size)
+		let targetMatrix = worker.createMatrixSnail(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
 		
@@ -266,7 +266,7 @@ final class PuzzleTest: XCTestCase {
 		let newGrid = Grid(matrix: newMatrix)
 		let startBoard = Board(grid: newGrid)
 		
-		let targetMatrix = worker.createMatrixSpiral(size: size)
+		let targetMatrix = worker.createMatrixSnail(size: size)
 		let gridTarget = Grid(matrix: targetMatrix)
 		let targetBoard = Board(grid: gridTarget)
 		
