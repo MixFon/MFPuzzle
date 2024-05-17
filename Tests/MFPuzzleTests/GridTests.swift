@@ -25,10 +25,10 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		let board = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix)
 		
 		// Act
-		let neighbors = board.getNeighbors(number: 0)
+		let neighbors = grid.getNeighbors(number: 0)
 		
 		// Assert
 		XCTAssertNotNil(neighbors)
@@ -46,10 +46,10 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [0,  11, 15,  6],
 		 [10,  9,  8,  7]]
-		let board = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix)
 		
 		// Act
-		let neighbors = board.getNeighbors(number: 0)
+		let neighbors = grid.getNeighbors(number: 0)
 		
 		// Assert
 		XCTAssertNotNil(neighbors)
@@ -67,10 +67,10 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  6, 15,  0],
 		 [10,  9,  8,  7]]
-		let board = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix)
 		
 		// Act
-		let neighbors = board.getNeighbors(number: 0)
+		let neighbors = grid.getNeighbors(number: 0)
 		
 		// Assert
 		XCTAssertNotNil(neighbors)
@@ -87,10 +87,10 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  2, 15,  6],
 		 [10,  9,  8,  7]]
-		let board = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix)
 		
 		// Act
-		let neighbors = board.getNeighbors(number: 0)
+		let neighbors = grid.getNeighbors(number: 0)
 		
 		// Assert
 		XCTAssertNotNil(neighbors)
@@ -107,10 +107,10 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  9, 15,  6],
 		 [10,  0,  8,  7]]
-		let board = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix)
 		
 		// Act
-		let neighbors = board.getNeighbors(number: 0)
+		let neighbors = grid.getNeighbors(number: 0)
 		
 		// Assert
 		XCTAssertNotNil(neighbors)
@@ -127,10 +127,10 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  1, 15,  6],
 		 [10,  9,  8,  7]]
-		let board = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix)
 		
 		// Act
-		let neighbors = board.getNeighbors(number: 0)
+		let neighbors = grid.getNeighbors(number: 0)
 		
 		// Assert
 		XCTAssertNotNil(neighbors)
@@ -146,10 +146,10 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  4, 15,  6],
 		 [10,  9,  8,  7]]
-		let board = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix)
 		
 		// Act
-		let neighbors = board.getNeighbors(number: 0)
+		let neighbors = grid.getNeighbors(number: 0)
 		
 		// Assert
 		XCTAssertNotNil(neighbors)
@@ -165,10 +165,10 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  7, 15,  6],
 		 [10,  9,  8,  0]]
-		let board = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix)
 		
 		// Act
-		let neighbors = board.getNeighbors(number: 0)
+		let neighbors = grid.getNeighbors(number: 0)
 		
 		// Assert
 		XCTAssertNotNil(neighbors)
@@ -184,10 +184,10 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11, 10, 15,  6],
 		 [ 0,  9,  8,  7]]
-		let board = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix)
 		
 		// Act
-		let neighbors = board.getNeighbors(number: 0)
+		let neighbors = grid.getNeighbors(number: 0)
 		
 		// Assert
 		XCTAssertNotNil(neighbors)
@@ -203,10 +203,10 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11, 10, 15,  6],
 		 [16,  9,  8,  7]]
-		let board = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix)
 		
 		// Act
-		let neighbors = board.getNeighbors(number: 0)
+		let neighbors = grid.getNeighbors(number: 0)
 		
 		// Assert
 		XCTAssertNil(neighbors)
@@ -219,25 +219,63 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11, 10, 15,  6],
 		 [16,  9,  8,  7]]
-		let board = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix)
 		
 		// Act
 		
 		// Assert
-		XCTAssertEqual(board.isNeighbors(one: 1, two: 2), true)
-		XCTAssertEqual(board.isNeighbors(one: 3, two: 14), true)
-		XCTAssertEqual(board.isNeighbors(one: 10, two: 11), true)
-		XCTAssertEqual(board.isNeighbors(one: 7, two: 6), true)
+		XCTAssertEqual(grid.isNeighbors(one: 1, two: 2), true)
+		XCTAssertEqual(grid.isNeighbors(one: 3, two: 14), true)
+		XCTAssertEqual(grid.isNeighbors(one: 10, two: 11), true)
+		XCTAssertEqual(grid.isNeighbors(one: 7, two: 6), true)
 		
-		XCTAssertEqual(board.isNeighbors(one: 7, two: 4), false)
-		XCTAssertEqual(board.isNeighbors(one: 9, two: 15), false)
-		XCTAssertEqual(board.isNeighbors(one: 16, two: 12), false)
-		XCTAssertEqual(board.isNeighbors(one: 13, two: 6), false)
+		XCTAssertEqual(grid.isNeighbors(one: 7, two: 4), false)
+		XCTAssertEqual(grid.isNeighbors(one: 9, two: 15), false)
+		XCTAssertEqual(grid.isNeighbors(one: 16, two: 12), false)
+		XCTAssertEqual(grid.isNeighbors(one: 13, two: 6), false)
 		
-		XCTAssertNil(board.isNeighbors(one: 1, two: 17))
-		XCTAssertNil(board.isNeighbors(one: 3, two: 18))
-		XCTAssertNil(board.isNeighbors(one: 9, two: 19))
-		XCTAssertNil(board.isNeighbors(one: 10, two: 20))
+		XCTAssertNil(grid.isNeighbors(one: 1, two: 17))
+		XCTAssertNil(grid.isNeighbors(one: 3, two: 18))
+		XCTAssertNil(grid.isNeighbors(one: 9, two: 19))
+		XCTAssertNil(grid.isNeighbors(one: 10, two: 20))
+	}
+	
+	func testSwapNumberNotSwap() {
+		// Arrange
+		let matrix: Matrix =
+		[[ 1,  2,  3,  4],
+		 [12, 13, 14,  5],
+		 [11, 10, 15,  6],
+		 [16,  9,  8,  7]]
+		let grid = Grid(matrix: matrix)
+		
+		// Act
+		grid.swapNumber(number: 2)
+		grid.swapNumber(number: 21)
+		
+		// Assert
+		XCTAssertEqual(matrix, grid.matrix)
+	}
+	
+	func testSwapNumber() {
+		// Arrange
+		let matrix: Matrix =
+		[[ 1,  2,  3,  4],
+		 [12, 13, 14,  5],
+		 [11, 10, 15,  6],
+		 [ 0,  9,  8,  7]]
+		let grid = Grid(matrix: matrix)
+		
+		// Assert
+		grid.swapNumber(number: 2)
+		XCTAssertEqual(grid.matrix[0][1], 0)
+		XCTAssertEqual(grid.matrix[3][0], 2)
+		
+		grid.swapNumber(number: 14)
+		XCTAssertEqual(grid.matrix[3][0], 2)
+		XCTAssertEqual(grid.matrix[1][2], 0)
+		XCTAssertEqual(grid.matrix[0][1], 14)
+		
 	}
 
 }
