@@ -297,18 +297,21 @@ final class MatrixWorkerTests: XCTestCase {
 		let matrix2: [[MatrixElement]] = [[1, 2, 3], [4, 5], [7, 8, 9]]
 		let matrix3: [[MatrixElement]] = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
 		let matrix4: [[MatrixElement]] = [[]]
+		let matrix5: [[MatrixElement]] = []
 		
 		// Act
 		let result1 = matrixWorker.isSquereMatrix(matrix: matrix1)
 		let result2 = matrixWorker.isSquereMatrix(matrix: matrix2)
 		let result3 = matrixWorker.isSquereMatrix(matrix: matrix3)
 		let result4 = matrixWorker.isSquereMatrix(matrix: matrix4)
+		let result5 = matrixWorker.isSquereMatrix(matrix: matrix5)
 		
 		// Assert
 		XCTAssertEqual(result1, true)
 		XCTAssertEqual(result2, false)
 		XCTAssertEqual(result3, false)
 		XCTAssertEqual(result4, false)
+		XCTAssertEqual(result5, false)
 	}
 	
 	func testChangesParityInvariant() {
@@ -317,11 +320,17 @@ final class MatrixWorkerTests: XCTestCase {
 		var matrix1: [[MatrixElement]] = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 		var matrix2: [[MatrixElement]] = [[0, 2, 3], [4, 5, 6], [7, 8, 9]]
 		var matrix3: [[MatrixElement]] = [[1, 2, 3], [0, 5, 6], [7, 8, 9]]
+		var matrix4: [[MatrixElement]] = []
+		var matrix5: [[MatrixElement]] = [[1, 2, 3], [0, 5, 6]]
+		var matrix6: [[MatrixElement]] = [[1, 2, 3], [0, 5, 6], [7, 8, 9], [7, 8, 9]]
 		
 		// Act
 		matrixWorker.changesParityInvariant(matrix: &matrix1)
 		matrixWorker.changesParityInvariant(matrix: &matrix2)
 		matrixWorker.changesParityInvariant(matrix: &matrix3)
+		matrixWorker.changesParityInvariant(matrix: &matrix4)
+		matrixWorker.changesParityInvariant(matrix: &matrix5)
+		matrixWorker.changesParityInvariant(matrix: &matrix6)
 		
 		// Assert
 		XCTAssertEqual(matrix1[0][0], 4)
@@ -332,6 +341,14 @@ final class MatrixWorkerTests: XCTestCase {
 		
 		XCTAssertEqual(matrix3[1][1], 8)
 		XCTAssertEqual(matrix3[2][1], 5)
+		
+		XCTAssertEqual(matrix4.isEmpty, true)
+		
+		XCTAssertEqual(matrix5[0][0], 1)
+		XCTAssertEqual(matrix5[1][0], 0)
+		
+		XCTAssertEqual(matrix5[0][0], 1)
+		XCTAssertEqual(matrix5[1][0], 0)
 	}
 
 }

@@ -139,7 +139,7 @@ open class MatrixWorker: _MatrixWorker {
 	}
 	
 	public func isSquereMatrix(matrix: [[MatrixElement]]) -> Bool {
-		if matrix.isEmpty { return false}
+		if matrix.isEmpty { return false }
 		let count = matrix.count
 		for row in matrix {
 			if row.count != count {
