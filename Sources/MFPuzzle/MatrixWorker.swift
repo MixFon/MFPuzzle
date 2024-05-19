@@ -22,7 +22,7 @@ public protocol _MatrixWorker {
 	/// Изменяет четность инварианта. Меняет метами 2-е соседние ячеки
 	func changesParityInvariant(matrix: inout Matrix)
 	/// Создание классической игры. Каждый ряд начинается слева
-    func createMatrixBoustrophedon(size: Int) -> Matrix
+    func createMatrixClassic(size: Int) -> Matrix
 }
 
 open class MatrixWorker: _MatrixWorker {
@@ -154,7 +154,7 @@ open class MatrixWorker: _MatrixWorker {
 		return true
 	}
 	
-	public func createMatrixBoustrophedon(size: Int) -> Matrix {
+	public func createMatrixClassic(size: Int) -> Matrix {
 		var matrix = Array(repeating: Array(repeating: MatrixElement(0), count: size), count: size)
 		var elem: MatrixElement = 1
 		for i in 0..<size {

@@ -259,6 +259,23 @@ final class CheckerTest: XCTestCase {
 		// Assert
 		XCTAssertNil(zeroX)
 	}
+	
+	/// Проверка что все три случая могут переходить один в доругой
+	func testCheckSolutionIn3Type() {
+		// Arrange
+		let worker = MatrixWorker()
+		let checker = Checker()
+		
+		// Act
+		let boustrophedon = worker.createMatrixClassic(size: 3)
+		let snake = worker.createMatrixSnake(size: 3)
+		let snail = worker.createMatrixSnail(size: 3)
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: boustrophedon, matrixTarget: snail), false)
+		XCTAssertEqual(checker.checkSolution(matrix: boustrophedon, matrixTarget: snake), false)
+		XCTAssertEqual(checker.checkSolution(matrix: snake, matrixTarget: snail), true)
+	}
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
