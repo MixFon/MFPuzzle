@@ -10,9 +10,9 @@ public typealias MatrixElement = UInt8
 
 public protocol _MatrixWorker {
     func creationMatrix(text: String) throws -> Matrix
+	/// Определяет является ли матрица квадратной
+	func isSquereMatrix(matrix: [[MatrixElement]]) -> Bool
     func fillBoardInSpiral(matrix: inout Matrix)
-	/// Создание классической игры. Каждый ряд начинается слева
-    func createMatrixClassic(size: Int) -> Matrix
 	/// Создание матрицы улиткой, по спирали
     func createMatrixSnail(size: Int) -> Matrix
 	/// Создание S-образной матрицы
@@ -21,8 +21,8 @@ public protocol _MatrixWorker {
     func createMatrixRandom(size: Int) -> Matrix
 	/// Изменяет четность инварианта. Меняет метами 2-е соседние ячеки
 	func changesParityInvariant(matrix: inout Matrix)
-	/// Определяет является ли матрица квадратной
-	func isSquereMatrix(matrix: [[MatrixElement]]) -> Bool
+	/// Создание классической игры. Каждый ряд начинается слева
+    func createMatrixBoustrophedon(size: Int) -> Matrix
 }
 
 open class MatrixWorker: _MatrixWorker {
@@ -154,7 +154,7 @@ open class MatrixWorker: _MatrixWorker {
 		return true
 	}
 	
-	public func createMatrixClassic(size: Int) -> Matrix {
+	public func createMatrixBoustrophedon(size: Int) -> Matrix {
 		var matrix = Array(repeating: Array(repeating: MatrixElement(0), count: size), count: size)
 		var elem: MatrixElement = 1
 		for i in 0..<size {

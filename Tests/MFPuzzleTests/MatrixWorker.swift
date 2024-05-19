@@ -360,7 +360,7 @@ final class MatrixWorkerTests: XCTestCase {
 		 [7, 8, 0]]
 		
 		// Act
-		let matrixClassic = self.worker?.createMatrixClassic(size: size)
+		let matrixClassic = self.worker?.createMatrixBoustrophedon(size: size)
 		
 		// Assert
 		XCTAssertEqual(matrix, matrixClassic)
@@ -376,7 +376,7 @@ final class MatrixWorkerTests: XCTestCase {
 		 [13, 14, 15,  0]]
 		
 		// Act
-		let matrixClassic = self.worker?.createMatrixClassic(size: size)
+		let matrixClassic = self.worker?.createMatrixBoustrophedon(size: size)
 		
 		// Assert
 		XCTAssertEqual(matrix, matrixClassic)
@@ -393,7 +393,7 @@ final class MatrixWorkerTests: XCTestCase {
 		 [21, 22, 23, 24,  0]]
 		
 		// Act
-		let matrixClassic = self.worker?.createMatrixClassic(size: size)
+		let matrixClassic = self.worker?.createMatrixBoustrophedon(size: size)
 		
 		// Assert
 		XCTAssertEqual(matrix, matrixClassic)
@@ -418,9 +418,9 @@ final class MatrixWorkerTests: XCTestCase {
 		 [21, 22, 23, 24,  0]]
 		
 		// Act
-		let matrixClassic3x3 = self.worker?.createMatrixClassic(size: 3)
-		let matrixClassic4x4 = self.worker?.createMatrixClassic(size: 4)
-		let matrixClassic5x5 = self.worker?.createMatrixClassic(size: 5)
+		let matrixClassic3x3 = self.worker?.createMatrixBoustrophedon(size: 3)
+		let matrixClassic4x4 = self.worker?.createMatrixBoustrophedon(size: 4)
+		let matrixClassic5x5 = self.worker?.createMatrixBoustrophedon(size: 5)
 		
 		// Assert
 		XCTAssertEqual(matrix3x3, matrixClassic3x3)
