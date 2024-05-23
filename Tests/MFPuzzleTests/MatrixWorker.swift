@@ -433,7 +433,7 @@ final class MatrixWorkerTests: XCTestCase {
 		XCTAssertNotEqual(matrix4x4, matrixClassic5x5)
 	}
 	
-	func testCreateMatrixSnake3x3() {
+	func testCreateMatrixBoustrophedon3x3() {
 		// Arrange
 		let size = 3
 		let matrix: Matrix =
@@ -442,13 +442,13 @@ final class MatrixWorkerTests: XCTestCase {
 		 [7, 8, 0]]
 		
 		// Act
-		let matrixSnake = self.worker?.createMatrixSnake(size: size)
+		let matrixSnake = self.worker?.createMatrixBoustrophedon(size: size)
 		
 		// Assert
 		XCTAssertEqual(matrix, matrixSnake)
 	}
 
-	func testCreateMatrixSnake4x4() {
+	func testCreateMatrixBoustrophedon4x4() {
 		// Arrange
 		let size = 4
 		let matrix: Matrix =
@@ -458,13 +458,13 @@ final class MatrixWorkerTests: XCTestCase {
 		 [ 0, 15, 14,  13]]
 		
 		// Act
-		let matrixSnake = self.worker?.createMatrixSnake(size: size)
+		let matrixSnake = self.worker?.createMatrixBoustrophedon(size: size)
 		
 		// Assert
 		XCTAssertEqual(matrix, matrixSnake)
 	}
 	
-	func testCreateMatrixSnake5x5() {
+	func testCreateMatrixBoustrophedon5x5() {
 		// Arrange
 		let size = 5
 		let matrix: Matrix =
@@ -475,13 +475,13 @@ final class MatrixWorkerTests: XCTestCase {
 		 [21, 22, 23, 24,  0]]
 		
 		// Act
-		let matrixSnake = self.worker?.createMatrixSnake(size: size)
+		let matrixSnake = self.worker?.createMatrixBoustrophedon(size: size)
 		
 		// Assert
 		XCTAssertEqual(matrix, matrixSnake)
 	}
 	
-	func testCreateMatrixSnakeNotEquel() {
+	func testCreateMatrixBoustrophedonNotEquel() {
 		// Arrange
 		let matrix3x3: Matrix =
 		[[1, 2, 3],
@@ -500,9 +500,9 @@ final class MatrixWorkerTests: XCTestCase {
 		 [21, 22, 23, 24,  0]]
 		
 		// Act
-		let matrixSnake3x3 = self.worker?.createMatrixSnake(size: 3)
-		let matrixSnake4x4 = self.worker?.createMatrixSnake(size: 4)
-		let matrixSnake5x5 = self.worker?.createMatrixSnake(size: 5)
+		let matrixSnake3x3 = self.worker?.createMatrixBoustrophedon(size: 3)
+		let matrixSnake4x4 = self.worker?.createMatrixBoustrophedon(size: 4)
+		let matrixSnake5x5 = self.worker?.createMatrixBoustrophedon(size: 5)
 		
 		// Assert
 		XCTAssertEqual(matrix3x3, matrixSnake3x3)

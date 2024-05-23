@@ -268,7 +268,7 @@ final class CheckerTest: XCTestCase {
 		
 		// Act
 		let boustrophedon = worker.createMatrixClassic(size: 3)
-		let snake = worker.createMatrixSnake(size: 3)
+		let snake = worker.createMatrixBoustrophedon(size: 3)
 		let snail = worker.createMatrixSnail(size: 3)
 		
 		// Assert

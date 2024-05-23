@@ -12,17 +12,18 @@ public protocol _MatrixWorker {
     func creationMatrix(text: String) throws -> Matrix
 	/// Определяет является ли матрица квадратной
 	func isSquereMatrix(matrix: [[MatrixElement]]) -> Bool
+	/// Заполнение матрицы по спирали
     func fillBoardInSpiral(matrix: inout Matrix)
 	/// Создание матрицы улиткой, по спирали
     func createMatrixSnail(size: Int) -> Matrix
-	/// Создание S-образной матрицы
-    func createMatrixSnake(size: Int) -> Matrix
 	/// Создание матрицы случайных элементов размерности size
     func createMatrixRandom(size: Int) -> Matrix
-	/// Изменяет четность инварианта. Меняет метами 2-е соседние ячеки
-	func changesParityInvariant(matrix: inout Matrix)
 	/// Создание классической игры. Каждый ряд начинается слева
     func createMatrixClassic(size: Int) -> Matrix
+	/// Изменяет четность инварианта. Меняет метами 2-е соседние ячеки
+	func changesParityInvariant(matrix: inout Matrix)
+	/// Создание S-образной матрицы
+    func createMatrixBoustrophedon(size: Int) -> Matrix
 }
 
 open class MatrixWorker: _MatrixWorker {
@@ -167,7 +168,7 @@ open class MatrixWorker: _MatrixWorker {
 		return matrix
 	}
 	
-	public func createMatrixSnake(size: Int) -> Matrix {
+	public func createMatrixBoustrophedon(size: Int) -> Matrix {
 		var matrix = Array(repeating: Array(repeating: MatrixElement(0), count: size), count: size)
 		var elem: MatrixElement = 1
 		for i in 0..<size {
