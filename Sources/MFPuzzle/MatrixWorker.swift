@@ -10,8 +10,6 @@ public typealias MatrixElement = UInt8
 
 public protocol _MatrixWorker {
     func creationMatrix(text: String) throws -> Matrix
-	/// Определяет является ли матрица квадратной
-	func isSquereMatrix(matrix: [[MatrixElement]]) -> Bool
 	/// Заполнение матрицы по спирали
     func fillBoardInSpiral(matrix: inout Matrix)
 	/// Создание матрицы улиткой, по спирали
@@ -27,8 +25,12 @@ public protocol _MatrixWorker {
 }
 
 open class MatrixWorker: _MatrixWorker {
+	
+	private let checker: _Checker
     
-    public init() { }
+	public init(checker: _Checker) {
+		self.checker = checker
+	}
     
     /// Создание матрицы результата
     public func createMatrixSnail(size: Int) -> Matrix {
@@ -136,23 +138,12 @@ open class MatrixWorker: _MatrixWorker {
 	
 	public func changesParityInvariant(matrix: inout Matrix) {
 		if matrix.count < 3 { return }
-		if !isSquereMatrix(matrix: matrix) { return }
+		if !self.checker.isSquereMatrix(matrix: matrix) { return }
 		if matrix[0][0] != 0 && matrix[1][0] != 0 {
 			(matrix[0][0], matrix[1][0]) = (matrix[1][0], matrix[0][0])
 		} else {
 			(matrix[1][1], matrix[2][1]) = (matrix[2][1], matrix[1][1])
 		}
-	}
-	
-	public func isSquereMatrix(matrix: [[MatrixElement]]) -> Bool {
-		if matrix.isEmpty { return false }
-		let count = matrix.count
-		for row in matrix {
-			if row.count != count {
-				return false
-			}
-		}
-		return true
 	}
 	
 	public func createMatrixClassic(size: Int) -> Matrix {

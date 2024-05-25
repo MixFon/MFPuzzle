@@ -9,6 +9,8 @@ import Foundation
 
 public protocol _Checker {
 	func checkUniqueElementsMatrix(matrix: Matrix) -> Bool
+	/// Определяет является ли матрица квадратной
+	func isSquereMatrix(matrix: Matrix) -> Bool
 	func checkSolution(matrix: Matrix, matrixTarget: Matrix) -> Bool
 }
 
@@ -38,6 +40,17 @@ open class Checker: _Checker {
 		} else {
 			return summa % 2 == summaTarget % 2
 		}
+	}
+	
+	public func isSquereMatrix(matrix: Matrix) -> Bool {
+		if matrix.isEmpty { return false }
+		let count = matrix.count
+		for row in matrix {
+			if row.count != count {
+				return false
+			}
+		}
+		return true
 	}
 	
 	/// Возвращает количество инвариантов.

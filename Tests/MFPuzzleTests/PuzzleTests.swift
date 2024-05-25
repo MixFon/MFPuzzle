@@ -35,7 +35,8 @@ final class PuzzleTest: XCTestCase {
 		1 6 4
 		8 7 5
 		"""
-		let worker = MatrixWorker()
+		let checker = Checker()
+		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid(matrix: newMatrix)
@@ -66,7 +67,8 @@ final class PuzzleTest: XCTestCase {
 		8 7 5
 		6 4 1
 		"""
-		let worker = MatrixWorker()
+		let checker = Checker()
+		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid(matrix: newMatrix)
@@ -97,7 +99,8 @@ final class PuzzleTest: XCTestCase {
 		5 8 4
 		3 1 0
 		"""
-		let worker = MatrixWorker()
+		let checker = Checker()
+		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid(matrix: newMatrix)
@@ -129,7 +132,8 @@ final class PuzzleTest: XCTestCase {
 		12 10 13  3
 		15  5  0  7
 		"""
-		let worker = MatrixWorker()
+		let checker = Checker()
+		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid(matrix: newMatrix)
@@ -163,7 +167,8 @@ final class PuzzleTest: XCTestCase {
 		 8  6 16  5  4
 		23  3 20 21 19
 		"""
-		let worker = MatrixWorker()
+		let checker = Checker()
+		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid(matrix: newMatrix)
@@ -192,7 +197,8 @@ final class PuzzleTest: XCTestCase {
 		5 8 4
 		3 1 0
 		"""
-		let worker = MatrixWorker()
+		let checker = Checker()
+		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid(matrix: newMatrix)
@@ -225,7 +231,8 @@ final class PuzzleTest: XCTestCase {
 		0  5  3  9
 		"""
 		
-		let worker = MatrixWorker()
+		let checker = Checker()
+		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid(matrix: newMatrix)
@@ -260,7 +267,8 @@ final class PuzzleTest: XCTestCase {
 		18  6  7  0 16
 		15 11 24 13 19
 		"""
-		let worker = MatrixWorker()
+		let checker = Checker()
+		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid(matrix: newMatrix)

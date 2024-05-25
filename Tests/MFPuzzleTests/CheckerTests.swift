@@ -263,9 +263,9 @@ final class CheckerTest: XCTestCase {
 	/// Проверка что все три случая могут переходить один в доругой
 	func testCheckSolutionIn3Type() {
 		// Arrange
-		let worker = MatrixWorker()
 		let checker = Checker()
-		
+		let worker = MatrixWorker(checker: checker)
+
 		// Act
 		let boustrophedon = worker.createMatrixClassic(size: 3)
 		let snake = worker.createMatrixBoustrophedon(size: 3)
@@ -275,6 +275,31 @@ final class CheckerTest: XCTestCase {
 		XCTAssertEqual(checker.checkSolution(matrix: boustrophedon, matrixTarget: snail), false)
 		XCTAssertEqual(checker.checkSolution(matrix: boustrophedon, matrixTarget: snake), false)
 		XCTAssertEqual(checker.checkSolution(matrix: snake, matrixTarget: snail), true)
+	}
+	
+	
+	func testIsSquereMatrix() {
+		// Arrange
+		let checker = Checker()
+		let matrix1: [[MatrixElement]] = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+		let matrix2: [[MatrixElement]] = [[1, 2, 3], [4, 5], [7, 8, 9]]
+		let matrix3: [[MatrixElement]] = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
+		let matrix4: [[MatrixElement]] = [[]]
+		let matrix5: [[MatrixElement]] = []
+		
+		// Act
+		let result1 = checker.isSquereMatrix(matrix: matrix1)
+		let result2 = checker.isSquereMatrix(matrix: matrix2)
+		let result3 = checker.isSquereMatrix(matrix: matrix3)
+		let result4 = checker.isSquereMatrix(matrix: matrix4)
+		let result5 = checker.isSquereMatrix(matrix: matrix5)
+		
+		// Assert
+		XCTAssertEqual(result1, true)
+		XCTAssertEqual(result2, false)
+		XCTAssertEqual(result3, false)
+		XCTAssertEqual(result4, false)
+		XCTAssertEqual(result5, false)
 	}
 
     func testPerformanceExample() throws {
