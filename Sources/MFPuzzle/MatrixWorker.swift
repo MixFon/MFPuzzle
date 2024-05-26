@@ -16,6 +16,8 @@ public protocol _MatrixWorker {
     func createMatrixSnail(size: Int) -> Matrix
 	/// Создание матрицы случайных элементов размерности size
     func createMatrixRandom(size: Int) -> Matrix
+	/// Возвращает матрицу решения заданного размера
+	func createMatrixSolution(size: Int, solution: Solution) -> Matrix
 	/// Создание классической игры. Каждый ряд начинается слева
     func createMatrixClassic(size: Int) -> Matrix
 	/// Изменяет четность инварианта. Меняет метами 2-е соседние ячеки
@@ -172,6 +174,18 @@ open class MatrixWorker: _MatrixWorker {
 		let k = size % 2 == 0 ? 0 : size - 1
 		matrix[size - 1][k] = 0
 		return matrix
+	}
+	
+	/// Возвращает матрицу решения заданного размера
+	public func createMatrixSolution(size: Int, solution: Solution) -> Matrix {
+		switch solution {
+		case .boustrophedon:
+			return createMatrixBoustrophedon(size: size)
+		case .snail:
+			return createMatrixSnail(size: size)
+		case .classic:
+			return createMatrixClassic(size: size)
+		}
 	}
     
     /// Создает на основе строки массив целочисленных элементов.
