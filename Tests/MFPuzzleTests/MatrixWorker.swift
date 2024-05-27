@@ -493,4 +493,107 @@ final class MatrixWorkerTests: XCTestCase {
 		
 		XCTAssertNotEqual(matrix4x4, matrixSnake5x5)
 	}
+	
+	func testCreateMatrixSolutionBoustrophedon() {
+		// Arrange
+		let matrix3x3: Matrix =
+		[[1, 2, 3],
+		 [6, 5, 4],
+		 [7, 8, 0]]
+		let matrix4x4: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 8,  7,  6,  5],
+		 [ 9, 10, 11, 12],
+		 [ 0, 15, 14,  13]]
+		let matrix5x5: Matrix =
+		[[ 1,  2,  3,  4,  5],
+		 [10,  9,  8,  7,  6],
+		 [11, 12, 13, 14, 15],
+		 [20, 19, 18, 17, 16],
+		 [21, 22, 23, 24,  0]]
+		
+		// Act
+		let matrixBoustrophedon3x3 = self.worker?.createMatrixSolution(size: 3, solution: .boustrophedon)
+		let matrixBoustrophedon4x4 = self.worker?.createMatrixSolution(size: 4, solution: .boustrophedon)
+		let matrixBoustrophedon5x5 = self.worker?.createMatrixSolution(size: 5, solution: .boustrophedon)
+		
+		// Assert
+		XCTAssertEqual(matrix3x3, matrixBoustrophedon3x3)
+		XCTAssertEqual(matrix4x4, matrixBoustrophedon4x4)
+		XCTAssertEqual(matrix5x5, matrixBoustrophedon5x5)
+		
+		XCTAssertNotEqual(matrix3x3, matrixBoustrophedon4x4)
+		XCTAssertNotEqual(matrix3x3, matrixBoustrophedon5x5)
+		
+		XCTAssertNotEqual(matrix4x4, matrixBoustrophedon5x5)
+	}
+	
+	func testCreateMatrixSolutionClassic() {
+		// Arrange
+		let matrix3x3: Matrix =
+		[[1, 2, 3],
+		 [4, 5, 6],
+		 [7, 8, 0]]
+		let matrix4x4: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 5,  6,  7,  8],
+		 [ 9, 10, 11, 12],
+		 [13, 14, 15,  0]]
+		let matrix5x5: Matrix =
+		[[ 1,  2,  3,  4,  5],
+		 [ 6,  7,  8,  9, 10],
+		 [11, 12, 13, 14, 15],
+		 [16, 17, 18, 19, 20],
+		 [21, 22, 23, 24,  0]]
+		
+		// Act
+		let matrixClassic3x3 = self.worker?.createMatrixSolution(size: 3, solution: .classic)
+		let matrixClassic4x4 = self.worker?.createMatrixSolution(size: 4, solution: .classic)
+		let matrixClassic5x5 = self.worker?.createMatrixSolution(size: 5, solution: .classic)
+		
+		// Assert
+		XCTAssertEqual(matrix3x3, matrixClassic3x3)
+		XCTAssertEqual(matrix4x4, matrixClassic4x4)
+		XCTAssertEqual(matrix5x5, matrixClassic5x5)
+		
+		XCTAssertNotEqual(matrix3x3, matrixClassic4x4)
+		XCTAssertNotEqual(matrix3x3, matrixClassic5x5)
+		
+		XCTAssertNotEqual(matrix4x4, matrixClassic5x5)
+	}
+	
+	func testCreateMatrixSolutionSnail() {
+		// Arrange
+		let matrix3x3: Matrix =
+		[[1, 2, 3],
+		 [8, 0, 4],
+		 [7, 6, 5]]
+		let matrix4x4: Matrix =
+		[[ 1,  2,  3,  4],
+		 [12, 13, 14,  5],
+		 [11,  0, 15,  6],
+		 [10,  9,  8,  7]]
+		let matrix5x5: Matrix =
+		[[ 1,  2,  3,  4,  5],
+		 [16, 17, 18, 19,  6],
+		 [15, 24,  0, 20,  7],
+		 [14, 23, 22, 21,  8],
+		 [13, 12, 11, 10,  9]]
+		
+		// Act
+		let matrixSnail3x3 = self.worker?.createMatrixSolution(size: 3, solution: .snail)
+		let matrixSnail4x4 = self.worker?.createMatrixSolution(size: 4, solution: .snail)
+		let matrixSnail5x5 = self.worker?.createMatrixSolution(size: 5, solution: .snail)
+		
+		// Assert
+		XCTAssertEqual(matrix3x3, matrixSnail3x3)
+		XCTAssertEqual(matrix4x4, matrixSnail4x4)
+		XCTAssertEqual(matrix5x5, matrixSnail5x5)
+		
+		XCTAssertNotEqual(matrix3x3, matrixSnail4x4)
+		XCTAssertNotEqual(matrix3x3, matrixSnail5x5)
+		
+		XCTAssertNotEqual(matrix4x4, matrixSnail5x5)
+	}
+	
 }

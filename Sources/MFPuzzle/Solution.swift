@@ -1,6 +1,6 @@
 //
 //  Solution.swift
-//  
+//
 //
 //  Created by Михаил Фокин on 26.05.2024.
 //
