@@ -42,7 +42,6 @@ final class CheckerTest: XCTestCase {
 		XCTAssertTrue(self.checker?.checkSolution(matrix: matrix3x3, matrixTarget: matrixTarget3x3) == true)
 	}
 	
-	
 	func testCheckSolution4x4() throws {
 		let matrixTarget4x4: [[MatrixElement]] =
 		[[ 1, 2,  3,  4],
@@ -50,22 +49,52 @@ final class CheckerTest: XCTestCase {
 		 [11,  0, 15, 6],
 		 [10,  9, 8,  7]]
 		var matrix4x4: [[MatrixElement]] =
-		[[12, 15, 13,  5],
-		 [ 3,  9,  6,  2],
-		 [ 1, 11,  7, 10],
-		 [ 8, 14,  0,  4]]
+		[[ 1, 2,  3,  4],
+		 [12, 13, 14, 0],
+		 [11, 15,  6, 5],
+		 [10,  9, 8,  7]]
 		XCTAssertTrue(self.checker?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
 		matrix4x4 =
-		[[12, 13, 11,  4],
-		 [ 6,  7,  9,  8],
-		 [ 3,  0,  1, 14],
-		 [ 5, 10,  2, 15]]
+		[[ 1,  2,  3,  4],
+		 [12, 13,  6, 14],
+		 [11,  0, 15,  5],
+		 [10,  9,  8,  7]]
 		XCTAssertTrue(self.checker?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
 		matrix4x4 =
-		[[11,  4,  6,  5],
-		 [ 9,  1,  0,  3],
-		 [15,  8, 13, 12],
-		 [10,  2,  7, 14]]
+		[[ 1,  2,  4,  6],
+		 [12, 13,  3, 14],
+		 [11,  9, 15,  0],
+		 [10,  8,  7,  5]]
+		XCTAssertTrue(self.checker?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
+		matrix4x4 =
+		[[ 1,  2,  4,  6],
+		 [12, 13,  3, 14],
+		 [11,  0,  9, 15],
+		 [10,  8,  7,  5]]
+		XCTAssertTrue(self.checker?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
+		matrix4x4 =
+		[[ 1,  2,  4,  6],
+		 [12, 13,  3, 14],
+		 [ 0, 11,  9, 15],
+		 [10,  8,  7,  5]]
+		XCTAssertTrue(self.checker?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
+		matrix4x4 =
+		[[ 1,  2,  4,  6],
+		 [12, 13,  3, 14],
+		 [10, 11,  9, 15],
+		 [ 0,  8,  7,  5]]
+		XCTAssertTrue(self.checker?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
+		matrix4x4 =
+		[[ 1,  2,  4,  6],
+		 [12, 13,  3, 14],
+		 [10, 11,  9, 15],
+		 [ 8,  7,  0,  5]]
+		XCTAssertTrue(self.checker?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
+		matrix4x4 =
+		[[ 1,  2,  4,  6],
+		 [12, 13,  0, 14],
+		 [10, 11,  3, 15],
+		 [ 8,  7,  9,  5]]
 		XCTAssertTrue(self.checker?.checkSolution(matrix: matrix4x4, matrixTarget: matrixTarget4x4) == true)
 	}
 	
@@ -97,6 +126,314 @@ final class CheckerTest: XCTestCase {
 		 [19, 23, 15, 21,  2],
 		 [16,  4,  9, 12, 18]]
 		XCTAssertTrue(self.checker?.checkSolution(matrix: matrix5x5, matrixTarget: matrixTarget5x5) == true)
+	}
+	
+	func testCheckRandomClassicMatrixSolution3x3() {
+		// Arrange
+		let checker = Checker()
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [4, 5, 6],
+		 [7, 8, 0]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
+	}
+	
+	func testCheckRandomClassicMatrixSolution4x4() {
+		// Arrange
+		let checker = Checker()
+		let matrix: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 5,  6,  7,  8],
+		 [ 9, 10, 11, 12],
+		 [13, 14, 15,  0]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
+	}
+	
+	func testCheckRandomClassicMatrixSolution5x5() {
+		// Arrange
+		let checker = Checker()
+		let matrix: Matrix =
+		[[ 1,  2,  3,  4,  5],
+		 [ 6,  7,  8,  9, 10],
+		 [11, 12, 13, 14, 15],
+		 [16, 17, 18, 19, 20],
+		 [21, 22, 23, 24,  0]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
+	}
+	
+	func testCheckRandomClassicMatrixNotSolution3x3() {
+		// Arrange
+		let checker = Checker()
+		var matrix: Matrix =
+		[[1, 2, 3],
+		 [4, 5, 6],
+		 [7, 8, 0]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), false)
+	}
+	
+	func testCheckRandomClassicMatrixNotSolution4x4() {
+		// Arrange
+		let checker = Checker()
+		var matrix: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 5,  6,  7,  8],
+		 [ 9, 10, 11, 12],
+		 [13, 14, 15,  0]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), false)
+	}
+	
+	func testCheckRandomClassicMatrixNotSolution5x5() {
+		// Arrange
+		let checker = Checker()
+		var matrix: Matrix =
+		[[ 1,  2,  3,  4,  5],
+		 [ 6,  7,  8,  9, 10],
+		 [11, 12, 13, 14, 15],
+		 [16, 17, 18, 19, 20],
+		 [21, 22, 23, 24,  0]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), false)
+	}
+	
+	func testCheckRandomSnailMatrixSolution3x3() {
+		// Arrange
+		let checker = Checker()
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [8, 0, 4],
+		 [7, 6, 5]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
+	}
+	
+	func testCheckRandomSnailMatrixSolution4x4() {
+		// Arrange
+		let checker = Checker()
+		let matrix: Matrix =
+		[[ 1, 2,  3,  4],
+		 [12, 13, 14, 5],
+		 [11,  0, 15, 6],
+		 [10,  9, 8,  7]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
+	}
+	
+	func testCheckRandomSnailMatrixSolution5x5() {
+		// Arrange
+		let checker = Checker()
+		let matrix: Matrix =
+		[[ 1,  2,  3,  4,  5],
+		 [16, 17, 18, 19,  6],
+		 [15, 24,  0, 20,  7],
+		 [14, 23, 22, 21,  8],
+		 [13, 12, 11, 10,  9]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
+	}
+	
+	func testCheckRandomSnailMatrixNotSolution3x3() {
+		// Arrange
+		let checker = Checker()
+		var matrix: Matrix =
+		[[1, 2, 3],
+		 [8, 0, 4],
+		 [7, 6, 5]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), false)
+	}
+	
+	func testCheckRandomSnailMatrixNotSolution4x4() {
+		// Arrange
+		let checker = Checker()
+		var matrix: Matrix =
+		[[ 1, 2,  3,  4],
+		 [12, 13, 14, 5],
+		 [11,  0, 15, 6],
+		 [10,  9, 8,  7]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), false)
+	}
+	
+	func testCheckRandomSnailMatrixNotSolution5x5() {
+		// Arrange
+		let checker = Checker()
+		var matrix: Matrix =
+		[[ 1,  2,  3,  4,  5],
+		 [16, 17, 18, 19,  6],
+		 [15, 24,  0, 20,  7],
+		 [14, 23, 22, 21,  8],
+		 [13, 12, 11, 10,  9]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), false)
+	}
+	
+	func testCheckRandomBostrophedonMatrixSolution3x3() {
+		// Arrange
+		let checker = Checker()
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [6, 5, 4],
+		 [7, 8, 0]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
+	}
+	
+	func testCheckRandomBostrophedonMatrixSolution4x4() {
+		// Arrange
+		let checker = Checker()
+		let matrix: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 8,  7,  6,  5],
+		 [ 9, 10, 11, 12],
+		 [ 0, 15, 14, 13]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
+	}
+	
+	func testCheckRandomBostrophedonMatrixSolution5x5() {
+		// Arrange
+		let checker = Checker()
+		let matrix: Matrix =
+		[[ 1,  2,  3,  4,  5],
+		 [10,  9,  8,  7,  6],
+		 [11, 12, 13, 14, 15],
+		 [20, 19, 18, 17, 16],
+		 [21, 22, 23, 24,  0]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
+	}
+	
+	func testCheckRandomBostrophedonMatrixNotSolution3x3() {
+		// Arrange
+		let checker = Checker()
+		var matrix: Matrix =
+		[[2, 1, 3],
+		 [6, 5, 4],
+		 [7, 8, 0]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), false)
+	}
+	
+	func testCheckRandomBostrophedonMatrixNotSolution4x4() {
+		// Arrange
+		let checker = Checker()
+		var matrix: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 8,  7,  6,  5],
+		 [ 9, 10, 11, 12],
+		 [ 0, 15, 14, 13]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), false)
+	}
+	
+	func testCheckRandomBostrophedonMatrixNotSolution5x5() {
+		// Arrange
+		let checker = Checker()
+		var matrix: Matrix =
+		[[ 1,  2,  3,  4,  5],
+		 [10,  9,  8,  7,  6],
+		 [11, 12, 13, 14, 15],
+		 [20, 19, 18, 17, 16],
+		 [21, 22, 23, 24,  0]]
+		
+		// Act
+		let matrixTransition = generateRangomSteps(matrix: matrix)
+		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
+		
+		// Assert
+		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), false)
+	}
+	
+	private func generateRangomSteps(matrix: Matrix) -> Matrix {
+		let grid = Grid(matrix: matrix)
+		let countSteps = Int.random(in: 1000...10000)
+		for _ in 0...countSteps {
+			if let randomNeighbors = grid.getNeighbors(number: 0)?.randomElement() {
+				grid.swapNumber(number: randomNeighbors)
+			}
+		}
+		return grid.matrix
 	}
 	
 	// MARK: Test check not solution.

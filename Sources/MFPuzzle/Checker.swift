@@ -33,13 +33,7 @@ open class Checker: _Checker {
 	public func checkSolution(matrix: Matrix, matrixTarget: Matrix) -> Bool {
 		let summa = getSummInversion(matrix: matrix)
 		let summaTarget = getSummInversion(matrix: matrixTarget)
-		let coordinateZeroBoard = getCoordinateXZero(matrix: matrix)! + summa + 1
-		let coordinateZeroBoardTarget = getCoordinateXZero(matrix: matrixTarget)! + summaTarget + 1
-		if matrix.count % 2 == 0 {
-			return coordinateZeroBoard % 2 == coordinateZeroBoardTarget % 2
-		} else {
-			return summa % 2 == summaTarget % 2
-		}
+		return summa % 2 == summaTarget % 2
 	}
 	
 	public func isSquereMatrix(matrix: Matrix) -> Bool {
