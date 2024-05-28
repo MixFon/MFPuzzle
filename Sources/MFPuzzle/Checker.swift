@@ -57,13 +57,14 @@ open class Checker: _Checker {
 	func getSummInversion(matrix: Matrix) -> Int {
 		var summ = 0
 		var arry = [MatrixElement]()
-		for row in matrix {
-			for elem in row {
-				if elem != 0 {
-					arry.append(elem)
-				}
+		for (i, line) in matrix.enumerated() {
+			if i % 2 == 0 {
+				arry.append(contentsOf: line)
+			} else {
+				arry.append(contentsOf: line.reversed())
 			}
 		}
+		arry.removeAll(where: { $0 == 0 })
 		for (i, elem) in arry.enumerated() {
 			for elemIter in arry[(i + 1)...] {
 				if elem > elemIter {

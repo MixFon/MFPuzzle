@@ -301,6 +301,124 @@ final class CheckerTest: XCTestCase {
 		XCTAssertEqual(result4, false)
 		XCTAssertEqual(result5, false)
 	}
+	
+	func testGetSummInversionSwapHorizontalZero() {
+		// Arrange
+		let checker = Checker()
+		let matrixOne: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 5,  6,  7,  8],
+		 [ 9, 10, 11, 12],
+		 [13, 14,  0, 15]]
+		// 1 2 3 4 8 7 6 5 9 10 11 12 15 0 14 13
+		//         3 2 1               2    1
+		// --> 9
+
+		let matrixTwo: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 5,  6,  7,  8],
+		 [ 9, 10, 11, 12],
+		 [13, 0,  14, 15]]
+		// 1 2 3 4 8 7 6 5 9 10 11 12 15 14 0 13
+		//         3 2 1               2  1
+		// --> 9
+		let matrixThree: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 5,  6,  7,  8],
+		 [ 9, 10, 11, 12],
+		 [13, 14, 15, 0]]
+		// 1 2 3 4 8 7 6 5 9 10 11 12 0 15 14 13
+		//         3 2 1                 2  1
+		// --> 9
+		
+		// Act
+		let summInversionOne = checker.getSummInversion(matrix: matrixOne)
+		let summInversionTwo = checker.getSummInversion(matrix: matrixTwo)
+		let summInversionThree = checker.getSummInversion(matrix: matrixThree)
+		
+		// Assert
+		XCTAssertEqual(summInversionOne, 9)
+		XCTAssertEqual(summInversionTwo, 9)
+		XCTAssertEqual(summInversionThree, 9)
+	}
+	
+	func testGetSummInversionSwapVerticalZero() {
+		// Arrange
+		let checker = Checker()
+		let matrixOne: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 5,  6,  7,  8],
+		 [ 9, 10, 11, 12],
+		 [13, 14,  0, 15]]
+		// 1 2 3 4 8 7 6 5 9 10 11 12 15 0 14 13
+		//         3 2 1               2    1
+		// --> 9
+		let matrixTwo: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 5,  6,  7,  8],
+		 [ 9, 10,  0, 12],
+		 [13, 14, 11, 15]]
+		// 1 2 3 4 8 7 6 5 9 10 0 12 15 11 14 13
+		//         3 2 1           1  3     1
+		// --> 11
+
+		let matrixThree: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 5,  6,  0,  8],
+		 [ 9, 10,  7, 12],
+		 [13, 14, 11, 15]]
+		// 1 2 3 4 8 0 6 5 9 10 7 12 15 11 14 13
+		//         3   1   1  1    1  3     1
+		// --> 11
+		
+		// Act
+		let summInversionOne = checker.getSummInversion(matrix: matrixOne)
+		let summInversionTwo = checker.getSummInversion(matrix: matrixTwo)
+		let summInversionThree = checker.getSummInversion(matrix: matrixThree)
+		
+		// Assert
+		XCTAssertEqual(summInversionOne, 9)
+		XCTAssertEqual(summInversionTwo, 11)
+		XCTAssertEqual(summInversionThree, 11)
+	}
+	
+	func testGetSummInversionSwapHorizontalNumbers() {
+		// Arrange
+		let checker = Checker()
+		let matrixOne: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 5,  6,  7,  8],
+		 [ 9, 10, 11, 12],
+		 [13, 14,  15, 0]]
+		let matrixTwo: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 5,  6,  7,  8],
+		 [ 9, 10, 11, 12],
+		 [13, 15,  14, 0]]
+		// 1 2 3 4 8 7 6 5 9 10 11 12 0 15 14 13
+		//         3 2 1                 2  1
+		// --> 9
+		let matrixThree: Matrix =
+		[[ 1,  2,  3,  4],
+		 [ 5,  6,  7,  8],
+		 [ 9, 10, 15, 12],
+		 [13, 14, 11, 0]]
+		// 1 2 3 4 8 7 6 5 9 10 15 12 0 11 14 13
+		//         3 2 1         4  1       1
+		// --> 12
+		
+		// Act
+		let summInversionOne = checker.getSummInversion(matrix: matrixOne)
+		let summInversionTwo = checker.getSummInversion(matrix: matrixTwo)
+		let summInversionThree = checker.getSummInversion(matrix: matrixThree)
+		
+		// Assert
+		XCTAssertEqual(summInversionOne, 9)
+		XCTAssertEqual(summInversionTwo, 8)
+		XCTAssertEqual(summInversionThree, 12)
+		XCTAssertNotEqual(summInversionOne, summInversionTwo)
+		XCTAssertNotEqual(summInversionTwo, summInversionThree)
+	}
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
