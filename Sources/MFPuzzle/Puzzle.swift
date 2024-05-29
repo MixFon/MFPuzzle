@@ -30,11 +30,12 @@ final class Puzzle {
 			if board == boardTarget {
 				return board
 			}
-			guard let children = board.getChildrens() else { continue }
+			guard let children = board.getChildrens(calculateHeuristic: {  [weak self] element, point in
+				guard let endPoint = boardTarget.grid.coordinats[element] else { return nil }
+				return self?.heuristic.distance(point, endPoint)
+			}) else { continue }
 			for board in children {
 				if !visited.contains(board.hashValue) {
-					let heuristic = self.heuristic.getHeuristic(grid: board.grid, gridTarget: boardTarget.grid)
-					board.setF(heuristic: heuristic)
 					heap.insert(board)
 				}
 			}

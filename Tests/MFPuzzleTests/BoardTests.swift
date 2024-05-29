@@ -139,7 +139,7 @@ final class BoardTests: XCTestCase {
 		let boardError = Board(grid: gridError)
 		
 		// Act
-		let childrens = board.getChildrens()
+		let childrens = board.getChildrens(calculateHeuristic: { _ , _ in 1 })
 		
 		// Assert
 		XCTAssertNotNil(childrens)
@@ -163,7 +163,7 @@ final class BoardTests: XCTestCase {
 		let board = Board(grid: grid)
 		
 		// Act
-		let childrens = board.getChildrens()
+		let childrens = board.getChildrens(calculateHeuristic: { _ , _ in 1 })
 		
 		// Assert
 		XCTAssertNil(childrens)

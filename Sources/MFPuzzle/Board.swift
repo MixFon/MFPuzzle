@@ -35,15 +35,27 @@ final class Board {
 	}
 	
 	/// Возвращает список смежных состояний. Состояний, в которые можно перейти
-	func getChildrens() -> [Board]? {
+	func getChildrens(calculateHeuristic: (MatrixElement, GridPoint) -> Int? ) -> [Board]? {
 		guard let neighbors = self.grid.getNeighbors(number: 0) else { return nil }
 		var childrens = [Board]()
+		let zeroPoint = self.grid.coordinats[0]!
+		let heuristicCurrentZero = calculateHeuristic(0, zeroPoint) ?? 0
 		for number in neighbors {
 			let newGrid = Grid(from: self.grid)
+			let numberPoint = self.grid.coordinats[number]!
+			let heuristicNumber = calculateHeuristic(number, numberPoint) ?? 0
+			
 			newGrid.swapNumber(number: number)
 			
+			let newZeroPoint = newGrid.coordinats[0]!
+			let newNuberPoint = newGrid.coordinats[number]!
+			let newHeuristicZero = calculateHeuristic(0, newZeroPoint) ?? 0
+			let newHeuristicNumber = calculateHeuristic(number, newNuberPoint) ?? 0
+			
+			let f = self.f + (newHeuristicZero - heuristicCurrentZero) + (newHeuristicNumber - heuristicNumber)
 			let newBoard = Board(grid: newGrid)
 			newBoard.lavel = self.lavel + 1
+			newBoard.setF(heuristic: f)
 			newBoard.parent = self
 			childrens.append(newBoard)
 		}

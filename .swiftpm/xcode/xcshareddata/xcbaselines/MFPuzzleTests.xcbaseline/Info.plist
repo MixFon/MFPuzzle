@@ -28,6 +28,30 @@
 			<key>targetArchitecture</key>
 			<string>arm64</string>
 		</dict>
+		<key>E7F53FDD-5B51-4FC1-8330-8F17603CA82E</key>
+		<dict>
+			<key>localComputer</key>
+			<dict>
+				<key>busSpeedInMHz</key>
+				<integer>0</integer>
+				<key>cpuCount</key>
+				<integer>1</integer>
+				<key>cpuKind</key>
+				<string>Apple M3 Pro</string>
+				<key>cpuSpeedInMHz</key>
+				<integer>0</integer>
+				<key>logicalCPUCoresPerPackage</key>
+				<integer>11</integer>
+				<key>modelCode</key>
+				<string>Mac15,6</string>
+				<key>physicalCPUCoresPerPackage</key>
+				<integer>11</integer>
+				<key>platformIdentifier</key>
+				<string>com.apple.platform.macosx</string>
+			</dict>
+			<key>targetArchitecture</key>
+			<string>arm64</string>
+		</dict>
 	</dict>
 </dict>
 </plist>
