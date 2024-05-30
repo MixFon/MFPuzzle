@@ -31,7 +31,7 @@ final class HeuristicTests: XCTestCase {
 		XCTAssertEqual(value, 0)
 	}
 	
-	func testGetHeuristicManhattan() {
+	func testGetHeuristicManhattanOne() {
 		// Arrange
 		let matrix: Matrix =
 		[[1, 2, 3],
@@ -49,6 +49,70 @@ final class HeuristicTests: XCTestCase {
 		let value = heuristic.getHeuristic(grid: grid, gridTarget: gridSolution)
 		
 		// Assert
-		XCTAssertEqual(value, 0)
+		XCTAssertEqual(value, 2)
 	}
+	
+	func testGetHeuristicManhattanTwo() {
+		// Arrange
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [4, 0, 6],
+		 [7, 5, 8]]
+		let grid = Grid(matrix: matrix)
+		let matrixSolution: Matrix =
+		[[1, 2, 3],
+		 [4, 5, 6],
+		 [7, 8, 0]]
+		let gridSolution = Grid(matrix: matrixSolution)
+		let heuristic = Heuristic.manhattan
+		
+		// Act
+		let value = heuristic.getHeuristic(grid: grid, gridTarget: gridSolution)
+		
+		// Assert
+		XCTAssertEqual(value, 4)
+	}
+	
+	func testGetHeuristicManhattanThree() {
+		// Arrange
+		let matrix: Matrix =
+		[[0, 1, 2],
+		 [4, 6, 3],
+		 [7, 5, 8]]
+		let grid = Grid(matrix: matrix)
+		let matrixSolution: Matrix =
+		[[1, 2, 3],
+		 [4, 5, 6],
+		 [7, 8, 0]]
+		let gridSolution = Grid(matrix: matrixSolution)
+		let heuristic = Heuristic.manhattan
+		
+		// Act
+		let value = heuristic.getHeuristic(grid: grid, gridTarget: gridSolution)
+		
+		// Assert
+		XCTAssertEqual(value, 10)
+	}
+	
+	func testGetHeuristicManhattanFive() {
+		// Arrange
+		let matrix: Matrix =
+		[[5, 4, 2],
+		 [0, 1, 3],
+		 [6, 7, 8]]
+		let grid = Grid(matrix: matrix)
+		let matrixSolution: Matrix =
+		[[1, 2, 3],
+		 [4, 5, 6],
+		 [7, 8, 0]]
+		let gridSolution = Grid(matrix: matrixSolution)
+		let heuristic = Heuristic.manhattan
+		
+		// Act
+		let value = heuristic.getHeuristic(grid: grid, gridTarget: gridSolution)
+		
+		// Assert
+		XCTAssertEqual(value, 16)
+	}
+	
 }
