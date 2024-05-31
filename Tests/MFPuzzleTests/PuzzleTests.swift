@@ -336,13 +336,13 @@ final class PuzzleTest: XCTestCase {
 			newBoard.parent = board
 			board = newBoard
 		}
-		let compassesAnswers: [Compass] = [.east, .north, .east, .north, .west, .west, .south, .south]
+		let compassesAnswers: [Compass] = [.south, .south, .west, .west, .north, .east, .north, .east]
 		
 		// Act
 		let compasses = puzzle.createPath(board: board)
 		
 		// Assert
-		XCTAssertEqual(compasses, compassesAnswers.reversed())
+		XCTAssertEqual(compasses, compassesAnswers)
 	}
 	
 	func testCreateEast() {
