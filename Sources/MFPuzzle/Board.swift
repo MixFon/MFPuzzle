@@ -8,9 +8,10 @@
 import Foundation
 
 // Класс предназначенный для поиска решения головоломки
-final class Board {
+public final class Board {
+	public private(set) var grid: Grid
+	
 	private(set) var f: Int
-	private(set) var grid: Grid
 	var lavel: Int
 	var parent: Board?
 	
@@ -19,7 +20,7 @@ final class Board {
 	}
 	
 	// Конструктор с доской
-	init(grid: Grid) {
+	public init(grid: Grid) {
 		self.f = 0
 		self.lavel = 0
 		self.grid = grid
@@ -65,11 +66,11 @@ final class Board {
 
 extension Board: Equatable {
 	
-	static func == (left: Board, right: Board) -> Bool {
+	public static func == (left: Board, right: Board) -> Bool {
 		return left.grid == right.grid
 	}
 	
-	static func != (left: Board, right: Board) -> Bool {
+	public static func != (left: Board, right: Board) -> Bool {
 		return !(left == right)
 	}
 }

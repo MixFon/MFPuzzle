@@ -291,5 +291,166 @@ final class PuzzleTest: XCTestCase {
 		XCTAssertNotNil(board)
 		XCTAssertEqual(board?.lavel, lavel)
     }
+	
+	func testCreatePath() {
+		// Arrange
+		let mockChecket = MockChecker()
+		let puzzle = Puzzle(heuristic: .manhattan, checker: mockChecket)
+		let matrixes: [Matrix] = [
+		[[1, 2, 3],
+		 [6, 5, 4],
+		 [7, 0, 8]],
+		[[1, 2, 3],
+		 [6, 0, 4],
+		 [7, 5, 8]],
+		[[1, 2, 3],
+		 [0, 6, 4],
+		 [7, 5, 8]],
+		[[0, 2, 3],
+		 [1, 6, 4],
+		 [7, 5, 8]],
+		[[2, 0, 3],
+		 [1, 6, 4],
+		 [7, 5, 8]],
+		[[2, 3, 0],
+		 [1, 6, 4],
+		 [7, 5, 8]],
+		[[2, 3, 4],
+		 [1, 6, 0],
+		 [7, 5, 8]],
+		[[2, 3, 4],
+		 [1, 6, 0],
+		 [7, 5, 8]],
+		[[2, 3, 4],
+		 [1, 6, 8],
+		 [7, 5, 0]]
+		]
+		
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [6, 5, 4],
+		 [7, 8, 0]]
+		var board = Board(grid: Grid(matrix: matrix))
+		for matrix in matrixes {
+			let newBoard = Board(grid: Grid(matrix: matrix))
+			newBoard.parent = board
+			board = newBoard
+		}
+		let compassesAnswers: [Compass] = [.east, .north, .east, .north, .west, .west, .south, .south]
+		
+		// Act
+		let compasses = puzzle.createPath(board: board)
+		
+		// Assert
+		XCTAssertEqual(compasses, compassesAnswers.reversed())
+	}
+	
+	func testCreateEast() {
+		// Arrange
+		let mockChecket = MockChecker()
+		let puzzle = Puzzle(heuristic: .manhattan, checker: mockChecket)
+		let matrixes: [Matrix] = [
+		[[1, 2, 3],
+		 [6, 5, 4],
+		 [7, 0, 8]]]
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [6, 5, 4],
+		 [7, 8, 0]]
+		var board = Board(grid: Grid(matrix: matrix))
+		for matrix in matrixes {
+			let newBoard = Board(grid: Grid(matrix: matrix))
+			newBoard.parent = board
+			board = newBoard
+		}
+		let compassesAnswers: [Compass] = [.east]
+		
+		// Act
+		let compasses = puzzle.createPath(board: board)
+		
+		// Assert
+		XCTAssertEqual(compasses, compassesAnswers)
+	}
+	
+	func testCreateWest() {
+		// Arrange
+		let mockChecket = MockChecker()
+		let puzzle = Puzzle(heuristic: .manhattan, checker: mockChecket)
+		let matrixes: [Matrix] = [
+		[[1, 2, 3],
+		 [6, 4, 0],
+		 [7, 5, 8]]]
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [6, 0, 4],
+		 [7, 5, 8]]
+		var board = Board(grid: Grid(matrix: matrix))
+		for matrix in matrixes {
+			let newBoard = Board(grid: Grid(matrix: matrix))
+			newBoard.parent = board
+			board = newBoard
+		}
+		let compassesAnswers: [Compass] = [.west]
+		
+		// Act
+		let compasses = puzzle.createPath(board: board)
+		
+		// Assert
+		XCTAssertEqual(compasses, compassesAnswers)
+	}
+	
+	func testCreateNorth() {
+		// Arrange
+		let mockChecket = MockChecker()
+		let puzzle = Puzzle(heuristic: .manhattan, checker: mockChecket)
+		let matrixes: [Matrix] = [
+		[[1, 0, 3],
+		 [6, 2, 4],
+		 [7, 5, 8]]]
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [6, 0, 4],
+		 [7, 5, 8]]
+		var board = Board(grid: Grid(matrix: matrix))
+		for matrix in matrixes {
+			let newBoard = Board(grid: Grid(matrix: matrix))
+			newBoard.parent = board
+			board = newBoard
+		}
+		let compassesAnswers: [Compass] = [.north]
+		
+		// Act
+		let compasses = puzzle.createPath(board: board)
+		
+		// Assert
+		XCTAssertEqual(compasses, compassesAnswers)
+	}
+	
+	func testCreateSouth() {
+		// Arrange
+		let mockChecket = MockChecker()
+		let puzzle = Puzzle(heuristic: .manhattan, checker: mockChecket)
+		let matrixes: [Matrix] = [
+		[[1, 2, 3],
+		 [6, 5, 4],
+		 [7, 0, 8]]]
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [6, 0, 4],
+		 [7, 5, 8]]
+		var board = Board(grid: Grid(matrix: matrix))
+		for matrix in matrixes {
+			let newBoard = Board(grid: Grid(matrix: matrix))
+			newBoard.parent = board
+			board = newBoard
+		}
+		let compassesAnswers: [Compass] = [.south]
+		
+		// Act
+		let compasses = puzzle.createPath(board: board)
+		
+		// Assert
+		XCTAssertEqual(compasses, compassesAnswers)
+	}
 
 }
