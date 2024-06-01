@@ -82,7 +82,34 @@ open class Grid {
 		if self.coordinats[one] == nil || self.coordinats[two] == nil { return nil }
 		let neighbors = getNeighbors(number: one)
 		return neighbors?.contains(two)
-		
+	}
+	
+	public func getNumber(for compass: Compass) -> MatrixElement? {
+		guard let zero = self.coordinats[0] else { return nil }
+		let x = Int(zero.x)
+		let y = Int(zero.y)
+		switch compass {
+		case .west:
+			return isInsidea(x: x, y: y + 1) ? self.matrix[x][y + 1] : nil
+		case .east:
+			return isInsidea(x: x, y: y - 1) ? self.matrix[x][y - 1] : nil
+		case .north:
+			return isInsidea(x: x - 1, y: y) ? self.matrix[x - 1][y] : nil
+		case .south:
+			return isInsidea(x: x + 1, y: y) ? self.matrix[x + 1][y] : nil
+		}
+	}
+	
+	/// Проверяет, находятся ли координаты внутри матрицы
+	public func isInsidea(x: Int, y: Int) -> Bool {
+		return x < self.size && x >= 0 && y < self.size && y >= 0
+	}
+	
+	/// Проверяет, находятся ли координаты внутри матрицы
+	public func isInsidea(point: GridPoint) -> Bool {
+		let x = Int(point.x)
+		let y = Int(point.y)
+		return x < self.size && x >= 0 && y < self.size && y >= 0
 	}
 }
 

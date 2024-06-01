@@ -277,5 +277,169 @@ final class GridTests: XCTestCase {
 		XCTAssertEqual(grid.matrix[0][1], 14)
 		
 	}
+	
+	func testGetNumberWest() {
+		// Arrange
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [4, 0, 6],
+		 [7, 5, 8]]
+		let grid = Grid(matrix: matrix)
+		
+		// Act
+		let number = grid.getNumber(for: .west)
+		
+		// Assert
+		XCTAssertNotNil(number)
+		XCTAssertEqual(number, 6)
+	}
+	
+	func testGetNumberWestNil() {
+		// Arrange
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [4, 6, 0],
+		 [7, 5, 8]]
+		let grid = Grid(matrix: matrix)
+		
+		// Act
+		let number = grid.getNumber(for: .west)
+		
+		// Assert
+		XCTAssertNil(number)
+		XCTAssertNotEqual(number, 6)
+	}
+	
+	func testGetNumberEast() {
+		// Arrange
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [4, 0, 6],
+		 [7, 5, 8]]
+		let grid = Grid(matrix: matrix)
+		
+		// Act
+		let number = grid.getNumber(for: .east)
+		
+		// Assert
+		XCTAssertNotNil(number)
+		XCTAssertEqual(number, 4)
+	}
+	
+	func testGetNumberEastNil() {
+		// Arrange
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [0, 4, 6],
+		 [7, 5, 8]]
+		let grid = Grid(matrix: matrix)
+		
+		// Act
+		let number = grid.getNumber(for: .east)
+		
+		// Assert
+		XCTAssertNil(number)
+		XCTAssertNotEqual(number, 4)
+	}
+	
+	func testGetNumberNorth() {
+		// Arrange
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [4, 0, 6],
+		 [7, 5, 8]]
+		let grid = Grid(matrix: matrix)
+		
+		// Act
+		let number = grid.getNumber(for: .north)
+		
+		// Assert
+		XCTAssertNotNil(number)
+		XCTAssertEqual(number, 2)
+	}
+	
+	func testGetNumberNorthNil() {
+		// Arrange
+		let matrix: Matrix =
+		[[1, 0, 3],
+		 [4, 2, 6],
+		 [7, 5, 8]]
+		let grid = Grid(matrix: matrix)
+		
+		// Act
+		let number = grid.getNumber(for: .north)
+		
+		// Assert
+		XCTAssertNil(number)
+		XCTAssertNotEqual(number, 2)
+	}
+	
+	func testGetNumberSouth() {
+		// Arrange
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [4, 0, 6],
+		 [7, 5, 8]]
+		let grid = Grid(matrix: matrix)
+		
+		// Act
+		let number = grid.getNumber(for: .south)
+		
+		// Assert
+		XCTAssertNotNil(number)
+		XCTAssertEqual(number, 5)
+	}
+	
+	func testGetNumberSouthhNil() {
+		// Arrange
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [4, 5, 6],
+		 [7, 0, 8]]
+		let grid = Grid(matrix: matrix)
+		
+		// Act
+		let number = grid.getNumber(for: .south)
+		
+		// Assert
+		XCTAssertNil(number)
+		XCTAssertNotEqual(number, 5)
+	}
+	
+	func testIsInsidea() {
+		// Arrange
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [4, 5, 6],
+		 [7, 0, 8]]
+		let grid = Grid(matrix: matrix)
+		
+		// Act
+		
+		// Assert
+		XCTAssertEqual(grid.isInsidea(x: 0, y: 0), true)
+		XCTAssertEqual(grid.isInsidea(x: 0, y: 1), true)
+		XCTAssertEqual(grid.isInsidea(x: 0, y: 2), true)
+		XCTAssertEqual(grid.isInsidea(x: 1, y: 0), true)
+		XCTAssertEqual(grid.isInsidea(x: 1, y: 1), true)
+		XCTAssertEqual(grid.isInsidea(x: 1, y: 2), true)
+		XCTAssertEqual(grid.isInsidea(x: 2, y: 0), true)
+		XCTAssertEqual(grid.isInsidea(x: 2, y: 1), true)
+		XCTAssertEqual(grid.isInsidea(x: 2, y: 2), true)
+		
+		XCTAssertEqual(grid.isInsidea(x: -1, y: 0), false)
+		XCTAssertEqual(grid.isInsidea(x: -1, y: 1), false)
+		XCTAssertEqual(grid.isInsidea(x: -1, y: 2), false)
+		XCTAssertEqual(grid.isInsidea(x: 3, y: 0), false)
+		XCTAssertEqual(grid.isInsidea(x: 3, y: 1), false)
+		XCTAssertEqual(grid.isInsidea(x: 3, y: 2), false)
+		XCTAssertEqual(grid.isInsidea(x: 0, y: 3), false)
+		XCTAssertEqual(grid.isInsidea(x: 1, y: 3), false)
+		XCTAssertEqual(grid.isInsidea(x: 2, y: 3), false)
+		XCTAssertEqual(grid.isInsidea(x: 0, y: -1), false)
+		XCTAssertEqual(grid.isInsidea(x: 1, y: -1), false)
+		XCTAssertEqual(grid.isInsidea(x: 2, y: -1), false)
+		
+	}
 
 }
