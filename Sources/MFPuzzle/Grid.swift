@@ -97,6 +97,8 @@ open class Grid {
 			return isInsidea(x: x - 1, y: y) ? self.matrix[x - 1][y] : nil
 		case .south:
 			return isInsidea(x: x + 1, y: y) ? self.matrix[x + 1][y] : nil
+		case .needle:
+			return nil
 		}
 	}
 	
