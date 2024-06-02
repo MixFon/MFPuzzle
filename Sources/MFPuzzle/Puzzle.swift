@@ -14,17 +14,17 @@ public protocol _Puzzle {
 	func searchSolutionWithHeap(board: Board, boardTarget: Board) -> Board?
 }
 
-final class Puzzle: _Puzzle {
+final public class Puzzle: _Puzzle {
 	
 	private var heuristic: Heuristic = .manhattan
 	private let checker: _Checker
 	
-	init(heuristic: Heuristic, checker: _Checker) {
+	public init(heuristic: Heuristic, checker: _Checker) {
 		self.heuristic = heuristic
 		self.checker = checker
 	}
 	
-	func createPath(board: Board?) -> [Compass] {
+	public func createPath(board: Board?) -> [Compass] {
 		var iter = board
 		var compasses: [Compass] = []
 		while iter != nil {
@@ -57,7 +57,7 @@ final class Puzzle: _Puzzle {
 	
 	/// Поиск решения, используя алгоритм A*
 	@discardableResult
-	func searchSolutionWithHeap(board: Board, boardTarget: Board) -> Board? {
+	public func searchSolutionWithHeap(board: Board, boardTarget: Board) -> Board? {
 		let heap = MFHeap<Board>(priorityFunction: {$0.f < $1.f})
 		let heuristic = self.heuristic.getHeuristic(grid: board.grid, gridTarget: boardTarget.grid)
 		board.setF(heuristic: heuristic)
