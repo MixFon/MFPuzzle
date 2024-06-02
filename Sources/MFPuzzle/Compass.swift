@@ -13,6 +13,7 @@ public enum Compass {
 	case east
 	case north
 	case south
+	case needle
 	
 	public var opposite: Compass {
 		switch self {
@@ -24,6 +25,8 @@ public enum Compass {
 			return .south
 		case .south:
 			return .north
+		case .needle:
+			return .needle
 		}
 	}
 }
