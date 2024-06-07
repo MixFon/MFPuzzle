@@ -102,6 +102,19 @@ open class Grid {
 		}
 	}
 	
+	/// Позвращает направление от нуля до номера number, если они являются соседями
+	public func getCompass(for number: MatrixElement) -> Compass? {
+		return getCompass(from: 0, to: number)
+	}
+	
+	/// Возвращает компас от элемента from до элемента to, если они являются соседями
+	public func getCompass(from: MatrixElement, to: MatrixElement) -> Compass? {
+		guard isNeighbors(one: from, two: to) == true else { return nil }
+		let startPoint = getPoint(number: to)
+		let endPoint = getPoint(number: from)
+		return Compass.calculateCompass(endPoint: endPoint, startPoint: startPoint)
+	}
+	
 	/// Проверяет, находятся ли координаты внутри матрицы
 	public func isInsidea(x: Int, y: Int) -> Bool {
 		return x < self.size && x >= 0 && y < self.size && y >= 0

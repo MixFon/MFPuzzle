@@ -439,7 +439,68 @@ final class GridTests: XCTestCase {
 		XCTAssertEqual(grid.isInsidea(x: 0, y: -1), false)
 		XCTAssertEqual(grid.isInsidea(x: 1, y: -1), false)
 		XCTAssertEqual(grid.isInsidea(x: 2, y: -1), false)
-		
 	}
 
+	
+	func testGetCompass() {
+		// Arrange
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [6, 0, 4],
+		 [7, 8, 5]]
+		let grid = Grid(matrix: matrix)
+		
+		// Act
+		let north = grid.getCompass(for: 2)
+		let west = grid.getCompass(for: 4)
+		let east = grid.getCompass(for: 6)
+		let south = grid.getCompass(for: 8)
+		
+		let northWest = grid.getCompass(for: 1)
+		let northEast = grid.getCompass(for: 3)
+		let southWest = grid.getCompass(for: 5)
+		let southEast = grid.getCompass(for: 7)
+		
+		// Assert
+		XCTAssertEqual(north, .north)
+		XCTAssertEqual(west, .west)
+		XCTAssertEqual(east, .east)
+		XCTAssertEqual(south, .south)
+		
+		XCTAssertNil(northWest)
+		XCTAssertNil(northEast)
+		XCTAssertNil(southWest)
+		XCTAssertNil(southEast)
+	}
+	
+	func testGetCompassFromTo() {
+		// Arrange
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [6, 0, 4],
+		 [7, 8, 5]]
+		let grid = Grid(matrix: matrix)
+		
+		// Act
+		let north = grid.getCompass(from: 6, to: 1)
+		let west = grid.getCompass(from: 8, to: 5)
+		let east = grid.getCompass(from: 2, to: 1)
+		let south = grid.getCompass(from: 6, to: 7)
+		
+		let northWest = grid.getCompass(from: 8, to: 4)
+		let northEast = grid.getCompass(from: 4, to: 2)
+		let southWest = grid.getCompass(from: 2, to: 4)
+		let southEast = grid.getCompass(from: 4, to: 8)
+		
+		// Assert
+		XCTAssertEqual(north, .north)
+		XCTAssertEqual(west, .west)
+		XCTAssertEqual(east, .east)
+		XCTAssertEqual(south, .south)
+		
+		XCTAssertNil(northWest)
+		XCTAssertNil(northEast)
+		XCTAssertNil(southWest)
+		XCTAssertNil(southEast)
+	}
 }
