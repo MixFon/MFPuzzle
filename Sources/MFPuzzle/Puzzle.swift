@@ -10,8 +10,8 @@ import Foundation
 public protocol _Puzzle {
 	///  Создает путь в котором содержится последовательность перемещений нуля
 	func createPath(board: Board?) -> [Compass]
-	/// Поиск решения, используя алгоритм A*
-	func searchSolutionWithHeap(board: Board, boardTarget: Board) -> Board?
+	/// Поиск решения, используя алгоритм A* с ограничением длины кучи
+	func searchSolutionWithHeap(board: Board, limiter: Int?, boardTarget: Board) -> Board?
 }
 
 final public class Puzzle: _Puzzle {
@@ -37,11 +37,10 @@ final public class Puzzle: _Puzzle {
 		}
 		return compasses
 	}
-	
-	/// Поиск решения, используя алгоритм A*
+
 	@discardableResult
-	public func searchSolutionWithHeap(board: Board, boardTarget: Board) -> Board? {
-		let heap = MFHeap<Board>(priorityFunction: {$0.f < $1.f})
+	public func searchSolutionWithHeap(board: Board, limiter: Int? = nil, boardTarget: Board) -> Board? {
+		let heap = MFHeap<Board>(limiter: limiter, priorityFunction: {$0.f < $1.f})
 		let heuristic = self.heuristic.getHeuristic(grid: board.grid, gridTarget: boardTarget.grid)
 		board.setF(heuristic: heuristic)
 		heap.insert(board)
