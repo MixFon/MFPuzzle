@@ -57,7 +57,6 @@ public final class Board {
 			let newBoard = Board(grid: newGrid)
 			newBoard.lavel = self.lavel + 1
 			newBoard.setF(heuristic: f)
-			newBoard.parent = self
 			childrens.append(newBoard)
 		}
 		return childrens

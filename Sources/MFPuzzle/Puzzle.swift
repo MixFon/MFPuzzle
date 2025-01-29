@@ -40,7 +40,7 @@ final public class Puzzle: _Puzzle {
 
 	@discardableResult
 	public func searchSolutionWithHeap(board: Board, limiter: Int? = nil, boardTarget: Board) -> Board? {
-		let heap = MFHeap<Board>(limiter: limiter, priorityFunction: {$0.f < $1.f})
+		let heap = MFLimitedHeap<Board>(limiter: limiter, priorityFunction: {$0.f < $1.f})
 		let heuristic = self.heuristic.getHeuristic(grid: board.grid, gridTarget: boardTarget.grid)
 		board.setF(heuristic: heuristic)
 		heap.insert(board)
@@ -53,9 +53,13 @@ final public class Puzzle: _Puzzle {
 				guard let endPoint = boardTarget.grid.coordinats[element] else { return nil }
 				return self?.heuristic.distance(point, endPoint)
 			}) else { continue }
-			for board in children {
-				if !visited.contains(board.hashValue) {
-					heap.insert(board)
+			for child in children {
+				if !visited.contains(child.hashValue) {
+					// Только если не было добавлен назначаем предка
+					child.parent = board
+					heap.insert(child) { deleteChild in
+						deleteChild?.parent = nil
+					}
 				}
 			}
 			visited.insert(board.hashValue)
