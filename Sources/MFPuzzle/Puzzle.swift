@@ -11,7 +11,7 @@ public protocol _Puzzle {
 	///  Создает путь в котором содержится последовательность перемещений нуля
 	func createPath(board: Board?) -> [Compass]
 	/// Поиск решения, используя алгоритм A* с ограничением длины кучи
-	func searchSolutionWithHeap(board: Board, limiter: Int?, boardTarget: Board) -> Board?
+	func searchSolutionWithHeap(board: Board, limiter: Int?, boardTarget: Board) async throws -> Board?
 }
 
 final public class Puzzle: _Puzzle {
@@ -39,13 +39,14 @@ final public class Puzzle: _Puzzle {
 	}
 
 	@discardableResult
-	public func searchSolutionWithHeap(board: Board, limiter: Int? = nil, boardTarget: Board) -> Board? {
+	public func searchSolutionWithHeap(board: Board, limiter: Int? = nil, boardTarget: Board) async throws -> Board? {
 		let heap = MFLimitedHeap<Board>(limiter: limiter, priorityFunction: {$0.f < $1.f})
 		let heuristic = self.heuristic.getHeuristic(grid: board.grid, gridTarget: boardTarget.grid)
 		board.setF(heuristic: heuristic)
 		heap.insert(board)
 		var visited = Set<Int>()
 		while let board = heap.extract() {
+			try Task.checkCancellation()
 			if board == boardTarget {
 				return board
 			}
