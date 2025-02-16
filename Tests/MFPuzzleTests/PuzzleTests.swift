@@ -22,7 +22,7 @@ final class PuzzleTest: XCTestCase {
     }
 	// MARK: Testing solution
 	
-	func testSolution4Iteration3x3() throws {
+	func testSolution4Iteration3x3() async throws {
 		// Arrange
 		let size = 3
 		let lavel = 4
@@ -47,14 +47,14 @@ final class PuzzleTest: XCTestCase {
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
-		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+		board = try await self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
 		
 		// Assert
 		XCTAssertNotNil(board)
 		XCTAssertEqual(board?.lavel, lavel)
 	}
 	
-	func testSolution18Iteration3x3() throws {
+	func testSolution18Iteration3x3() async throws {
 		// Arrange
 		let size = 3
 		let lavel = 18
@@ -79,14 +79,14 @@ final class PuzzleTest: XCTestCase {
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
-		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+		board = try await self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
 		
 		// Assert
 		XCTAssertNotNil(board)
 		XCTAssertEqual(board?.lavel, lavel)
 	}
 	
-	func testSolution23Iteration3x3() throws {
+	func testSolution23Iteration3x3() async throws {
 		// Arrange
 		let size = 3
 		let lavel = 24
@@ -111,14 +111,14 @@ final class PuzzleTest: XCTestCase {
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
-		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+		board = try await self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
 		
 		// Assert
 		XCTAssertNotNil(board)
 		XCTAssertEqual(board?.lavel, lavel)
 	}
 	
-	func testSolutionIteration4x4() throws {
+	func testSolutionIteration4x4() async throws {
 		// Arrange
 		let size = 4
 		let lavel = 220
@@ -144,7 +144,7 @@ final class PuzzleTest: XCTestCase {
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
-		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+		board = try await self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
 		
 		// Assert
 		XCTAssertNotNil(board)
@@ -152,7 +152,7 @@ final class PuzzleTest: XCTestCase {
 	}
 	
 	
-	func testSolutionIteration5x5() throws {
+	func testSolutionIteration5x5() async throws {
 		// Arrange
 		let size = 5
 		let lavel = 384
@@ -179,14 +179,53 @@ final class PuzzleTest: XCTestCase {
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
-		board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+		board = try await self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
 		
 		// Assert
 		XCTAssertNotNil(board)
 		XCTAssertEqual(board?.lavel, lavel)
 	}
 	
-    func testPerformanceSearchSolution3x3() throws {
+	func testCansaletionIteration5x5() async throws {
+		// Arrange
+		let size = 5
+		var board: Board?
+		let matrix =
+		"""
+		# This puzzle is solvable
+		5
+		15 18 11 10 24
+		12 13  1  7 14
+		 9 22 17  2  0
+		 8  6 16  5  4
+		23  3 20 21 19
+		"""
+		let checker = Checker()
+		let worker = MatrixWorker(checker: checker)
+		
+		let newMatrix = try worker.creationMatrix(text: matrix)
+		let newGrid = Grid(matrix: newMatrix)
+		let startBoard = Board(grid: newGrid)
+		
+		let targetMatrix = worker.createMatrixSnail(size: size)
+		let gridTarget = Grid(matrix: targetMatrix)
+		let targetBoard = Board(grid: gridTarget)
+		
+		// Act
+		let task = Task {
+			do {
+				board = try await self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+			} catch {
+				XCTAssertTrue(error is CancellationError)
+			}
+		}
+		task.cancel()
+		// Assert
+		XCTAssertNil(board)
+	}
+	
+	// Почему-то выполняется очень долго примерно 23 секунды
+    func testPerformanceSearchSolution3x3() async throws {
 		// Arrange
 		let size = 3
 		let matrix =
@@ -211,13 +250,18 @@ final class PuzzleTest: XCTestCase {
 		// Act
 		
 		// Assert
-        self.measure {
-			// Executed 1 test, with 0 failures (0 unexpected) in 0.960 (0.961) seconds
-			self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
-        }
-    }
+		self.measure {
+			let expectation = self.expectation(description: "Performance test")
+			Task {
+				// Executed 1 test, with 0 failures (0 unexpected) in 1.933 (1.934) seconds
+				try await self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+				expectation.fulfill()
+			}
+			wait(for: [expectation], timeout: 5)
+		}
+	}
 	
-	func testPerformanceSearchSolution4x4() throws {
+	func testPerformanceSearchSolution4x4() async throws {
 		// Arrange
 		let size = 4
 		let lavel = 210
@@ -243,17 +287,22 @@ final class PuzzleTest: XCTestCase {
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Assert
-		var board: Board? = nil
+
 		self.measure {
-			// Executed 1 test, with 0 failures (0 unexpected) in 1.933 (1.934) seconds
-			board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+			let expectation = self.expectation(description: "Performance test")
+			Task {
+				// Executed 1 test, with 0 failures (0 unexpected) in 1.933 (1.934) seconds
+				var board: Board? = nil
+				board = try await self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+				XCTAssertNotNil(board)
+				XCTAssertEqual(board?.lavel, lavel)
+				expectation.fulfill()
+			}
+			wait(for: [expectation], timeout: 5)
 		}
-		
-		XCTAssertNotNil(board)
-		XCTAssertEqual(board?.lavel, lavel)
 	}
 	
-    func testPerformanceSearchSolution5x5() throws {
+	func testPerformanceSearchSolution5x5() async throws {
 		// Arrange
 		let size = 5
 		let lavel = 434
@@ -281,15 +330,18 @@ final class PuzzleTest: XCTestCase {
 		// Act
 		
 		// Assert
-		var board: Board?
-        self.measure {
-			// Executed 50 tests, with 0 failures (0 unexpected) in 6.732 (6.741) seconds
-			board = self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
-        }
-		
-		// Assert
-		XCTAssertNotNil(board)
-		XCTAssertEqual(board?.lavel, lavel)
+		self.measure {
+			let expectation = self.expectation(description: "Performance test")
+			Task {
+				var board: Board? = nil
+				// Executed 50 tests, with 0 failures (0 unexpected) in 6.732 (6.741) seconds
+				board = try await self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+				XCTAssertNotNil(board)
+				XCTAssertEqual(board?.lavel, lavel)
+				expectation.fulfill()
+			}
+			wait(for: [expectation], timeout: 5)
+		}
     }
 	
 	func testCreatePath() {

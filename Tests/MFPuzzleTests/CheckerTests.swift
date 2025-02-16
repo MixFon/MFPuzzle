@@ -427,7 +427,7 @@ final class CheckerTest: XCTestCase {
 	
 	private func generateRangomSteps(matrix: Matrix) -> Matrix {
 		let grid = Grid(matrix: matrix)
-		let countSteps = Int.random(in: 1000...10000)
+		let countSteps = Int.random(in: 1000...100000)
 		for _ in 0...countSteps {
 			if let randomNeighbors = grid.getNeighbors(number: 0)?.randomElement() {
 				grid.swapNumber(number: randomNeighbors)
@@ -756,12 +756,5 @@ final class CheckerTest: XCTestCase {
 		XCTAssertNotEqual(summInversionOne, summInversionTwo)
 		XCTAssertNotEqual(summInversionTwo, summInversionThree)
 	}
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
 
 }
