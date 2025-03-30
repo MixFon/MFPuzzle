@@ -7,12 +7,12 @@
 
 import Foundation
 
-open class Grid3D {
+open class Grid3D<T: Hashable> {
 	
-	public private(set) var cube: [Matrix]
-	private(set) var coordinats = [MatrixElement: Grid3DPoint]()
+	public private(set) var cube: [[[T]]]
+	private(set) var coordinats = [T: Grid3DPoint]()
 	
-	init(cube: [Matrix]) {
+	init(cube: [[[T]]]) {
 		self.cube = cube
 		setCoordinats()
 	}
@@ -39,18 +39,18 @@ open class Grid3D {
 	}
 	
 	/// Возвращает координаты ячейки с номером.
-	public func getPoint(number: MatrixElement) -> Grid3DPoint? {
+	public func getPoint(number: T) -> Grid3DPoint? {
 		return self.coordinats[number]
 	}
 	
 	/// Возвращает номер по координате
-	public func getNumber(point: Grid3DPoint) -> MatrixElement? {
+	public func getNumber(point: Grid3DPoint) -> T? {
 		guard isInsidea(point: point) else { return nil }
 		return self.cube[Int(point.z)][Int(point.x)][Int(point.y)]
 	}
 	
 	/// Меняет два номера местами.
-	public func swapNumber(number: MatrixElement, target: MatrixElement) {
+	public func swapNumber(number: T, target: T) {
 		guard let coordinatsNumber = getPoint(number: number) else { return }
 		guard let coordinatsTarget = getPoint(number: target) else { return }
 		self.cube[Int(coordinatsNumber.z)][Int(coordinatsNumber.x)][Int(coordinatsNumber.y)] = target
