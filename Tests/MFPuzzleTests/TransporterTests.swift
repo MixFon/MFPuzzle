@@ -110,23 +110,49 @@ final class TransporterTests: XCTestCase {
 		XCTAssertEqual(shortestPath[15], [.north, .east])
 	}
 	
-	func testCreateDirections() {
+	func testCreateDirectionsOnePath() {
 		// Arrange
 		let matrix: Matrix =
 		[[1, 2, 3],
 		 [6, 5, 4],
-		 [7, 8, 253]]
+		 [7, 8, 0]]
 		let solution: Matrix =
-		[[253, 7, 3],
+		[[0, 2, 3],
 		 [6, 5, 4],
-		 [2, 8, 1]]
+		 [7, 8, 1]]
 		let transporter = Transporter()
 
 		// Act
 		let paths = transporter.createDirections(from: matrix, to: solution)
-		print(paths)
 		
 		// Assert
-		
+		XCTAssertEqual(paths[0], nil)
+		if let path = paths[1] {
+			let dict = createDictionaryDirectionCount(directions: path)
+			XCTAssertEqual(dict[.up], 1)
+			XCTAssertEqual(dict[.down], 1)
+			XCTAssertEqual(dict[.west], nil)
+			XCTAssertEqual(dict[.east], 2)
+			XCTAssertEqual(dict[.north], nil)
+			XCTAssertEqual(dict[.south], 2)
+			XCTAssertEqual(dict[.pause], nil)
+		} else {
+			XCTFail()
+		}
+		XCTAssertEqual(paths[2], [])
+		XCTAssertEqual(paths[3], [])
+		XCTAssertEqual(paths[4], [])
+		XCTAssertEqual(paths[5], [])
+		XCTAssertEqual(paths[6], [])
+		XCTAssertEqual(paths[7], [])
+		XCTAssertEqual(paths[8], [])
+	}
+	
+	private func createDictionaryDirectionCount(directions: [Direction]) -> [Direction: Int] {
+		var directionCount: [Direction: Int] = [:]
+		for direction in directions {
+			directionCount[direction, default: 0] += 1
+		}
+		return directionCount
 	}
 }
