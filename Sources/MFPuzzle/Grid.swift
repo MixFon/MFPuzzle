@@ -46,16 +46,16 @@ open class Grid {
 		return self.coordinats[number]
 	}
 	
-	/// Меняет местами номер и пустую клетку местами.
-	public func swapNumber(number: MatrixElement) {
+	/// Меняет местами два указанных номера
+	public func swapNumber(number: MatrixElement, target: MatrixElement = 0) {
 		guard let coordinatsNumber = getPoint(number: number) else { return }
-		guard let coordinatsZero = getPoint(number: 0) else { return }
-		self.matrix[Int(coordinatsNumber.x)][Int(coordinatsNumber.y)] = 0
-		self.matrix[Int(coordinatsZero.x)][Int(coordinatsZero.y)] = number
-		self.coordinats[number] = coordinatsZero
-		self.coordinats[0] = coordinatsNumber
+		guard let coordinatsTarget = getPoint(number: target) else { return }
+		self.matrix[Int(coordinatsNumber.x)][Int(coordinatsNumber.y)] = target
+		self.matrix[Int(coordinatsTarget.x)][Int(coordinatsTarget.y)] = number
+		self.coordinats[number] = coordinatsTarget
+		self.coordinats[target] = coordinatsNumber
 	}
-	
+		
 	/// Возвращает номера соседних ячеек.
 	public func getNeighbors(number: MatrixElement) -> [MatrixElement]? {
 		var result = [MatrixElement]()
@@ -124,7 +124,7 @@ open class Grid {
 	public func isInsidea(point: GridPoint) -> Bool {
 		let x = Int(point.x)
 		let y = Int(point.y)
-		return x < self.size && x >= 0 && y < self.size && y >= 0
+		return isInsidea(x: x, y: y)
 	}
 }
 
