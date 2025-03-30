@@ -6,7 +6,7 @@
 //
 
 public typealias Matrix = [[MatrixElement]]
-public typealias MatrixElement = UInt8
+public typealias MatrixElement = Int8
 
 public protocol _MatrixWorker {
     func creationMatrix(text: String) throws -> Matrix
