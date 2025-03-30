@@ -276,6 +276,12 @@ final class GridTests: XCTestCase {
 		XCTAssertEqual(grid.matrix[1][2], 0)
 		XCTAssertEqual(grid.matrix[0][1], 14)
 		
+		grid.swapNumber(number: 6, target: 11)
+		XCTAssertEqual(grid.matrix[3][0], 2)
+		XCTAssertEqual(grid.matrix[1][2], 0)
+		XCTAssertEqual(grid.matrix[0][1], 14)
+		XCTAssertEqual(grid.matrix[2][3], 11)
+		XCTAssertEqual(grid.matrix[2][0], 6)
 	}
 	
 	func testGetNumberWest() {
@@ -439,6 +445,41 @@ final class GridTests: XCTestCase {
 		XCTAssertEqual(grid.isInsidea(x: 0, y: -1), false)
 		XCTAssertEqual(grid.isInsidea(x: 1, y: -1), false)
 		XCTAssertEqual(grid.isInsidea(x: 2, y: -1), false)
+	}
+	
+	func testIsInsideaPoint() {
+		// Arrange
+		let matrix: Matrix =
+		[[1, 2, 3],
+		 [4, 5, 6],
+		 [7, 0, 8]]
+		let grid = Grid(matrix: matrix)
+		
+		// Act
+		
+		// Assert
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 0, y: 0)), true)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 0, y: 1)), true)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 0, y: 2)), true)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 1, y: 0)), true)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 1, y: 1)), true)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 1, y: 2)), true)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 2, y: 0)), true)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 2, y: 1)), true)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 2, y: 2)), true)
+		
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: -1, y: 0)), false)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: -1, y: 1)), false)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: -1, y: 2)), false)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 3, y: 0)), false)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 3, y: 1)), false)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 3, y: 2)), false)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 0, y: 3)), false)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 1, y: 3)), false)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 2, y: 3)), false)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 0, y: -1)), false)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 1, y: -1)), false)
+		XCTAssertEqual(grid.isInsidea(point: GridPoint(x: 2, y: -1)), false)
 	}
 
 	
