@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Grid3DPoint.swift
 //  MFPuzzle
 //
 //  Created by Михаил Фокин on 29.03.2025.
