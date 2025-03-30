@@ -49,16 +49,19 @@ final class Box {
 	}
 	
 	func deleteDirectionForShortPath(_ direction: Direction) {
-		if let index = self.shortestPath.firstIndex(of: direction) {
-			self.shortestPath.remove(at: index)
-		}
+		let index = self.shortestPath.firstIndex(of: direction)!
+		self.shortestPath.remove(at: index)
+//		if let index = self.shortestPath.firstIndex(of: direction) {
+//			self.shortestPath.remove(at: index)
+//		}
 	}
 }
 
 final public class Transporter: _Transporter {
 	
 	private func printCube(cube: [Matrix]) {
-		for one in cube {
+		for (i, one) in cube.enumerated() {
+			print("lavel \(i)")
 			for row in one {
 				print(row)
 			}
@@ -69,15 +72,13 @@ final public class Transporter: _Transporter {
 	public func createDirections(from current: Matrix, to solution: Matrix) -> [MatrixElement : [Direction]] {
 		if current.isEmpty || solution.isEmpty { return [:] }
 		var cube = createCube(size: current[0].count)
-		cube[1] = current
+		cube[cube.count / 2] = current
 		let grid3D = Grid3D(cube: cube)
 		let shortestPath = createShortestPath(from: current, to: solution)
 		let boxes: [Box] = shortestPath.map { Box(number: $0.key, shortestPath: $0.value) }
 		while !boxes.allSatisfy( { $0.shortestPath.isEmpty }) {
-			printCube(cube: grid3D.cube)
 			for box in boxes {
 				if box.shortestPath.isEmpty { continue }
-				print(box.number, box.path)
 				isAvalableDirectionOnMiddle(box: box, grid3D: grid3D)
 			}
 		}
@@ -89,13 +90,13 @@ final public class Transporter: _Transporter {
 	}
 	
 	private func createCube(size: Int) -> [Matrix] {
-		var value = 100
-		var cube: [Matrix] = Array(repeating: Array(repeating: Array(repeating: 0, count: size), count: size), count: 3)
+		var value = 0
+		var cube: [Matrix] = Array(repeating: Array(repeating: Array(repeating: 0, count: size), count: size), count: 5)
 		for (k, matrix) in cube.enumerated() {
 			for (i, row) in matrix.enumerated() {
 				for (j, _) in row.enumerated() {
+					value -= 1
 					cube[k][i][j] = MatrixElement(value)
-					value += 1
 				}
 			}
 		}
@@ -104,23 +105,24 @@ final public class Transporter: _Transporter {
 	
 	/// true если нашел на среднем уровне направдение.
 	/// false если на среднем уровне нельзя сделать шаг
-	private func isAvalableDirectionOnMiddle(box: Box, grid3D: Grid3D) {
+	private func isAvalableDirectionOnMiddle(box: Box, grid3D: Grid3D<MatrixElement>) {
 		guard let currentPoint = grid3D.getPoint(number: box.number) else { return }
 		let availableDirections = box.availableDirections
 		for availableDirection in availableDirections {
 			let nextPoint = currentPoint + getNextPoint(availableDirection)
-			if let target = grid3D.getNumber(point: nextPoint), target > 9 {
+			if let target = grid3D.getNumber(point: nextPoint), target <= 0 {
 				box.path.append(availableDirection)
 				box.deleteDirectionForShortPath(availableDirection)
 				grid3D.swapNumber(number: box.number, target: target)
 				return
 			}
 		}
-		for availableDirection in availableDirections{
+		for availableDirection in availableDirections {
+			if availableDirection == .up || availableDirection == .down { continue }
 			let upPoint = currentPoint + getNextPoint(.up)
-			if !grid3D.isInsidea(point: upPoint) { break }
+			if !grid3D.isInsidea(point: upPoint) { continue }
 			let nextPoint = upPoint + getNextPoint(availableDirection)
-			if let target = grid3D.getNumber(point: nextPoint), target > 9 {
+			if let target = grid3D.getNumber(point: nextPoint), target <= 0 {
 				box.path.append(.up)
 				box.path.append(availableDirection)
 				box.shortestPath.append(.down)
@@ -129,11 +131,12 @@ final public class Transporter: _Transporter {
 				return
 			}
 		}
-		for availableDirection in availableDirections{
+		for availableDirection in availableDirections {
+			if availableDirection == .up || availableDirection == .down { continue }
 			let donwPoint = currentPoint + getNextPoint(.down)
-			if !grid3D.isInsidea(point: donwPoint) { break }
+			if !grid3D.isInsidea(point: donwPoint) { continue }
 			let nextPoint = donwPoint + getNextPoint(availableDirection)
-			if let target = grid3D.getNumber(point: nextPoint), target > 9 {
+			if let target = grid3D.getNumber(point: nextPoint), target <= 0 {
 				box.path.append(.down)
 				box.path.append(availableDirection)
 				box.shortestPath.append(.up)
