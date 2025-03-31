@@ -25,7 +25,7 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let neighbors = grid.getNeighbors(number: 0)
@@ -46,7 +46,7 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [0,  11, 15,  6],
 		 [10,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let neighbors = grid.getNeighbors(number: 0)
@@ -67,7 +67,7 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  6, 15,  0],
 		 [10,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let neighbors = grid.getNeighbors(number: 0)
@@ -87,7 +87,7 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  2, 15,  6],
 		 [10,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let neighbors = grid.getNeighbors(number: 0)
@@ -107,7 +107,7 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  9, 15,  6],
 		 [10,  0,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let neighbors = grid.getNeighbors(number: 0)
@@ -127,7 +127,7 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  1, 15,  6],
 		 [10,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let neighbors = grid.getNeighbors(number: 0)
@@ -146,7 +146,7 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  4, 15,  6],
 		 [10,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let neighbors = grid.getNeighbors(number: 0)
@@ -165,7 +165,7 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  7, 15,  6],
 		 [10,  9,  8,  0]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let neighbors = grid.getNeighbors(number: 0)
@@ -184,7 +184,7 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11, 10, 15,  6],
 		 [ 0,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let neighbors = grid.getNeighbors(number: 0)
@@ -203,7 +203,7 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11, 10, 15,  6],
 		 [16,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let neighbors = grid.getNeighbors(number: 0)
@@ -219,7 +219,7 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11, 10, 15,  6],
 		 [16,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		
@@ -247,11 +247,11 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11, 10, 15,  6],
 		 [16,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
-		grid.swapNumber(number: 2)
-		grid.swapNumber(number: 21)
+		grid.swapNumber(number: 2, target: 0)
+		grid.swapNumber(number: 21, target: 0)
 		
 		// Assert
 		XCTAssertEqual(matrix, grid.matrix)
@@ -264,14 +264,14 @@ final class GridTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11, 10, 15,  6],
 		 [ 0,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Assert
-		grid.swapNumber(number: 2)
+		grid.swapNumber(number: 2, target: 0)
 		XCTAssertEqual(grid.matrix[0][1], 0)
 		XCTAssertEqual(grid.matrix[3][0], 2)
 		
-		grid.swapNumber(number: 14)
+		grid.swapNumber(number: 14, target: 0)
 		XCTAssertEqual(grid.matrix[3][0], 2)
 		XCTAssertEqual(grid.matrix[1][2], 0)
 		XCTAssertEqual(grid.matrix[0][1], 14)
@@ -290,7 +290,7 @@ final class GridTests: XCTestCase {
 		[[1, 2, 3],
 		 [4, 0, 6],
 		 [7, 5, 8]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let number = grid.getNumber(for: .west)
@@ -306,7 +306,7 @@ final class GridTests: XCTestCase {
 		[[1, 2, 3],
 		 [4, 6, 0],
 		 [7, 5, 8]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let number = grid.getNumber(for: .west)
@@ -322,7 +322,7 @@ final class GridTests: XCTestCase {
 		[[1, 2, 3],
 		 [4, 0, 6],
 		 [7, 5, 8]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let number = grid.getNumber(for: .east)
@@ -338,7 +338,7 @@ final class GridTests: XCTestCase {
 		[[1, 2, 3],
 		 [0, 4, 6],
 		 [7, 5, 8]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let number = grid.getNumber(for: .east)
@@ -354,7 +354,7 @@ final class GridTests: XCTestCase {
 		[[1, 2, 3],
 		 [4, 0, 6],
 		 [7, 5, 8]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let number = grid.getNumber(for: .north)
@@ -370,7 +370,7 @@ final class GridTests: XCTestCase {
 		[[1, 0, 3],
 		 [4, 2, 6],
 		 [7, 5, 8]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let number = grid.getNumber(for: .north)
@@ -386,7 +386,7 @@ final class GridTests: XCTestCase {
 		[[1, 2, 3],
 		 [4, 0, 6],
 		 [7, 5, 8]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let number = grid.getNumber(for: .south)
@@ -402,7 +402,7 @@ final class GridTests: XCTestCase {
 		[[1, 2, 3],
 		 [4, 5, 6],
 		 [7, 0, 8]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let number = grid.getNumber(for: .south)
@@ -418,7 +418,7 @@ final class GridTests: XCTestCase {
 		[[1, 2, 3],
 		 [4, 5, 6],
 		 [7, 0, 8]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		
@@ -453,7 +453,7 @@ final class GridTests: XCTestCase {
 		[[1, 2, 3],
 		 [4, 5, 6],
 		 [7, 0, 8]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		
@@ -489,7 +489,7 @@ final class GridTests: XCTestCase {
 		[[1, 2, 3],
 		 [6, 0, 4],
 		 [7, 8, 5]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let north = grid.getCompass(for: 2)
@@ -520,7 +520,7 @@ final class GridTests: XCTestCase {
 		[[1, 2, 3],
 		 [6, 0, 4],
 		 [7, 8, 5]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		// Act
 		let north = grid.getCompass(from: 6, to: 1)

@@ -16,12 +16,12 @@ final class HeuristicTests: XCTestCase {
 		[[1, 2, 3],
 		 [4, 5, 6],
 		 [7, 8, 0]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix, zero: 0)
 		let matrixSolution: Matrix =
 		[[1, 2, 3],
 		 [4, 5, 6],
 		 [7, 8, 0]]
-		let gridSolution = Grid(matrix: matrixSolution)
+		let gridSolution = Grid(matrix: matrixSolution, zero: 0)
 		let heuristic = Heuristic.manhattan
 		
 		// Act
@@ -37,12 +37,12 @@ final class HeuristicTests: XCTestCase {
 		[[1, 2, 3],
 		 [4, 5, 6],
 		 [7, 0, 8]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix, zero: 0)
 		let matrixSolution: Matrix =
 		[[1, 2, 3],
 		 [4, 5, 6],
 		 [7, 8, 0]]
-		let gridSolution = Grid(matrix: matrixSolution)
+		let gridSolution = Grid(matrix: matrixSolution, zero: 0)
 		let heuristic = Heuristic.manhattan
 		
 		// Act
@@ -58,12 +58,12 @@ final class HeuristicTests: XCTestCase {
 		[[1, 2, 3],
 		 [4, 0, 6],
 		 [7, 5, 8]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix, zero: 0)
 		let matrixSolution: Matrix =
 		[[1, 2, 3],
 		 [4, 5, 6],
 		 [7, 8, 0]]
-		let gridSolution = Grid(matrix: matrixSolution)
+		let gridSolution = Grid(matrix: matrixSolution, zero: 0)
 		let heuristic = Heuristic.manhattan
 		
 		// Act
@@ -79,12 +79,12 @@ final class HeuristicTests: XCTestCase {
 		[[0, 1, 2],
 		 [4, 6, 3],
 		 [7, 5, 8]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix, zero: 0)
 		let matrixSolution: Matrix =
 		[[1, 2, 3],
 		 [4, 5, 6],
 		 [7, 8, 0]]
-		let gridSolution = Grid(matrix: matrixSolution)
+		let gridSolution = Grid(matrix: matrixSolution, zero: 0)
 		let heuristic = Heuristic.manhattan
 		
 		// Act
@@ -100,12 +100,12 @@ final class HeuristicTests: XCTestCase {
 		[[5, 4, 2],
 		 [0, 1, 3],
 		 [6, 7, 8]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid(matrix: matrix, zero: 0)
 		let matrixSolution: Matrix =
 		[[1, 2, 3],
 		 [4, 5, 6],
 		 [7, 8, 0]]
-		let gridSolution = Grid(matrix: matrixSolution)
+		let gridSolution = Grid(matrix: matrixSolution, zero: 0)
 		let heuristic = Heuristic.manhattan
 		
 		// Act

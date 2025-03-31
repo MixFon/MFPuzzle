@@ -8,9 +8,10 @@
 import Foundation
 
 /// Класс для работы с матрицей
-open class Grid {
-	public private(set) var matrix: Matrix
-	private(set) var coordinats = [MatrixElement: GridPoint]()
+open class Grid<T : Hashable> {
+	public private(set) var zero: T
+	public private(set) var matrix: [[T]]
+	private(set) var coordinats = [T: GridPoint]()
 	
 	public var size: Int {
 		self.matrix.count
@@ -21,13 +22,15 @@ open class Grid {
 	}
 	
 	/// Создание доски на основе матрицы и размера
-	public init(matrix: Matrix) {
+	public init(matrix: [[T]], zero: T = 0) {
+		self.zero = zero
 		self.matrix = matrix
 		setCoordinats()
 	}
 	
 	/// Конструктор копирования
-	public init(from: Grid) {
+	public init(from: Grid, zero: T = 0) {
+		self.zero = zero
 		self.matrix = from.matrix
 		self.coordinats = from.coordinats
 	}
@@ -42,12 +45,12 @@ open class Grid {
 	}
 	
 	/// Возвращает координаты ячейки с номером.
-	public func getPoint(number: MatrixElement) -> GridPoint? {
+	public func getPoint(number: T) -> GridPoint? {
 		return self.coordinats[number]
 	}
 	
 	/// Меняет местами два указанных номера
-	public func swapNumber(number: MatrixElement, target: MatrixElement = 0) {
+	public func swapNumber(number: T, target: T = 0) {
 		guard let coordinatsNumber = getPoint(number: number) else { return }
 		guard let coordinatsTarget = getPoint(number: target) else { return }
 		self.matrix[Int(coordinatsNumber.x)][Int(coordinatsNumber.y)] = target
@@ -57,8 +60,8 @@ open class Grid {
 	}
 		
 	/// Возвращает номера соседних ячеек.
-	public func getNeighbors(number: MatrixElement) -> [MatrixElement]? {
-		var result = [MatrixElement]()
+	public func getNeighbors(number: T) -> [T]? {
+		var result = [T]()
 		guard let coordinats = self.coordinats[number] else { return nil }
 		let x = Int(coordinats.x)
 		let y = Int(coordinats.y)
@@ -78,14 +81,14 @@ open class Grid {
 	}
 	
 	/// Определяет, являются ли два номера соседними
-	public func isNeighbors(one: MatrixElement, two: MatrixElement) -> Bool? {
+	public func isNeighbors(one: T, two: T) -> Bool? {
 		if self.coordinats[one] == nil || self.coordinats[two] == nil { return nil }
 		let neighbors = getNeighbors(number: one)
 		return neighbors?.contains(two)
 	}
 	
-	public func getNumber(for compass: Compass) -> MatrixElement? {
-		guard let zero = self.coordinats[0] else { return nil }
+	public func getNumber(for compass: Compass) -> T? {
+		guard let zero = self.coordinats[self.zero] else { return nil }
 		let x = Int(zero.x)
 		let y = Int(zero.y)
 		switch compass {
@@ -103,12 +106,12 @@ open class Grid {
 	}
 	
 	/// Позвращает направление от нуля до номера number, если они являются соседями
-	public func getCompass(for number: MatrixElement) -> Compass? {
-		return getCompass(from: 0, to: number)
+	public func getCompass(for number: T) -> Compass? {
+		return getCompass(from: self.zero, to: number)
 	}
 	
 	/// Возвращает компас от элемента from до элемента to, если они являются соседями
-	public func getCompass(from: MatrixElement, to: MatrixElement) -> Compass? {
+	public func getCompass(from: T, to: T) -> Compass? {
 		guard isNeighbors(one: from, two: to) == true else { return nil }
 		let startPoint = getPoint(number: to)
 		let endPoint = getPoint(number: from)

@@ -39,11 +39,11 @@ final class PuzzleTest: XCTestCase {
 		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
-		let newGrid = Grid(matrix: newMatrix)
+		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
 		let startBoard = Board(grid: newGrid)
 		
 		let targetMatrix = worker.createMatrixSnail(size: size)
-		let gridTarget = Grid(matrix: targetMatrix)
+		let gridTarget = Grid<MatrixElement>(matrix: targetMatrix, zero: 0)
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
@@ -71,11 +71,11 @@ final class PuzzleTest: XCTestCase {
 		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
-		let newGrid = Grid(matrix: newMatrix)
+		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
 		let startBoard = Board(grid: newGrid)
 		
 		let targetMatrix = worker.createMatrixSnail(size: size)
-		let gridTarget = Grid(matrix: targetMatrix)
+		let gridTarget = Grid<MatrixElement>(matrix: targetMatrix, zero: 0)
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
@@ -103,11 +103,11 @@ final class PuzzleTest: XCTestCase {
 		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
-		let newGrid = Grid(matrix: newMatrix)
+		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
 		let startBoard = Board(grid: newGrid)
 		
 		let targetMatrix = worker.createMatrixSnail(size: size)
-		let gridTarget = Grid(matrix: targetMatrix)
+		let gridTarget = Grid<MatrixElement>(matrix: targetMatrix, zero: 0)
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
@@ -136,11 +136,11 @@ final class PuzzleTest: XCTestCase {
 		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
-		let newGrid = Grid(matrix: newMatrix)
+		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
 		let startBoard = Board(grid: newGrid)
 		
 		let targetMatrix = worker.createMatrixSnail(size: size)
-		let gridTarget = Grid(matrix: targetMatrix)
+		let gridTarget = Grid<MatrixElement>(matrix: targetMatrix, zero: 0)
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
@@ -171,11 +171,11 @@ final class PuzzleTest: XCTestCase {
 		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
-		let newGrid = Grid(matrix: newMatrix)
+		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
 		let startBoard = Board(grid: newGrid)
 		
 		let targetMatrix = worker.createMatrixSnail(size: size)
-		let gridTarget = Grid(matrix: targetMatrix)
+		let gridTarget = Grid<MatrixElement>(matrix: targetMatrix, zero: 0)
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
@@ -204,11 +204,11 @@ final class PuzzleTest: XCTestCase {
 		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
-		let newGrid = Grid(matrix: newMatrix)
+		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
 		let startBoard = Board(grid: newGrid)
 		
 		let targetMatrix = worker.createMatrixSnail(size: size)
-		let gridTarget = Grid(matrix: targetMatrix)
+		let gridTarget = Grid<MatrixElement>(matrix: targetMatrix, zero: 0)
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
@@ -240,11 +240,11 @@ final class PuzzleTest: XCTestCase {
 		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
-		let newGrid = Grid(matrix: newMatrix)
+		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
 		let startBoard = Board(grid: newGrid)
 		
 		let targetMatrix = worker.createMatrixSnail(size: size)
-		let gridTarget = Grid(matrix: targetMatrix)
+		let gridTarget = Grid<MatrixElement>(matrix: targetMatrix, zero: 0)
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
@@ -279,11 +279,11 @@ final class PuzzleTest: XCTestCase {
 		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
-		let newGrid = Grid(matrix: newMatrix)
+		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
 		let startBoard = Board(grid: newGrid)
 		
 		let targetMatrix = worker.createMatrixSnail(size: size)
-		let gridTarget = Grid(matrix: targetMatrix)
+		let gridTarget = Grid<MatrixElement>(matrix: targetMatrix, zero: 0)
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Assert
@@ -320,11 +320,11 @@ final class PuzzleTest: XCTestCase {
 		let worker = MatrixWorker(checker: checker)
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
-		let newGrid = Grid(matrix: newMatrix)
+		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
 		let startBoard = Board(grid: newGrid)
 		
 		let targetMatrix = worker.createMatrixSnail(size: size)
-		let gridTarget = Grid(matrix: targetMatrix)
+		let gridTarget = Grid<MatrixElement>(matrix: targetMatrix, zero: 0)
 		let targetBoard = Board(grid: gridTarget)
 		
 		// Act
@@ -382,9 +382,9 @@ final class PuzzleTest: XCTestCase {
 		[[1, 2, 3],
 		 [6, 5, 4],
 		 [7, 8, 0]]
-		var board = Board(grid: Grid(matrix: matrix))
+		var board = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 		for matrix in matrixes {
-			let newBoard = Board(grid: Grid(matrix: matrix))
+			let newBoard = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 			newBoard.parent = board
 			board = newBoard
 		}
@@ -409,9 +409,9 @@ final class PuzzleTest: XCTestCase {
 		[[1, 2, 3],
 		 [6, 5, 4],
 		 [7, 8, 0]]
-		var board = Board(grid: Grid(matrix: matrix))
+		var board = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 		for matrix in matrixes {
-			let newBoard = Board(grid: Grid(matrix: matrix))
+			let newBoard = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 			newBoard.parent = board
 			board = newBoard
 		}
@@ -436,9 +436,9 @@ final class PuzzleTest: XCTestCase {
 		[[1, 2, 3],
 		 [6, 0, 4],
 		 [7, 5, 8]]
-		var board = Board(grid: Grid(matrix: matrix))
+		var board = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 		for matrix in matrixes {
-			let newBoard = Board(grid: Grid(matrix: matrix))
+			let newBoard = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 			newBoard.parent = board
 			board = newBoard
 		}
@@ -463,9 +463,9 @@ final class PuzzleTest: XCTestCase {
 		[[1, 2, 3],
 		 [6, 0, 4],
 		 [7, 5, 8]]
-		var board = Board(grid: Grid(matrix: matrix))
+		var board = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 		for matrix in matrixes {
-			let newBoard = Board(grid: Grid(matrix: matrix))
+			let newBoard = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 			newBoard.parent = board
 			board = newBoard
 		}
@@ -490,9 +490,9 @@ final class PuzzleTest: XCTestCase {
 		[[1, 2, 3],
 		 [6, 0, 4],
 		 [7, 5, 8]]
-		var board = Board(grid: Grid(matrix: matrix))
+		var board = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 		for matrix in matrixes {
-			let newBoard = Board(grid: Grid(matrix: matrix))
+			let newBoard = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 			newBoard.parent = board
 			board = newBoard
 		}

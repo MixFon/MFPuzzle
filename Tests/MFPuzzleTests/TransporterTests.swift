@@ -20,11 +20,11 @@ final class TransporterTests: XCTestCase {
 
 	func testCreateShortestPathSimple() {
 		// Arrange
-		let matrix: Matrix =
+		let matrix: [[Int]] =
 		[[1, 2, 3],
 		 [6, 5, 4],
 		 [7, 8, 0]]
-		let solution: Matrix =
+		let solution: [[Int]] =
 		[[2, 3, 4],
 		 [1, 6, 8],
 		 [7, 5, 0]]
@@ -47,11 +47,11 @@ final class TransporterTests: XCTestCase {
 	
 	func testCreateShortestPath3x3() {
 		// Arrange
-		let matrix: Matrix =
+		let matrix: [[Int]] =
 		[[1, 2, 3],
 		 [6, 5, 4],
 		 [7, 8, 0]]
-		let solution: Matrix =
+		let solution: [[Int]] =
 		[[4, 8, 6],
 		 [3, 7, 0],
 		 [2, 1, 5]]
@@ -74,13 +74,13 @@ final class TransporterTests: XCTestCase {
 	
 	func testCreateShortestPath_4x4() {
 		// Arrange
-		let matrix: Matrix =
+		let matrix: [[Int]] =
 		[[ 1,  2,  3,  4],
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
 		
-		let solution: Matrix =
+		let solution: [[Int]] =
 		[[ 4,  8, 12,  0],
 		 [ 3,  7, 11, 15],
 		 [ 2,  6, 10, 14],
@@ -112,11 +112,11 @@ final class TransporterTests: XCTestCase {
 	
 	func testCreateDirectionsOnePath() {
 		// Arrange
-		let matrix: Matrix =
+		let matrix: [[Int]] =
 		[[1, 2, 3],
 		 [6, 5, 4],
 		 [7, 8, 0]]
-		let solution: Matrix =
+		let solution: [[Int]] =
 		[[0, 2, 3],
 		 [6, 5, 4],
 		 [7, 8, 1]]
@@ -146,6 +146,41 @@ final class TransporterTests: XCTestCase {
 		XCTAssertEqual(paths[6], [])
 		XCTAssertEqual(paths[7], [])
 		XCTAssertEqual(paths[8], [])
+	}
+	
+	func testCreateDirectionsRandom() {
+		// Arrange
+		let matrix: [[Int]] =
+		[[1, 2, 3],
+		 [6, 5, 4],
+		 [7, 8, 0]]
+		let randorizer = MatrixRondomazer<Int>()
+		let randomMatrix = randorizer.generateRangomSteps(matrix: matrix, zero: 0)
+		let solution: [[Int]] =
+		[[0, 2, 3],
+		 [6, 5, 4],
+		 [7, 8, 1]]
+		let transporter = Transporter()
+
+		// Act
+		let paths = transporter.createDirections(from: randomMatrix, to: solution)
+		let shortestPaths = transporter.createShortestPath(from: randomMatrix, to: solution)
+
+		// Assert
+		XCTAssertEqual(paths[0], nil)
+		for i in 1...8 {
+			if let path = paths[i], let shortestPath = shortestPaths[i] {
+				let dict = createDictionaryDirectionCount(directions: path)
+				let dictSortestPath = createDictionaryDirectionCount(directions: shortestPath)
+				XCTAssertEqual(dict[.up], dict[.down])
+				XCTAssertEqual(dict[.west], dictSortestPath[.west])
+				XCTAssertEqual(dict[.east], dictSortestPath[.east])
+				XCTAssertEqual(dict[.north], dictSortestPath[.north])
+				XCTAssertEqual(dict[.south], dictSortestPath[.south])
+			} else {
+				XCTFail()
+			}
+		}
 	}
 	
 	private func createDictionaryDirectionCount(directions: [Direction]) -> [Direction: Int] {

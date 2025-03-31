@@ -24,7 +24,7 @@ final class BoardTests: XCTestCase {
 		[[1, 2, 3],
 		 [9, 0, 4],
 		 [7, 6, 5]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		let board = Board(grid: grid)
 		
 		// Act
@@ -40,7 +40,7 @@ final class BoardTests: XCTestCase {
 		[[1, 2, 3],
 		 [9, 0, 4],
 		 [7, 6, 5]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		let board = Board(grid: grid)
 		
 		// Act
@@ -59,7 +59,7 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		let board = Board(grid: grid)
 		
 		// Act
@@ -76,7 +76,7 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		
 		
 		// Act
@@ -95,7 +95,7 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		let board = Board(grid: grid)
 		
 		let matrixUp: Matrix =
@@ -103,7 +103,7 @@ final class BoardTests: XCTestCase {
 		 [12,  0, 14,  5],
 		 [11, 13, 15,  6],
 		 [10,  9,  8,  7]]
-		let gridUp = Grid(matrix: matrixUp)
+		let gridUp = Grid<MatrixElement>(matrix: matrixUp, zero: 0)
 		let boardUp = Board(grid: gridUp)
 		
 		let matrixLeft: Matrix =
@@ -111,7 +111,7 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [ 0, 11, 15,  6],
 		 [10,  9,  8,  7]]
-		let gridLeft = Grid(matrix: matrixLeft)
+		let gridLeft = Grid<MatrixElement>(matrix: matrixLeft, zero: 0)
 		let boardLeft = Board(grid: gridLeft)
 		
 		let matrixRight: Matrix =
@@ -119,7 +119,7 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11, 15,  0,  6],
 		 [10,  9,  8,  7]]
-		let gridRight = Grid(matrix: matrixRight)
+		let gridRight = Grid<MatrixElement>(matrix: matrixRight, zero: 0)
 		let boardRight = Board(grid: gridRight)
 		
 		let matrixBottom: Matrix =
@@ -127,7 +127,7 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  9, 15,  6],
 		 [10,  0,  8,  7]]
-		let gridBottom = Grid(matrix: matrixBottom)
+		let gridBottom = Grid<MatrixElement>(matrix: matrixBottom, zero: 0)
 		let boardBottom = Board(grid: gridBottom)
 		
 		let matrixError: Matrix =
@@ -135,7 +135,7 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  7, 15,  6],
 		 [10,  9,  8,  0]]
-		let gridError = Grid(matrix: matrixError)
+		let gridError = Grid<MatrixElement>(matrix: matrixError, zero: 0)
 		let boardError = Board(grid: gridError)
 		
 		// Act
@@ -159,7 +159,7 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11, 16, 15,  6],
 		 [10,  9,  8,  7]]
-		let grid = Grid(matrix: matrix)
+		let grid = Grid<MatrixElement>(matrix: matrix, zero: 0)
 		let board = Board(grid: grid)
 		
 		// Act
@@ -176,7 +176,7 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		let gridOne = Grid(matrix: matrixOne)
+		let gridOne = Grid<MatrixElement>(matrix: matrixOne, zero: 0)
 		let boardOne = Board(grid: gridOne)
 		
 		let matrixTwo: Matrix =
@@ -184,7 +184,7 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		let gridTwo = Grid(matrix: matrixTwo)
+		let gridTwo = Grid<MatrixElement>(matrix: matrixTwo, zero: 0)
 		let boardTwo = Board(grid: gridTwo)
 		
 		// Assert
@@ -198,7 +198,7 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11, 15,  0,  6],
 		 [10,  9,  8,  7]]
-		let gridOne = Grid(matrix: matrixOne)
+		let gridOne = Grid<MatrixElement>(matrix: matrixOne, zero: 0)
 		let boardOne = Board(grid: gridOne)
 		
 		let matrixTwo: Matrix =
@@ -206,7 +206,7 @@ final class BoardTests: XCTestCase {
 		 [12, 13, 14,  5],
 		 [11,  0, 15,  6],
 		 [10,  9,  8,  7]]
-		let gridTwo = Grid(matrix: matrixTwo)
+		let gridTwo = Grid<MatrixElement>(matrix: matrixTwo, zero: 0)
 		let boardTwo = Board(grid: gridTwo)
 		
 		// Assert

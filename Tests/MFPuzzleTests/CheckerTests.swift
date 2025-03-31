@@ -11,6 +11,7 @@ import XCTest
 final class CheckerTest: XCTestCase {
 
 	private var checker: Checker?
+	private let randomizer = MatrixRondomazer<MatrixElement>()
 
 	override func setUpWithError() throws {
 		self.checker = Checker()
@@ -137,7 +138,7 @@ final class CheckerTest: XCTestCase {
 		 [7, 8, 0]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		
 		// Assert
 		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
@@ -153,7 +154,7 @@ final class CheckerTest: XCTestCase {
 		 [13, 14, 15,  0]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		
 		// Assert
 		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
@@ -170,7 +171,7 @@ final class CheckerTest: XCTestCase {
 		 [21, 22, 23, 24,  0]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		
 		// Assert
 		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
@@ -185,7 +186,7 @@ final class CheckerTest: XCTestCase {
 		 [7, 8, 0]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
 		
 		// Assert
@@ -202,7 +203,7 @@ final class CheckerTest: XCTestCase {
 		 [13, 14, 15,  0]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
 		
 		// Assert
@@ -220,7 +221,7 @@ final class CheckerTest: XCTestCase {
 		 [21, 22, 23, 24,  0]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
 		
 		// Assert
@@ -236,7 +237,7 @@ final class CheckerTest: XCTestCase {
 		 [7, 6, 5]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		
 		// Assert
 		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
@@ -252,7 +253,7 @@ final class CheckerTest: XCTestCase {
 		 [10,  9, 8,  7]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		
 		// Assert
 		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
@@ -269,7 +270,7 @@ final class CheckerTest: XCTestCase {
 		 [13, 12, 11, 10,  9]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		
 		// Assert
 		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
@@ -284,7 +285,7 @@ final class CheckerTest: XCTestCase {
 		 [7, 6, 5]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
 		
 		// Assert
@@ -301,7 +302,7 @@ final class CheckerTest: XCTestCase {
 		 [10,  9, 8,  7]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
 		
 		// Assert
@@ -319,7 +320,7 @@ final class CheckerTest: XCTestCase {
 		 [13, 12, 11, 10,  9]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
 		
 		// Assert
@@ -335,7 +336,7 @@ final class CheckerTest: XCTestCase {
 		 [7, 8, 0]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		
 		// Assert
 		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
@@ -351,7 +352,7 @@ final class CheckerTest: XCTestCase {
 		 [ 0, 15, 14, 13]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		
 		// Assert
 		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
@@ -368,7 +369,7 @@ final class CheckerTest: XCTestCase {
 		 [21, 22, 23, 24,  0]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		
 		// Assert
 		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), true)
@@ -383,7 +384,7 @@ final class CheckerTest: XCTestCase {
 		 [7, 8, 0]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
 		
 		// Assert
@@ -400,7 +401,7 @@ final class CheckerTest: XCTestCase {
 		 [ 0, 15, 14, 13]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
 		
 		// Assert
@@ -418,22 +419,11 @@ final class CheckerTest: XCTestCase {
 		 [21, 22, 23, 24,  0]]
 		
 		// Act
-		let matrixTransition = generateRangomSteps(matrix: matrix)
+		let matrixTransition = self.randomizer.generateRangomSteps(matrix: matrix, zero: 0)
 		(matrix[0][0], matrix[0][1]) = (matrix[0][1], matrix[0][0])
 		
 		// Assert
 		XCTAssertEqual(checker.checkSolution(matrix: matrix, matrixTarget: matrixTransition), false)
-	}
-	
-	private func generateRangomSteps(matrix: Matrix) -> Matrix {
-		let grid = Grid(matrix: matrix)
-		let countSteps = Int.random(in: 1000...100000)
-		for _ in 0...countSteps {
-			if let randomNeighbors = grid.getNeighbors(number: 0)?.randomElement() {
-				grid.swapNumber(number: randomNeighbors)
-			}
-		}
-		return grid.matrix
 	}
 	
 	// MARK: Test check not solution.

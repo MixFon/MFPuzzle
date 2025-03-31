@@ -27,7 +27,7 @@ public enum Heuristic: String {
 	}
 	
 	/// Возвращает эвристику согласно установленному флагу.
-	func getHeuristic(grid: Grid, gridTarget: Grid) -> Int {
+	func getHeuristic(grid: Grid<MatrixElement>, gridTarget: Grid<MatrixElement>) -> Int {
 		return calculateDistance(coordinats: grid.coordinats, coordinatsTarget: gridTarget.coordinats, distance: self.distance)
 	}
 	

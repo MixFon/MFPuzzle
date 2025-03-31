@@ -9,7 +9,7 @@ import Foundation
 
 // Класс предназначенный для поиска решения головоломки
 public final class Board {
-	public private(set) var grid: Grid
+	public private(set) var grid: Grid<MatrixElement>
 	
 	private(set) var f: Int
 	var lavel: Int
@@ -20,7 +20,7 @@ public final class Board {
 	}
 	
 	// Конструктор с доской
-	public init(grid: Grid) {
+	public init(grid: Grid<MatrixElement>) {
 		self.f = 0
 		self.lavel = 0
 		self.grid = grid
@@ -42,11 +42,11 @@ public final class Board {
 		let zeroPoint = self.grid.coordinats[0]!
 		let heuristicCurrentZero = calculateHeuristic(0, zeroPoint) ?? 0
 		for number in neighbors {
-			let newGrid = Grid(from: self.grid)
+			let newGrid = Grid(from: self.grid, zero: 0)
 			let numberPoint = self.grid.coordinats[number]!
 			let heuristicNumber = calculateHeuristic(number, numberPoint) ?? 0
 			
-			newGrid.swapNumber(number: number)
+			newGrid.swapNumber(number: number, target: 0)
 			
 			let newZeroPoint = newGrid.coordinats[0]!
 			let newNuberPoint = newGrid.coordinats[number]!

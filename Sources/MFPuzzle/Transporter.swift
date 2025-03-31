@@ -24,21 +24,22 @@ public enum Direction {
 }
 
 public protocol _Transporter {
+	associatedtype Cargo : Hashable
 	/// Создает для каждого номера массив направлений перемещений до его цели.
-	func createDirections(from current: Matrix, to solution: Matrix) -> [MatrixElement : [Direction]]
+	func createDirections(from current: [[Cargo]], to solution: [[Cargo]]) -> [Cargo : [Direction]]
 	/// Создание для каждого номера короткого пути. Комбинация из Direction, для достижения точки в solution
-	func createShortestPath(from current: Matrix, to solution: Matrix) -> [MatrixElement : [Direction]]
+	func createShortestPath(from current: [[Cargo]], to solution: [[Cargo]]) -> [Cargo : [Direction]]
 }
 
 final class Box {
 	/// Номер коробки
-	let number: MatrixElement
+	let number: Int
 	/// Полный путь до цели. Содержит переходы на другие уровни
 	var path: [Direction] = []
 	/// Короткий путь. Содержить только движения вдоль среднего уровня
 	var shortestPath: [Direction]
 	
-	init(number: MatrixElement, shortestPath: [Direction]) {
+	init(number: Int, shortestPath: [Direction]) {
 		self.number = number
 		self.shortestPath = shortestPath
 	}
@@ -49,17 +50,15 @@ final class Box {
 	}
 	
 	func deleteDirectionForShortPath(_ direction: Direction) {
-		let index = self.shortestPath.firstIndex(of: direction)!
-		self.shortestPath.remove(at: index)
-//		if let index = self.shortestPath.firstIndex(of: direction) {
-//			self.shortestPath.remove(at: index)
-//		}
+		if let index = self.shortestPath.firstIndex(of: direction) {
+			self.shortestPath.remove(at: index)
+		}
 	}
 }
 
 final public class Transporter: _Transporter {
 	
-	private func printCube(cube: [Matrix]) {
+	private func printCube(cube: [[[Int]]]) {
 		for (i, one) in cube.enumerated() {
 			print("lavel \(i)")
 			for row in one {
@@ -69,7 +68,7 @@ final public class Transporter: _Transporter {
 		}
 	}
 	
-	public func createDirections(from current: Matrix, to solution: Matrix) -> [MatrixElement : [Direction]] {
+	public func createDirections(from current: [[Int]], to solution: [[Int]]) -> [Int : [Direction]] {
 		if current.isEmpty || solution.isEmpty { return [:] }
 		var cube = createCube(size: current[0].count)
 		cube[cube.count / 2] = current
@@ -82,21 +81,21 @@ final public class Transporter: _Transporter {
 				isAvalableDirectionOnMiddle(box: box, grid3D: grid3D)
 			}
 		}
-		var result: [MatrixElement : [Direction]] = [:]
+		var result: [Int : [Direction]] = [:]
 		for box in boxes {
 			result[box.number] = box.path
 		}
 		return result
 	}
 	
-	private func createCube(size: Int) -> [Matrix] {
+	private func createCube(size: Int) -> [[[Int]]] {
 		var value = 0
-		var cube: [Matrix] = Array(repeating: Array(repeating: Array(repeating: 0, count: size), count: size), count: 5)
+		var cube: [[[Int]]] = Array(repeating: Array(repeating: Array(repeating: 0, count: size), count: size), count: 5)
 		for (k, matrix) in cube.enumerated() {
 			for (i, row) in matrix.enumerated() {
 				for (j, _) in row.enumerated() {
 					value -= 1
-					cube[k][i][j] = MatrixElement(value)
+					cube[k][i][j] = value
 				}
 			}
 		}
@@ -105,7 +104,7 @@ final public class Transporter: _Transporter {
 	
 	/// true если нашел на среднем уровне направдение.
 	/// false если на среднем уровне нельзя сделать шаг
-	private func isAvalableDirectionOnMiddle(box: Box, grid3D: Grid3D<MatrixElement>) {
+	private func isAvalableDirectionOnMiddle(box: Box, grid3D: Grid3D<Int>) {
 		guard let currentPoint = grid3D.getPoint(number: box.number) else { return }
 		let availableDirections = box.availableDirections
 		for availableDirection in availableDirections {
@@ -150,10 +149,10 @@ final public class Transporter: _Transporter {
 		return
 	}
 	
-	public func createShortestPath(from current: Matrix, to solution: Matrix) -> [MatrixElement : [Direction]] {
+	public func createShortestPath(from current: [[Int]], to solution: [[Int]]) -> [Int : [Direction]] {
 		let currentGrid = Grid(matrix: current)
 		let solutionGrid = Grid(matrix: solution)
-		var result: [MatrixElement : [Direction]] = [:]
+		var result: [Int : [Direction]] = [:]
 		for row in current {
 			for element in row {
 				if element == 0 { continue }
