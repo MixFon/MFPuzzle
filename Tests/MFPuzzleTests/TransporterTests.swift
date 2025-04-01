@@ -10,14 +10,6 @@ import XCTest
 
 final class TransporterTests: XCTestCase {
 
-    override func setUpWithError() throws {
-		
-    }
-
-    override func tearDownWithError() throws {
-		
-    }
-
 	func testCreateShortestPathSimple() {
 		// Arrange
 		let matrix: [[Int]] =
@@ -137,7 +129,7 @@ final class TransporterTests: XCTestCase {
 			XCTAssertEqual(dict[.south], 2)
 			XCTAssertEqual(dict[.pause], nil)
 		} else {
-			XCTFail()
+			XCTFail("Произошла ошибка на шаге \(1)")
 		}
 		XCTAssertEqual(paths[2], [])
 		XCTAssertEqual(paths[3], [])
@@ -178,7 +170,143 @@ final class TransporterTests: XCTestCase {
 				XCTAssertEqual(dict[.north], dictSortestPath[.north])
 				XCTAssertEqual(dict[.south], dictSortestPath[.south])
 			} else {
-				XCTFail()
+				XCTFail("Произошла ошибка на шаге \(i)")
+			}
+		}
+	}
+	
+	func testCreateDirectionsOnePath4x4() {
+		// Arrange
+		let matrix: [[Int]] =
+		[[ 1,  2,  3,  4],
+		 [ 8,  7,  6,  5],
+		 [ 9, 10, 11, 12],
+		 [ 0, 15, 14, 13]]
+		let solution: [[Int]] =
+		[[13,  2,  3,  4],
+		 [ 8,  7,  6,  5],
+		 [ 9, 10, 11, 12],
+		 [ 0, 15, 14, 1]]
+		let transporter = Transporter()
+
+		// Act
+		let paths = transporter.createDirections(from: matrix, to: solution)
+		
+		// Assert
+		XCTAssertEqual(paths[0], nil)
+		if let path = paths[1] {
+			let dict = createDictionaryDirectionCount(directions: path)
+			XCTAssertEqual(dict[.up], dict[.down])
+			XCTAssertEqual(dict[.west], nil)
+			XCTAssertEqual(dict[.east], 3)
+			XCTAssertEqual(dict[.north], nil)
+			XCTAssertEqual(dict[.south], 3)
+			XCTAssertEqual(dict[.pause], nil)
+		} else {
+			XCTFail("Произошла ошибка на шаге \(1)")
+		}
+		XCTAssertEqual(paths[2], [])
+		XCTAssertEqual(paths[3], [])
+		XCTAssertEqual(paths[4], [])
+		XCTAssertEqual(paths[5], [])
+		XCTAssertEqual(paths[6], [])
+		XCTAssertEqual(paths[7], [])
+		XCTAssertEqual(paths[8], [])
+		XCTAssertEqual(paths[9], [])
+		XCTAssertEqual(paths[10], [])
+		XCTAssertEqual(paths[11], [])
+		XCTAssertEqual(paths[12], [])
+		if let path = paths[13] {
+			let dict = createDictionaryDirectionCount(directions: path)
+			XCTAssertEqual(dict[.up], dict[.down])
+			XCTAssertEqual(dict[.west], 3)
+			XCTAssertEqual(dict[.east], nil)
+			XCTAssertEqual(dict[.north], 3)
+			XCTAssertEqual(dict[.south], nil)
+			XCTAssertEqual(dict[.pause], nil)
+		} else {
+			XCTFail("Произошла ошибка на шаге \(13)")
+		}
+		XCTAssertEqual(paths[14], [])
+		XCTAssertEqual(paths[15], [])
+	}
+	
+	func testCreateDirectionsRandom4x4() {
+		// Arrange
+		let matrix: [[Int]] =
+		[[ 1,  2,  3,  4],
+		 [ 8,  7,  6,  5],
+		 [ 9, 10, 11, 12],
+		 [ 0, 15, 14, 13]]
+		let randorizer = MatrixRondomazer<Int>()
+		let randomMatrix = randorizer.generateRangomSteps(matrix: matrix, zero: 0)
+		let solution: [[Int]] =
+		[[ 1,  2,  3,  4],
+		 [ 8,  7,  6,  5],
+		 [ 9, 10, 11, 12],
+		 [ 0, 15, 14, 13]]
+		let transporter = Transporter()
+		let size = solution.count * solution.count - 1
+
+		// Act
+		let paths = transporter.createDirections(from: randomMatrix, to: solution)
+		let shortestPaths = transporter.createShortestPath(from: randomMatrix, to: solution)
+
+		
+		// Assert
+		XCTAssertEqual(paths[0], nil)
+		for i in 1...size {
+			if let path = paths[i], let shortestPath = shortestPaths[i] {
+				let dict = createDictionaryDirectionCount(directions: path)
+				let dictSortestPath = createDictionaryDirectionCount(directions: shortestPath)
+				XCTAssertEqual(dict[.up], dict[.down])
+				XCTAssertEqual(dict[.west], dictSortestPath[.west])
+				XCTAssertEqual(dict[.east], dictSortestPath[.east])
+				XCTAssertEqual(dict[.north], dictSortestPath[.north])
+				XCTAssertEqual(dict[.south], dictSortestPath[.south])
+			} else {
+				XCTFail("Произошла ошибка на шаге \(i)")
+			}
+		}
+	}
+	
+	func testCreateDirectionsRandom5x5() {
+		// Arrange
+		let matrix: [[Int]] =
+		[[ 1,  2,  3,  4,  5],
+		 [10,  9,  8,  7,  6],
+		 [11, 12, 13, 14, 15],
+		 [20, 19, 18, 17, 16],
+		 [21, 22, 23, 24,  0]]
+		let randorizer = MatrixRondomazer<Int>()
+		let randomMatrix = randorizer.generateRangomSteps(matrix: matrix, zero: 0)
+		let solution: [[Int]] =
+		[[ 1,  2,  3,  4,  5],
+		 [10,  9,  8,  7,  6],
+		 [11, 12, 13, 14, 15],
+		 [20, 19, 18, 17, 16],
+		 [21, 22, 23, 24,  0]]
+		let transporter = Transporter()
+		let size = solution.count * solution.count - 1
+
+		// Act
+		let paths = transporter.createDirections(from: randomMatrix, to: solution)
+		let shortestPaths = transporter.createShortestPath(from: randomMatrix, to: solution)
+
+		
+		// Assert
+		XCTAssertEqual(paths[0], nil)
+		for i in 1...size {
+			if let path = paths[i], let shortestPath = shortestPaths[i] {
+				let dict = createDictionaryDirectionCount(directions: path)
+				let dictSortestPath = createDictionaryDirectionCount(directions: shortestPath)
+				XCTAssertEqual(dict[.up], dict[.down])
+				XCTAssertEqual(dict[.west], dictSortestPath[.west])
+				XCTAssertEqual(dict[.east], dictSortestPath[.east])
+				XCTAssertEqual(dict[.north], dictSortestPath[.north])
+				XCTAssertEqual(dict[.south], dictSortestPath[.south])
+			} else {
+				XCTFail("Произошла ошибка на шаге \(i)")
 			}
 		}
 	}
