@@ -58,6 +58,8 @@ final class Box {
 
 final public class Transporter: _Transporter {
 	
+	public init() {}
+	
 	public func createDirections(from current: [[Int]], to solution: [[Int]]) -> [Int : [Direction]] {
 		if current.isEmpty || solution.isEmpty { return [:] }
 		var cube = createCube(size: current[0].count)
