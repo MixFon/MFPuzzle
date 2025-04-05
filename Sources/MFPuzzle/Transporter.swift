@@ -24,11 +24,10 @@ public enum Direction {
 }
 
 public protocol _Transporter {
-	associatedtype Cargo : Hashable
 	/// Создает для каждого номера массив направлений перемещений до его цели.
-	func createDirections(from current: [[Cargo]], to solution: [[Cargo]]) -> [Cargo : [Direction]]
+	func createDirections(from current: [[Int]], to solution: [[Int]]) -> [Int : [Direction]]
 	/// Создание для каждого номера короткого пути. Комбинация из Direction, для достижения точки в solution
-	func createShortestPath(from current: [[Cargo]], to solution: [[Cargo]]) -> [Cargo : [Direction]]
+	func createShortestPath(from current: [[Int]], to solution: [[Int]]) -> [Int : [Direction]]
 }
 
 final class Box {
