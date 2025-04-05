@@ -10,6 +10,11 @@ import Foundation
 public struct GridPoint: Equatable {
 	public let x: Int8
 	public let y: Int8
+	
+	public init(x: Int8, y: Int8) {
+		self.x = x
+		self.y = y
+	}
 }
 
 extension GridPoint {
