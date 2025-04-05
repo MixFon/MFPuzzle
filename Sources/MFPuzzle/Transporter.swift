@@ -99,7 +99,7 @@ final public class Transporter: _Transporter {
 		guard let currentPoint = grid3D.getPoint(number: box.number) else { return }
 		let availableDirections = box.availableDirections
 		for availableDirection in availableDirections {
-			let nextPoint = currentPoint + getNextPoint(availableDirection)
+			let nextPoint = currentPoint.getByAdding(from: availableDirection)
 			if let target = grid3D.getNumber(point: nextPoint), target <= 0 {
 				box.path.append(availableDirection)
 				box.deleteDirectionForShortPath(availableDirection)
@@ -109,9 +109,9 @@ final public class Transporter: _Transporter {
 		}
 		for availableDirection in availableDirections {
 			if availableDirection == .up || availableDirection == .down { continue }
-			let upPoint = currentPoint + getNextPoint(.up)
+			let upPoint = currentPoint.getByAdding(from: .up)
 			if !grid3D.isInsidea(point: upPoint) { continue }
-			let nextPoint = upPoint + getNextPoint(availableDirection)
+			let nextPoint = upPoint.getByAdding(from: availableDirection)
 			if let target = grid3D.getNumber(point: nextPoint), target <= 0 {
 				box.path.append(.up)
 				box.path.append(availableDirection)
@@ -123,9 +123,9 @@ final public class Transporter: _Transporter {
 		}
 		for availableDirection in availableDirections {
 			if availableDirection == .up || availableDirection == .down { continue }
-			let donwPoint = currentPoint + getNextPoint(.down)
+			let donwPoint = currentPoint.getByAdding(from: .down)
 			if !grid3D.isInsidea(point: donwPoint) { continue }
-			let nextPoint = donwPoint + getNextPoint(availableDirection)
+			let nextPoint = donwPoint.getByAdding(from: availableDirection)
 			if let target = grid3D.getNumber(point: nextPoint), target <= 0 {
 				box.path.append(.down)
 				box.path.append(availableDirection)
@@ -164,25 +164,5 @@ final public class Transporter: _Transporter {
 			}
 		}
 		return result
-	}
-	
-	/// Возвращает точку
-	private func getNextPoint(_ direction: Direction) -> Grid3DPoint {
-		return switch direction {
-		case .up:
-			Grid3DPoint(x: 0, y: 0, z: -1)
-		case .down:
-			Grid3DPoint(x: 0, y: 0, z: 1)
-		case .north:
-			Grid3DPoint(x: -1, y: 0, z: 0)
-		case .south:
-			Grid3DPoint(x: 1, y: 0, z: 0)
-		case .west:
-			Grid3DPoint(x: 0, y: -1, z: 0)
-		case .east:
-			Grid3DPoint(x: 0, y: 1, z: 0)
-		case .pause:
-			Grid3DPoint(x: 0, y: 0, z: 0)
-		}
 	}
 }
