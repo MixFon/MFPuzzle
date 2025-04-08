@@ -6,11 +6,11 @@
 //
 
 /// Описывает возможные пути перемещения в 3-х мерном массве
-public enum Direction {
+public indirect enum Direction: Hashable {
 	/// Направдление на уровень выше текущего
-	case up
+	case up(Direction?)
 	/// Направлнение на уровень ниже текущего
-	case down
+	case down(Direction?)
 	/// Направлнение влево (запад)
 	case west
 	/// Направлнение вправо (восток)
@@ -109,13 +109,12 @@ final public class Transporter: _Transporter {
 		}
 		for availableDirection in availableDirections {
 			//if availableDirection == .up || availableDirection == .down { continue }
-			let upPoint = currentPoint.getByAdding(from: .up)
+			let upPoint = currentPoint.getByAdding(from: .up(nil))
 			if !grid3D.isInsidea(point: upPoint) { continue }
 			let nextPoint = upPoint.getByAdding(from: availableDirection)
 			if let target = grid3D.getNumber(point: nextPoint), target <= 0 {
-				box.path.append(.up)
-				box.path.append(availableDirection)
-				box.shortestPath.append(.down)
+				box.path.append(.up(availableDirection))
+				box.shortestPath.append(.down(nil))
 				box.deleteDirectionForShortPath(availableDirection)
 				grid3D.swapNumber(number: box.number, target: target)
 				return
@@ -123,13 +122,12 @@ final public class Transporter: _Transporter {
 		}
 		for availableDirection in availableDirections {
 			//if availableDirection == .up || availableDirection == .down { continue }
-			let donwPoint = currentPoint.getByAdding(from: .down)
+			let donwPoint = currentPoint.getByAdding(from: .down(nil))
 			if !grid3D.isInsidea(point: donwPoint) { continue }
 			let nextPoint = donwPoint.getByAdding(from: availableDirection)
 			if let target = grid3D.getNumber(point: nextPoint), target <= 0 {
-				box.path.append(.down)
-				box.path.append(availableDirection)
-				box.shortestPath.append(.up)
+				box.path.append(.down(availableDirection))
+				box.shortestPath.append(.up(nil))
 				box.deleteDirectionForShortPath(availableDirection)
 				grid3D.swapNumber(number: box.number, target: target)
 				return

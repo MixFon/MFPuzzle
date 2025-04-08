@@ -121,8 +121,8 @@ final class TransporterTests: XCTestCase {
 		XCTAssertEqual(paths[0], nil)
 		if let path = paths[1] {
 			let dict = createDictionaryDirectionCount(directions: path)
-			XCTAssertEqual(dict[.up], 1)
-			XCTAssertEqual(dict[.down], 1)
+			XCTAssertEqual(dict[.up(nil)], 1)
+			XCTAssertEqual(dict[.down(nil)], 1)
 			XCTAssertEqual(dict[.west], nil)
 			XCTAssertEqual(dict[.east], 2)
 			XCTAssertEqual(dict[.north], nil)
@@ -164,7 +164,7 @@ final class TransporterTests: XCTestCase {
 			if let path = paths[i], let shortestPath = shortestPaths[i] {
 				let dict = createDictionaryDirectionCount(directions: path)
 				let dictSortestPath = createDictionaryDirectionCount(directions: shortestPath)
-				XCTAssertEqual(dict[.up], dict[.down])
+				XCTAssertEqual(dict[.up(nil)], dict[.down(nil)])
 				XCTAssertEqual(dict[.west], dictSortestPath[.west])
 				XCTAssertEqual(dict[.east], dictSortestPath[.east])
 				XCTAssertEqual(dict[.north], dictSortestPath[.north])
@@ -196,7 +196,7 @@ final class TransporterTests: XCTestCase {
 		XCTAssertEqual(paths[0], nil)
 		if let path = paths[1] {
 			let dict = createDictionaryDirectionCount(directions: path)
-			XCTAssertEqual(dict[.up], dict[.down])
+			XCTAssertEqual(dict[.up(nil)], dict[.down(nil)])
 			XCTAssertEqual(dict[.west], nil)
 			XCTAssertEqual(dict[.east], 3)
 			XCTAssertEqual(dict[.north], nil)
@@ -218,7 +218,7 @@ final class TransporterTests: XCTestCase {
 		XCTAssertEqual(paths[12], [])
 		if let path = paths[13] {
 			let dict = createDictionaryDirectionCount(directions: path)
-			XCTAssertEqual(dict[.up], dict[.down])
+			XCTAssertEqual(dict[.up(nil)], dict[.down(nil)])
 			XCTAssertEqual(dict[.west], 3)
 			XCTAssertEqual(dict[.east], nil)
 			XCTAssertEqual(dict[.north], 3)
@@ -259,7 +259,7 @@ final class TransporterTests: XCTestCase {
 			if let path = paths[i], let shortestPath = shortestPaths[i] {
 				let dict = createDictionaryDirectionCount(directions: path)
 				let dictSortestPath = createDictionaryDirectionCount(directions: shortestPath)
-				XCTAssertEqual(dict[.up], dict[.down])
+				XCTAssertEqual(dict[.up(nil)], dict[.down(nil)])
 				XCTAssertEqual(dict[.west], dictSortestPath[.west])
 				XCTAssertEqual(dict[.east], dictSortestPath[.east])
 				XCTAssertEqual(dict[.north], dictSortestPath[.north])
@@ -300,7 +300,7 @@ final class TransporterTests: XCTestCase {
 			if let path = paths[i], let shortestPath = shortestPaths[i] {
 				let dict = createDictionaryDirectionCount(directions: path)
 				let dictSortestPath = createDictionaryDirectionCount(directions: shortestPath)
-				XCTAssertEqual(dict[.up], dict[.down])
+				XCTAssertEqual(dict[.up(nil)], dict[.down(nil)])
 				XCTAssertEqual(dict[.west], dictSortestPath[.west])
 				XCTAssertEqual(dict[.east], dictSortestPath[.east])
 				XCTAssertEqual(dict[.north], dictSortestPath[.north])
@@ -314,7 +314,20 @@ final class TransporterTests: XCTestCase {
 	private func createDictionaryDirectionCount(directions: [Direction]) -> [Direction: Int] {
 		var directionCount: [Direction: Int] = [:]
 		for direction in directions {
-			directionCount[direction, default: 0] += 1
+			switch direction {
+			case .up(let upDir):
+				if let upDir {
+					directionCount[upDir, default: 0] += 1
+				}
+				directionCount[.up(nil), default: 0] += 1
+			case .down(let downDir):
+				if let downDir {
+					directionCount[downDir, default: 0] += 1
+				}
+				directionCount[.down(nil), default: 0] += 1
+			default:
+				directionCount[direction, default: 0] += 1
+			}
 		}
 		return directionCount
 	}
