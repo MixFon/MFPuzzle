@@ -108,7 +108,7 @@ final public class Transporter: _Transporter {
 			}
 		}
 		for availableDirection in availableDirections {
-			//if availableDirection == .up || availableDirection == .down { continue }
+			if isUpOrDown(availableDirection) { continue }
 			let upPoint = currentPoint.getByAdding(from: .up(nil))
 			if !grid3D.isInsidea(point: upPoint) { continue }
 			let nextPoint = upPoint.getByAdding(from: availableDirection)
@@ -121,7 +121,7 @@ final public class Transporter: _Transporter {
 			}
 		}
 		for availableDirection in availableDirections {
-			//if availableDirection == .up || availableDirection == .down { continue }
+			if isUpOrDown(availableDirection) { continue }
 			let donwPoint = currentPoint.getByAdding(from: .down(nil))
 			if !grid3D.isInsidea(point: donwPoint) { continue }
 			let nextPoint = donwPoint.getByAdding(from: availableDirection)
@@ -136,6 +136,15 @@ final public class Transporter: _Transporter {
 		// Если ни в одно направление не удалось попать, то добавляем паузу
 		box.path.append(.pause)
 		return
+	}
+	
+	private func isUpOrDown(_ direction: Direction) -> Bool {
+		switch direction {
+		case .up, .down:
+			return true
+		default:
+			return false
+		}
 	}
 	
 	public func createShortestPath(from current: [[Int]], to solution: [[Int]]) -> [Int : [Direction]] {
