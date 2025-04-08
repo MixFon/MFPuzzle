@@ -108,7 +108,7 @@ final public class Transporter: _Transporter {
 			}
 		}
 		for availableDirection in availableDirections {
-			if availableDirection == .up || availableDirection == .down { continue }
+			//if availableDirection == .up || availableDirection == .down { continue }
 			let upPoint = currentPoint.getByAdding(from: .up)
 			if !grid3D.isInsidea(point: upPoint) { continue }
 			let nextPoint = upPoint.getByAdding(from: availableDirection)
@@ -122,7 +122,7 @@ final public class Transporter: _Transporter {
 			}
 		}
 		for availableDirection in availableDirections {
-			if availableDirection == .up || availableDirection == .down { continue }
+			//if availableDirection == .up || availableDirection == .down { continue }
 			let donwPoint = currentPoint.getByAdding(from: .down)
 			if !grid3D.isInsidea(point: donwPoint) { continue }
 			let nextPoint = donwPoint.getByAdding(from: availableDirection)
