@@ -21,6 +21,19 @@ public enum Direction {
 	case south
 	/// Направление прокускается
 	case pause
+	
+	/// Возвращает противоположенное направление
+	var opposite: Direction {
+		switch self {
+		case .up: return .down
+		case .down: return .up
+		case .west: return .east
+		case .east: return .west
+		case .north: return .south
+		case .south: return .north
+		case .pause: return .pause
+		}
+	}
 }
 
 public protocol _Transporter {
@@ -107,37 +120,27 @@ final public class Transporter: _Transporter {
 				return
 			}
 		}
-		for availableDirection in availableDirections {
-			//if availableDirection == .up || availableDirection == .down { continue }
-			let upPoint = currentPoint.getByAdding(from: .up)
-			if !grid3D.isInsidea(point: upPoint) { continue }
-			let nextPoint = upPoint.getByAdding(from: availableDirection)
-			if let target = grid3D.getNumber(point: nextPoint), target <= 0 {
-				box.path.append(.up)
-				box.path.append(availableDirection)
-				box.shortestPath.append(.down)
-				box.deleteDirectionForShortPath(availableDirection)
-				grid3D.swapNumber(number: box.number, target: target)
-				return
-			}
-		}
-		for availableDirection in availableDirections {
-			//if availableDirection == .up || availableDirection == .down { continue }
-			let donwPoint = currentPoint.getByAdding(from: .down)
-			if !grid3D.isInsidea(point: donwPoint) { continue }
-			let nextPoint = donwPoint.getByAdding(from: availableDirection)
-			if let target = grid3D.getNumber(point: nextPoint), target <= 0 {
-				box.path.append(.down)
-				box.path.append(availableDirection)
-				box.shortestPath.append(.up)
-				box.deleteDirectionForShortPath(availableDirection)
-				grid3D.swapNumber(number: box.number, target: target)
-				return
-			}
+		let direction: Direction = box.number % 2 == 0 ? .up : .down
+		if setDirection(box: box, grid3D: grid3D, direction: direction, currentPoint: currentPoint) {
+			return
+		} else if setDirection(box: box, grid3D: grid3D, direction: direction.opposite, currentPoint: currentPoint) {
+			return
 		}
 		// Если ни в одно направление не удалось попать, то добавляем паузу
 		box.path.append(.pause)
 		return
+	}
+	
+	private func setDirection(box: Box, grid3D: Grid3D<Int>, direction: Direction, currentPoint: Grid3DPoint) -> Bool {
+		let nexPoint = currentPoint.getByAdding(from: direction)
+		if grid3D.isInsidea(point: nexPoint), let target = grid3D.getNumber(point: nexPoint), target <= 0 {
+			box.path.append(direction)
+			box.deleteDirectionForShortPath(direction)
+			box.shortestPath.append(direction.opposite)
+			grid3D.swapNumber(number: box.number, target: target)
+			return true
+		}
+		return false
 	}
 	
 	public func createShortestPath(from current: [[Int]], to solution: [[Int]]) -> [Int : [Direction]] {
