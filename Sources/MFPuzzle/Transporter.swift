@@ -112,7 +112,8 @@ final public class Transporter: _Transporter {
 			let upPoint = currentPoint.getByAdding(from: .up(nil))
 			if !grid3D.isInsidea(point: upPoint) { continue }
 			let nextPoint = upPoint.getByAdding(from: availableDirection)
-			if let target = grid3D.getNumber(point: nextPoint), target <= 0 {
+			if let target = grid3D.getNumber(point: nextPoint), let upNumber = grid3D.getNumber(point: upPoint) {
+				if target > 0 || upNumber > 0 { continue }
 				box.path.append(.up(availableDirection))
 				box.shortestPath.append(.down(nil))
 				box.deleteDirectionForShortPath(availableDirection)
@@ -125,7 +126,8 @@ final public class Transporter: _Transporter {
 			let donwPoint = currentPoint.getByAdding(from: .down(nil))
 			if !grid3D.isInsidea(point: donwPoint) { continue }
 			let nextPoint = donwPoint.getByAdding(from: availableDirection)
-			if let target = grid3D.getNumber(point: nextPoint), target <= 0 {
+			if let target = grid3D.getNumber(point: nextPoint), let downNumber = grid3D.getNumber(point: donwPoint) {
+				if target > 0 || downNumber > 0 { continue }
 				box.path.append(.down(availableDirection))
 				box.shortestPath.append(.up(nil))
 				box.deleteDirectionForShortPath(availableDirection)
