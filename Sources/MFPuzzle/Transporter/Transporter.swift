@@ -5,71 +5,33 @@
 //  Created by Михаил Фокин on 29.03.2025.
 //
 
-/// Описывает возможные пути перемещения в 3-х мерном массве
-public indirect enum Direction: Hashable {
-	/// Направдление на уровень выше текущего
-	case up(Direction?)
-	/// Направлнение на уровень ниже текущего
-	case down(Direction?)
-	/// Направлнение влево (запад)
-	case west
-	/// Направлнение вправо (восток)
-	case east
-	/// Направлнение ввех (север)
-	case north
-	/// Направлнение вниз (юг)
-	case south
-	/// Направление прокускается
-	case pause
-}
-
 public protocol _Transporter {
 	/// Создает для каждого номера массив направлений перемещений до его цели.
-	func createDirections(from current: [[Int]], to solution: [[Int]]) -> [Int : [Direction]]
+	func createDirections(from current: [[Int]], to solution: [[Int]]) throws -> [Int : [Direction]]
 	/// Создание для каждого номера короткого пути. Комбинация из Direction, для достижения точки в solution
 	func createShortestPath(from current: [[Int]], to solution: [[Int]]) -> [Int : [Direction]]
-}
-
-final class Box {
-	/// Номер коробки
-	let number: Int
-	/// Полный путь до цели. Содержит переходы на другие уровни
-	var path: [Direction] = []
-	/// Короткий путь. Содержить только движения вдоль среднего уровня
-	var shortestPath: [Direction]
-	
-	init(number: Int, shortestPath: [Direction]) {
-		self.number = number
-		self.shortestPath = shortestPath
-	}
-	
-	/// Возвращает доступные координаты для следующего хода
-	var availableDirections: [Direction] {
-		Array(Set(self.shortestPath))
-	}
-	
-	func deleteDirectionForShortPath(_ direction: Direction) {
-		if let index = self.shortestPath.firstIndex(of: direction) {
-			self.shortestPath.remove(at: index)
-		}
-	}
 }
 
 final public class Transporter: _Transporter {
 	
 	public init() {}
 	
-	public func createDirections(from current: [[Int]], to solution: [[Int]]) -> [Int : [Direction]] {
+	public func createDirections(from current: [[Int]], to solution: [[Int]]) throws -> [Int : [Direction]] {
 		if current.isEmpty || solution.isEmpty { return [:] }
 		var cube = createCube(size: current[0].count)
 		cube[cube.count / 2] = current
 		let grid3D = Grid3D(cube: cube)
 		let shortestPath = createShortestPath(from: current, to: solution)
 		let boxes: [Box] = shortestPath.map { Box(number: $0.key, shortestPath: $0.value) }
+		var i = current.count * current.count
 		while !boxes.allSatisfy( { $0.shortestPath.isEmpty }) {
 			for box in boxes {
 				if box.shortestPath.isEmpty { continue }
 				isAvalableDirectionOnMiddle(box: box, grid3D: grid3D)
+			}
+			i -= 1
+			if i <= 0 {
+				throw TransporterError.limitAttemptsHasBeenReached
 			}
 		}
 		var result: [Int : [Direction]] = [:]

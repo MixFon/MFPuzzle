@@ -20,8 +20,8 @@ final class MatrixRondomazer<T: Hashable>: _MatrixRondomazer {
 		let grid = Grid<T>(matrix: matrix, zero: zero)
 		let countSteps = Int.random(in: 1000...100000)
 		for _ in 0...countSteps {
-			if let randomNeighbors = grid.getNeighbors(number: zero)?.randomElement() {
-				grid.swapNumber(number: randomNeighbors, target: zero)
+			if let randomNeighbor = grid.getNeighbors(number: zero)?.randomElement() {
+				grid.swapNumber(number: randomNeighbor, target: zero)
 			}
 		}
 		return grid.matrix

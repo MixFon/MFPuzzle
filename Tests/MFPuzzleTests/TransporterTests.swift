@@ -102,7 +102,7 @@ final class TransporterTests: XCTestCase {
 		XCTAssertEqual(shortestPath[15], [.north, .east])
 	}
 	
-	func testCreateDirectionsOnePath() {
+	func testCreateDirectionsOnePath() throws {
 		// Arrange
 		let matrix: [[Int]] =
 		[[1, 2, 3],
@@ -115,7 +115,7 @@ final class TransporterTests: XCTestCase {
 		let transporter = Transporter()
 
 		// Act
-		let paths = transporter.createDirections(from: matrix, to: solution)
+		let paths = try transporter.createDirections(from: matrix, to: solution)
 		
 		// Assert
 		XCTAssertEqual(paths[0], nil)
@@ -140,7 +140,7 @@ final class TransporterTests: XCTestCase {
 		XCTAssertEqual(paths[8], [])
 	}
 	
-	func testCreateDirectionsRandom() {
+	func testCreateDirectionsRandom() throws {
 		// Arrange
 		let matrix: [[Int]] =
 		[[1, 2, 3],
@@ -155,7 +155,7 @@ final class TransporterTests: XCTestCase {
 		let transporter = Transporter()
 
 		// Act
-		let paths = transporter.createDirections(from: randomMatrix, to: solution)
+		let paths = try transporter.createDirections(from: randomMatrix, to: solution)
 		let shortestPaths = transporter.createShortestPath(from: randomMatrix, to: solution)
 
 		// Assert
@@ -175,7 +175,7 @@ final class TransporterTests: XCTestCase {
 		}
 	}
 	
-	func testCreateDirectionsOnePath4x4() {
+	func testCreateDirectionsOnePath4x4() throws {
 		// Arrange
 		let matrix: [[Int]] =
 		[[ 1,  2,  3,  4],
@@ -190,7 +190,7 @@ final class TransporterTests: XCTestCase {
 		let transporter = Transporter()
 
 		// Act
-		let paths = transporter.createDirections(from: matrix, to: solution)
+		let paths = try transporter.createDirections(from: matrix, to: solution)
 		
 		// Assert
 		XCTAssertEqual(paths[0], nil)
@@ -231,7 +231,7 @@ final class TransporterTests: XCTestCase {
 		XCTAssertEqual(paths[15], [])
 	}
 	
-	func testCreateDirectionsRandom4x4() {
+	func testCreateDirectionsRandom4x4() throws {
 		// Arrange
 		let matrix: [[Int]] =
 		[[ 1,  2,  3,  4],
@@ -249,7 +249,7 @@ final class TransporterTests: XCTestCase {
 		let size = solution.count * solution.count - 1
 
 		// Act
-		let paths = transporter.createDirections(from: randomMatrix, to: solution)
+		let paths = try transporter.createDirections(from: randomMatrix, to: solution)
 		let shortestPaths = transporter.createShortestPath(from: randomMatrix, to: solution)
 
 		
@@ -270,7 +270,7 @@ final class TransporterTests: XCTestCase {
 		}
 	}
 	
-	func testCreateDirectionsRandom5x5() {
+	func testCreateDirectionsRandom5x5() throws {
 		// Arrange
 		let matrix: [[Int]] =
 		[[ 1,  2,  3,  4,  5],
@@ -290,7 +290,7 @@ final class TransporterTests: XCTestCase {
 		let size = solution.count * solution.count - 1
 
 		// Act
-		let paths = transporter.createDirections(from: randomMatrix, to: solution)
+		let paths = try transporter.createDirections(from: randomMatrix, to: solution)
 		let shortestPaths = transporter.createShortestPath(from: randomMatrix, to: solution)
 
 		
