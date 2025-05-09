@@ -311,6 +311,60 @@ final class TransporterTests: XCTestCase {
 		}
 	}
 	
+	func testCreateDirectionsThrows() {
+		// Arrange
+		let matrix: [[Int]] =
+		[[ 1,  2,  3,  4],
+		 [ 8,  7,  6,  6],
+		 [ 9, 10, 11, 12],
+		 [ 0, 15, 14, 13]]
+		let solution: [[Int]] =
+		[[ 1,  2,  3,  4],
+		 [ 8,  7,  6,  5],
+		 [ 9, 10, 11, 12],
+		 [ 0, 15, 14, 13]]
+		let transporter = Transporter()
+
+		// Act
+		
+		// Assert
+		XCTAssertThrowsError(try transporter.createDirections(from: matrix, to: solution)) { error in
+			XCTAssertEqual(error as? TransporterError, TransporterError.limitAttemptsHasBeenReached)
+		}
+	}
+	
+	func testCreateDirectionsEmptyMatrix() throws {
+		// Arrange
+		let solution: [[Int]] =
+		[[ 1,  2,  3,  4],
+		 [ 8,  7,  6,  5],
+		 [ 9, 10, 11, 12],
+		 [ 0, 15, 14, 13]]
+		let transporter = Transporter()
+
+		// Act
+		let paths = try transporter.createDirections(from: [[]], to: solution)
+		
+		// Assert
+		XCTAssertEqual(paths, [:])
+	}
+	
+	func testCreateDirectionsEmptySolution() throws {
+		// Arrange
+		let matrix: [[Int]] =
+		[[ 1,  2,  3,  4],
+		 [ 8,  7,  6,  6],
+		 [ 9, 10, 11, 12],
+		 [ 0, 15, 14, 13]]
+		let transporter = Transporter()
+
+		// Act
+		let paths = try transporter.createDirections(from: matrix, to: [[]])
+		
+		// Assert
+		XCTAssertEqual(paths, [:])
+	}
+	
 	private func createDictionaryDirectionCount(directions: [Direction]) -> [Direction: Int] {
 		var directionCount: [Direction: Int] = [:]
 		for direction in directions {
