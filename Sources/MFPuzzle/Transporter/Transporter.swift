@@ -17,13 +17,13 @@ final public class Transporter: _Transporter {
 	public init() {}
 	
 	public func createDirections(from current: [[Int]], to solution: [[Int]]) throws -> [Int : [Direction]] {
-		if current.isEmpty || solution.isEmpty { return [:] }
+		if current.isEmpty || current.first?.isEmpty == true || solution.isEmpty || solution.first?.isEmpty == true{ return [:] }
 		var cube = createCube(size: current[0].count)
 		cube[cube.count / 2] = current
 		let grid3D = Grid3D(cube: cube)
 		let shortestPath = createShortestPath(from: current, to: solution)
 		let boxes: [Box] = shortestPath.map { Box(number: $0.key, shortestPath: $0.value) }
-		var i = current.count * current.count * current.count
+		var i = current.count * current.count
 		while !boxes.allSatisfy( { $0.shortestPath.isEmpty }) {
 			for box in boxes {
 				if box.shortestPath.isEmpty { continue }
@@ -31,7 +31,7 @@ final public class Transporter: _Transporter {
 			}
 			i -= 1
 			if i <= 0 {
-				//throw TransporterError.limitAttemptsHasBeenReached
+				throw TransporterError.limitAttemptsHasBeenReached
 			}
 		}
 		var result: [Int : [Direction]] = [:]
@@ -43,7 +43,7 @@ final public class Transporter: _Transporter {
 	
 	private func createCube(size: Int) -> [[[Int]]] {
 		var value = 0
-		var cube: [[[Int]]] = Array(repeating: Array(repeating: Array(repeating: 0, count: size), count: size), count: 9)
+		var cube: [[[Int]]] = Array(repeating: Array(repeating: Array(repeating: 0, count: size), count: size), count: size * 2 - 1)
 		for (k, matrix) in cube.enumerated() {
 			for (i, row) in matrix.enumerated() {
 				for (j, _) in row.enumerated() {
