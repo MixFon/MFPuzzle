@@ -31,7 +31,7 @@ final public class Transporter: _Transporter {
 			}
 			i -= 1
 			if i <= 0 {
-				throw TransporterError.limitAttemptsHasBeenReached
+				//throw TransporterError.limitAttemptsHasBeenReached
 			}
 		}
 		var result: [Int : [Direction]] = [:]
