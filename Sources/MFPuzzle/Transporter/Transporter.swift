@@ -43,7 +43,7 @@ final public class Transporter: _Transporter {
 	
 	private func createCube(size: Int) -> [[[Int]]] {
 		var value = 0
-		var cube: [[[Int]]] = Array(repeating: Array(repeating: Array(repeating: 0, count: size), count: size), count: 5)
+		var cube: [[[Int]]] = Array(repeating: Array(repeating: Array(repeating: 0, count: size), count: size), count: 9)
 		for (k, matrix) in cube.enumerated() {
 			for (i, row) in matrix.enumerated() {
 				for (j, _) in row.enumerated() {
