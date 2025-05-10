@@ -23,7 +23,7 @@ final public class Transporter: _Transporter {
 		let grid3D = Grid3D(cube: cube)
 		let shortestPath = createShortestPath(from: current, to: solution)
 		let boxes: [Box] = shortestPath.map { Box(number: $0.key, shortestPath: $0.value) }
-		var i = current.count * current.count
+		var i = current.count * current.count * current.count
 		while !boxes.allSatisfy( { $0.shortestPath.isEmpty }) {
 			for box in boxes {
 				if box.shortestPath.isEmpty { continue }
