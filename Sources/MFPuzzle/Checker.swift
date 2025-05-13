@@ -49,6 +49,11 @@ open class Checker: _Checker {
 	
 	/// Возвращает количество инвариантов.
 	func getSummInversion(matrix: Matrix) -> Int {
+		return getCoupleInversion(matrix: matrix).count
+	}
+	
+	/// Возвращает количество инвариантов.
+	func getCoupleInversion(matrix: Matrix) -> [(MatrixElement, MatrixElement)] {
 		var summ = 0
 		var arry = [MatrixElement]()
 		for (i, line) in matrix.enumerated() {
@@ -59,14 +64,16 @@ open class Checker: _Checker {
 			}
 		}
 		arry.removeAll(where: { $0 == 0 })
+		var result: [(MatrixElement, MatrixElement)] = []
 		for (i, elem) in arry.enumerated() {
 			for elemIter in arry[(i + 1)...] {
 				if elem > elemIter {
 					summ += 1
+					result.append((elem, elemIter))
 				}
 			}
 		}
-		return summ
+		return result
 	}
 	
 	/// Возвращает коодинату x у нуля
