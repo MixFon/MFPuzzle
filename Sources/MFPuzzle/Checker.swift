@@ -12,6 +12,8 @@ public protocol _Checker {
 	/// Определяет является ли матрица квадратной
 	func isSquereMatrix(matrix: Matrix) -> Bool
 	func checkSolution(matrix: Matrix, matrixTarget: Matrix) -> Bool
+	/// Возвращает пары координат инверсий
+	func getCoupleInversion(matrix: Matrix) -> [(GridPoint, GridPoint)]
 }
 
 open class Checker: _Checker {
@@ -53,8 +55,7 @@ open class Checker: _Checker {
 	}
 	
 	/// Возвращает количество инвариантов.
-	func getCoupleInversion(matrix: Matrix) -> [(MatrixElement, MatrixElement)] {
-		var summ = 0
+	public func getCoupleInversion(matrix: Matrix) -> [(GridPoint, GridPoint)] {
 		var arry = [MatrixElement]()
 		for (i, line) in matrix.enumerated() {
 			if i % 2 == 0 {
@@ -64,16 +65,33 @@ open class Checker: _Checker {
 			}
 		}
 		arry.removeAll(where: { $0 == 0 })
-		var result: [(MatrixElement, MatrixElement)] = []
+		var resultMatrixElement: [(MatrixElement, MatrixElement)] = []
 		for (i, elem) in arry.enumerated() {
 			for elemIter in arry[(i + 1)...] {
 				if elem > elemIter {
-					summ += 1
-					result.append((elem, elemIter))
+					resultMatrixElement.append((elem, elemIter))
 				}
 			}
 		}
+		var result: [(GridPoint, GridPoint)] = []
+		for pair in resultMatrixElement {
+			if let point1 = getGridPoint(matrix: matrix, element: pair.0),
+			   let point2 = getGridPoint(matrix: matrix, element: pair.1) {
+				result.append((point1, point2))
+			}
+		}
 		return result
+	}
+	
+	func getGridPoint(matrix: Matrix, element: MatrixElement) -> GridPoint? {
+		for (i, row) in matrix.enumerated() {
+			for (j, elem) in row.enumerated() {
+				if elem == element {
+					return GridPoint(x: Int8(i), y: Int8(j))
+				}
+			}
+		}
+		return nil
 	}
 	
 	/// Возвращает коодинату x у нуля
