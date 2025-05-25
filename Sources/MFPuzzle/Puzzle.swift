@@ -17,11 +17,9 @@ public protocol _Puzzle {
 final public class Puzzle: _Puzzle {
 	
 	private var heuristic: Heuristic = .manhattan
-	private let checker: _Checker
 	
-	public init(heuristic: Heuristic, checker: _Checker) {
+	public init(heuristic: Heuristic) {
 		self.heuristic = heuristic
-		self.checker = checker
 	}
 	
 	public func createPath(board: Board?) -> [Compass] {
