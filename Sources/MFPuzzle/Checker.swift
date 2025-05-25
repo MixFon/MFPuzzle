@@ -9,8 +9,6 @@ import Foundation
 
 public protocol _Checker {
 	func checkUniqueElementsMatrix(matrix: Matrix) -> Bool
-	/// Определяет является ли матрица квадратной
-	func isSquereMatrix(matrix: Matrix) -> Bool
 	func checkSolution(matrix: Matrix, matrixTarget: Matrix) -> Bool
 	/// Возвращает пары координат инверсий
 	func getCoupleInversion(matrix: Matrix) -> [(GridPoint, GridPoint)]
@@ -36,17 +34,6 @@ open class Checker: _Checker {
 		let summa = getSummInversion(matrix: matrix)
 		let summaTarget = getSummInversion(matrix: matrixTarget)
 		return summa % 2 == summaTarget % 2
-	}
-	
-	public func isSquereMatrix(matrix: Matrix) -> Bool {
-		if matrix.isEmpty { return false }
-		let count = matrix.count
-		for row in matrix {
-			if row.count != count {
-				return false
-			}
-		}
-		return true
 	}
 	
 	/// Возвращает количество инвариантов.
