@@ -13,8 +13,7 @@ final class MatrixWorkerTests: XCTestCase {
     private var worker: MatrixWorker!
 
     override func setUpWithError() throws {
-		let checker = Checker()
-        self.worker = MatrixWorker(checker: checker)
+        self.worker = MatrixWorker()
     }
 
     override func tearDownWithError() throws {
@@ -266,8 +265,7 @@ final class MatrixWorkerTests: XCTestCase {
 	// MARK: Test create matrix random
 	
 	func testCreateMatrixRandom() {
-		let checker = Checker()
-		let matrixWorker = MatrixWorker(checker: checker)
+		let matrixWorker = MatrixWorker()
 		for size in 3...15 {
 			// Arrange
 			let n = size * size - 1
@@ -294,8 +292,7 @@ final class MatrixWorkerTests: XCTestCase {
 	
 	func testChangesParityInvariant() {
 		// Arrange
-		let checker = Checker()
-		let matrixWorker = MatrixWorker(checker: checker)
+		let matrixWorker = MatrixWorker()
 		var matrix1: [[MatrixElement]] = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 		var matrix2: [[MatrixElement]] = [[0, 2, 3], [4, 5, 6], [7, 8, 9]]
 		var matrix3: [[MatrixElement]] = [[1, 2, 3], [0, 5, 6], [7, 8, 9]]
@@ -596,4 +593,28 @@ final class MatrixWorkerTests: XCTestCase {
 		XCTAssertNotEqual(matrix4x4, matrixSnail5x5)
 	}
 	
+	
+	func testIsSquereMatrix() {
+		// Arrange
+		let matrixWorker = MatrixWorker()
+		let matrix1: [[MatrixElement]] = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+		let matrix2: [[MatrixElement]] = [[1, 2, 3], [4, 5], [7, 8, 9]]
+		let matrix3: [[MatrixElement]] = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
+		let matrix4: [[MatrixElement]] = [[]]
+		let matrix5: [[MatrixElement]] = []
+		
+		// Act
+		let result1 = matrixWorker.isSquereMatrix(matrix: matrix1)
+		let result2 = matrixWorker.isSquereMatrix(matrix: matrix2)
+		let result3 = matrixWorker.isSquereMatrix(matrix: matrix3)
+		let result4 = matrixWorker.isSquereMatrix(matrix: matrix4)
+		let result5 = matrixWorker.isSquereMatrix(matrix: matrix5)
+		
+		// Assert
+		XCTAssertEqual(result1, true)
+		XCTAssertEqual(result2, false)
+		XCTAssertEqual(result3, false)
+		XCTAssertEqual(result4, false)
+		XCTAssertEqual(result5, false)
+	}
 }

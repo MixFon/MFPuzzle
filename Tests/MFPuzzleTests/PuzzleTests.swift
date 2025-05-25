@@ -13,8 +13,7 @@ final class PuzzleTest: XCTestCase {
     private var puzzle: Puzzle?
 
     override func setUpWithError() throws {
-        let checker = Checker()
-        self.puzzle = Puzzle(heuristic: .manhattan, checker: checker)
+        self.puzzle = Puzzle(heuristic: .manhattan)
     }
 
     override func tearDownWithError() throws {
@@ -35,8 +34,7 @@ final class PuzzleTest: XCTestCase {
 		1 6 4
 		8 7 5
 		"""
-		let checker = Checker()
-		let worker = MatrixWorker(checker: checker)
+		let worker = MatrixWorker()
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
@@ -67,8 +65,7 @@ final class PuzzleTest: XCTestCase {
 		8 7 5
 		6 4 1
 		"""
-		let checker = Checker()
-		let worker = MatrixWorker(checker: checker)
+		let worker = MatrixWorker()
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
@@ -99,8 +96,7 @@ final class PuzzleTest: XCTestCase {
 		5 8 4
 		3 1 0
 		"""
-		let checker = Checker()
-		let worker = MatrixWorker(checker: checker)
+		let worker = MatrixWorker()
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
@@ -132,8 +128,7 @@ final class PuzzleTest: XCTestCase {
 		12 10 13  3
 		15  5  0  7
 		"""
-		let checker = Checker()
-		let worker = MatrixWorker(checker: checker)
+		let worker = MatrixWorker()
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
@@ -167,8 +162,7 @@ final class PuzzleTest: XCTestCase {
 		 8  6 16  5  4
 		23  3 20 21 19
 		"""
-		let checker = Checker()
-		let worker = MatrixWorker(checker: checker)
+		let worker = MatrixWorker()
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
@@ -200,8 +194,7 @@ final class PuzzleTest: XCTestCase {
 		 8  6 16  5  4
 		23  3 20 21 19
 		"""
-		let checker = Checker()
-		let worker = MatrixWorker(checker: checker)
+		let worker = MatrixWorker()
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
@@ -236,8 +229,7 @@ final class PuzzleTest: XCTestCase {
 		5 8 4
 		3 1 0
 		"""
-		let checker = Checker()
-		let worker = MatrixWorker(checker: checker)
+		let worker = MatrixWorker()
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
@@ -275,8 +267,7 @@ final class PuzzleTest: XCTestCase {
 		0  5  3  9
 		"""
 		
-		let checker = Checker()
-		let worker = MatrixWorker(checker: checker)
+		let worker = MatrixWorker()
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
@@ -316,8 +307,7 @@ final class PuzzleTest: XCTestCase {
 		18  6  7  0 16
 		15 11 24 13 19
 		"""
-		let checker = Checker()
-		let worker = MatrixWorker(checker: checker)
+		let worker = MatrixWorker()
 		
 		let newMatrix = try worker.creationMatrix(text: matrix)
 		let newGrid = Grid<MatrixElement>(matrix: newMatrix, zero: 0)
@@ -346,8 +336,7 @@ final class PuzzleTest: XCTestCase {
 	
 	func testCreatePath() {
 		// Arrange
-		let mockChecket = MockChecker()
-		let puzzle = Puzzle(heuristic: .manhattan, checker: mockChecket)
+		let puzzle = Puzzle(heuristic: .manhattan)
 		let matrixes: [Matrix] = [
 		[[1, 2, 3],
 		 [6, 5, 4],
@@ -399,8 +388,7 @@ final class PuzzleTest: XCTestCase {
 	
 	func testCreateEast() {
 		// Arrange
-		let mockChecket = MockChecker()
-		let puzzle = Puzzle(heuristic: .manhattan, checker: mockChecket)
+		let puzzle = Puzzle(heuristic: .manhattan)
 		let matrixes: [Matrix] = [
 		[[1, 2, 3],
 		 [6, 5, 4],
@@ -426,8 +414,7 @@ final class PuzzleTest: XCTestCase {
 	
 	func testCreateWest() {
 		// Arrange
-		let mockChecket = MockChecker()
-		let puzzle = Puzzle(heuristic: .manhattan, checker: mockChecket)
+		let puzzle = Puzzle(heuristic: .manhattan)
 		let matrixes: [Matrix] = [
 		[[1, 2, 3],
 		 [6, 4, 0],
@@ -453,8 +440,7 @@ final class PuzzleTest: XCTestCase {
 	
 	func testCreateNorth() {
 		// Arrange
-		let mockChecket = MockChecker()
-		let puzzle = Puzzle(heuristic: .manhattan, checker: mockChecket)
+		let puzzle = Puzzle(heuristic: .manhattan)
 		let matrixes: [Matrix] = [
 		[[1, 0, 3],
 		 [6, 2, 4],
@@ -480,8 +466,7 @@ final class PuzzleTest: XCTestCase {
 	
 	func testCreateSouth() {
 		// Arrange
-		let mockChecket = MockChecker()
-		let puzzle = Puzzle(heuristic: .manhattan, checker: mockChecket)
+		let puzzle = Puzzle(heuristic: .manhattan)
 		let matrixes: [Matrix] = [
 		[[1, 2, 3],
 		 [6, 5, 4],

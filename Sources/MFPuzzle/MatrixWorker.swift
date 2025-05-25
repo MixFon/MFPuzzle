@@ -28,11 +28,7 @@ public protocol _MatrixWorker {
 
 open class MatrixWorker: _MatrixWorker {
 	
-	private let checker: _Checker
-    
-	public init(checker: _Checker) {
-		self.checker = checker
-	}
+	public init() { }
     
     /// Создание матрицы результата
     public func createMatrixSnail(size: Int) -> Matrix {
@@ -140,7 +136,7 @@ open class MatrixWorker: _MatrixWorker {
 	
 	public func changesParityInvariant(matrix: inout Matrix) {
 		if matrix.count < 3 { return }
-		if !self.checker.isSquereMatrix(matrix: matrix) { return }
+		if !isSquereMatrix(matrix: matrix) { return }
 		if matrix[0][0] != 0 && matrix[1][0] != 0 {
 			(matrix[0][0], matrix[1][0]) = (matrix[1][0], matrix[0][0])
 		} else {
@@ -186,6 +182,18 @@ open class MatrixWorker: _MatrixWorker {
 		case .classic:
 			return createMatrixClassic(size: size)
 		}
+	}
+	
+	/// Определяет является ли матрица квадратной
+	func isSquereMatrix(matrix: Matrix) -> Bool {
+		if matrix.isEmpty { return false }
+		let count = matrix.count
+		for row in matrix {
+			if row.count != count {
+				return false
+			}
+		}
+		return true
 	}
     
     /// Создает на основе строки массив целочисленных элементов.
