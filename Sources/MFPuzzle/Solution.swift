@@ -11,7 +11,7 @@ import Foundation
 /// - snail: решение в виде спирали, закрученной по часовой стрелке
 /// - classic: решение про котором номера идут слева направо, как при обычном писме
 /// - boustrophedon: решение при котором числа идут слева направа, а на следующей в обратную сторону справа налево
-public enum Solution: String {
+public enum Solution: String, Sendable {
 	case snail
 	case classic
 	case boustrophedon
