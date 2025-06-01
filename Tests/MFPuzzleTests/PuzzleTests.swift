@@ -203,16 +203,18 @@ final class PuzzleTest: XCTestCase {
 		let targetMatrix = worker.createMatrixSnail(size: size)
 		let gridTarget = Grid<MatrixElement>(matrix: targetMatrix, zero: 0)
 		let targetBoard = Board(grid: gridTarget)
+		let puzzle = self.puzzle
 		
 		// Act
-		let task = Task {
+		let task = Task { @MainActor in
 			do {
-				board = try await self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+				board = try await puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
 			} catch {
 				XCTAssertTrue(error is CancellationError)
 			}
 		}
 		task.cancel()
+		await task.value
 		// Assert
 		XCTAssertNil(board)
 	}
@@ -238,6 +240,7 @@ final class PuzzleTest: XCTestCase {
 		let targetMatrix = worker.createMatrixSnail(size: size)
 		let gridTarget = Grid<MatrixElement>(matrix: targetMatrix, zero: 0)
 		let targetBoard = Board(grid: gridTarget)
+		let puzzle = self.puzzle
 		
 		// Act
 		
@@ -246,7 +249,7 @@ final class PuzzleTest: XCTestCase {
 			let expectation = self.expectation(description: "Performance test")
 			Task {
 				// Executed 1 test, with 0 failures (0 unexpected) in 1.933 (1.934) seconds
-				try await self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+				try await puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
 				expectation.fulfill()
 			}
 			wait(for: [expectation], timeout: 5)
@@ -276,6 +279,7 @@ final class PuzzleTest: XCTestCase {
 		let targetMatrix = worker.createMatrixSnail(size: size)
 		let gridTarget = Grid<MatrixElement>(matrix: targetMatrix, zero: 0)
 		let targetBoard = Board(grid: gridTarget)
+		let puzzle = self.puzzle
 		
 		// Assert
 
@@ -284,7 +288,7 @@ final class PuzzleTest: XCTestCase {
 			Task {
 				// Executed 1 test, with 0 failures (0 unexpected) in 1.933 (1.934) seconds
 				var board: Board? = nil
-				board = try await self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+				board = try await puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
 				XCTAssertNotNil(board)
 				XCTAssertEqual(board?.lavel, lavel)
 				expectation.fulfill()
@@ -316,7 +320,7 @@ final class PuzzleTest: XCTestCase {
 		let targetMatrix = worker.createMatrixSnail(size: size)
 		let gridTarget = Grid<MatrixElement>(matrix: targetMatrix, zero: 0)
 		let targetBoard = Board(grid: gridTarget)
-		
+		let puzzle = self.puzzle
 		// Act
 		
 		// Assert
@@ -325,7 +329,7 @@ final class PuzzleTest: XCTestCase {
 			Task {
 				var board: Board? = nil
 				// Executed 50 tests, with 0 failures (0 unexpected) in 6.732 (6.741) seconds
-				board = try await self.puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+				board = try await puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
 				XCTAssertNotNil(board)
 				XCTAssertEqual(board?.lavel, lavel)
 				expectation.fulfill()

@@ -7,6 +7,7 @@
 
 import MFStructs
 import Foundation
+
 public protocol _Puzzle {
 	///  Создает путь в котором содержится последовательность перемещений нуля
 	func createPath(board: Board?) -> [Compass]
@@ -14,7 +15,7 @@ public protocol _Puzzle {
 	func searchSolutionWithHeap(board: Board, limiter: Int?, boardTarget: Board) async throws -> Board?
 }
 
-final public class Puzzle: _Puzzle {
+final public class Puzzle: _Puzzle, @unchecked Sendable {
 	
 	private var heuristic: Heuristic = .manhattan
 	

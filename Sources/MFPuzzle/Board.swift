@@ -8,7 +8,7 @@
 import Foundation
 
 // Класс предназначенный для поиска решения головоломки
-public final class Board: Sendable {
+public final class Board: @unchecked Sendable {
 	public private(set) var grid: Grid<MatrixElement>
 	
 	private(set) var f: Int

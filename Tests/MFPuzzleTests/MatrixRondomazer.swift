@@ -14,7 +14,7 @@ protocol _MatrixRondomazer {
 	func generateRangomSteps(matrix: [[RantomType]], zero: RantomType) -> [[RantomType]]
 }
 
-final class MatrixRondomazer<T: Hashable>: _MatrixRondomazer {
+final class MatrixRondomazer<T: Hashable & Sendable>: _MatrixRondomazer {
 	typealias RantomType = T
 	func generateRangomSteps(matrix: [[T]], zero: T) -> [[T]] {
 		let grid = Grid<T>(matrix: matrix, zero: zero)
