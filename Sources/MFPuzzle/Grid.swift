@@ -8,7 +8,7 @@
 import Foundation
 
 /// Класс для работы с матрицей
-open class Grid<T : Hashable & Sendable> {
+open class Grid<T : Hashable & Sendable>: @unchecked Sendable  {
 	public private(set) var zero: T
 	public private(set) var matrix: [[T]]
 	private(set) var coordinats = [T: GridPoint]()

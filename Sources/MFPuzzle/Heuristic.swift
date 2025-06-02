@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Heuristic: String {
+public enum Heuristic: String, Sendable {
 	case simple = "-s"
 	case manhattan = "-m"
 	case chebyshev = "-ch"

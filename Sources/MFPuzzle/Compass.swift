@@ -8,7 +8,7 @@
 import Foundation
 
 /// Перечисление, которое определяет в какое направление будет перемещен ноль.
-public enum Compass {
+public enum Compass: Sendable {
 	case west
 	case east
 	case north

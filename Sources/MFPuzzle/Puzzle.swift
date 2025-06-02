@@ -8,18 +8,18 @@
 import MFStructs
 import Foundation
 
-public protocol _Puzzle {
+public protocol _Puzzle: Sendable {
 	///  Создает путь в котором содержится последовательность перемещений нуля
 	func createPath(board: Board?) -> [Compass]
 	/// Поиск решения, используя алгоритм A* с ограничением длины кучи
 	func searchSolutionWithHeap(board: Board, limiter: Int?, boardTarget: Board) async throws -> Board?
 }
 
-final public class Puzzle: _Puzzle, @unchecked Sendable {
+final public class Puzzle: _Puzzle {
 	
-	private var heuristic: Heuristic = .manhattan
+	private let heuristic: Heuristic
 	
-	public init(heuristic: Heuristic) {
+	public init(heuristic: Heuristic = .manhattan) {
 		self.heuristic = heuristic
 	}
 	
