@@ -8,7 +8,7 @@
 import Foundation
 
 /// Описывает возможные пути перемещения в 3-х мерном массве
-public indirect enum Direction: Hashable {
+public indirect enum Direction: Hashable, Sendable {
 	/// Направдление на уровень выше текущего
 	case up(Direction?)
 	/// Направлнение на уровень ниже текущего
