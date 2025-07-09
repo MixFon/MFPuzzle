@@ -8,10 +8,10 @@
 import Foundation
 
 /// Класс для работы с матрицей
-open class Grid<T : Hashable & Sendable>: @unchecked Sendable  {
-	public private(set) var zero: T
-	public private(set) var matrix: [[T]]
-	private(set) var coordinats = [T: GridPoint]()
+public final class Grid<T : Hashable & Sendable>: Sendable  {
+	public let zero: T
+	nonisolated(unsafe) public private(set) var matrix: [[T]]
+	nonisolated(unsafe) private(set) var coordinats = [T: GridPoint]()
 	
 	public var size: Int {
 		self.matrix.count

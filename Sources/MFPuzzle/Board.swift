@@ -8,12 +8,12 @@
 import Foundation
 
 // Класс предназначенный для поиска решения головоломки
-public final class Board: @unchecked Sendable {
-	public private(set) var grid: Grid<MatrixElement>
+public final class Board: Sendable {
+	public let grid: Grid<MatrixElement>
 	
-	private(set) var f: Int
-	var lavel: Int
-	var parent: Board?
+	nonisolated(unsafe) var f: Int
+	nonisolated(unsafe) var lavel: Int
+	nonisolated(unsafe) var parent: Board?
 	
 	var hashValue: Int {
 		self.grid.hashValue
