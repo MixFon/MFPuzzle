@@ -10,7 +10,7 @@ import Foundation
 
 public protocol _Puzzle: Sendable {
 	///  Создает путь в котором содержится последовательность перемещений нуля
-	func createPath(board: Board?) -> [Compass]
+	func createPath(board: Board?) async -> [Compass]
 	/// Поиск решения, используя алгоритм A* с ограничением длины кучи
 	func searchSolutionWithHeap(board: Board, limiter: Int?, boardTarget: Board) async throws -> Board?
 }
@@ -23,25 +23,25 @@ final public class Puzzle: _Puzzle {
 		self.heuristic = heuristic
 	}
 	
-	public func createPath(board: Board?) -> [Compass] {
+	public func createPath(board: Board?) async -> [Compass] {
 		var iter = board
 		var compasses: [Compass] = []
 		while iter != nil {
 			let startPoint = iter?.grid.getPoint(number: 0)
-			let endPoint = iter?.parent?.grid.getPoint(number: 0)
+			let endPoint = await iter?.parent?.grid.getPoint(number: 0)
 			if let compass = Compass.calculateCompass(endPoint: endPoint, startPoint: startPoint) {
 				compasses.append(compass)
 			}
-			iter = iter?.parent
+			iter = await iter?.parent
 		}
 		return compasses
 	}
 
 	@discardableResult
 	public func searchSolutionWithHeap(board: Board, limiter: Int? = nil, boardTarget: Board) async throws -> Board? {
-		let heap = MFLimitedHeap<Board>(limiter: limiter, priorityFunction: {$0.f < $1.f})
+		let heap = MFLimitedHeap<Board>(limiter: limiter, priorityFunction: { $0.f < $1.f} )
 		let heuristic = self.heuristic.getHeuristic(grid: board.grid, gridTarget: boardTarget.grid)
-		board.setF(heuristic: heuristic)
+		await board.setF(heuristic: heuristic)
 		heap.insert(board)
 		var visited = Set<Int>()
 		while let board = heap.extract() {
@@ -49,20 +49,22 @@ final public class Puzzle: _Puzzle {
 			if board == boardTarget {
 				return board
 			}
-			guard let children = board.getChildrens(calculateHeuristic: {  [weak self] element, point in
+			guard let children = await board.getChildrens(calculateHeuristic: {  [weak self] element, point in
 				guard let endPoint = boardTarget.grid.coordinats[element] else { return nil }
 				return self?.heuristic.distance(point, endPoint)
 			}) else { continue }
 			for child in children {
-				if !visited.contains(child.hashValue) {
+				if !visited.contains(await child.hashValue) {
 					// Только если не было добавлен назначаем предка
-					child.parent = board
+					await child.setParent(board)
 					heap.insert(child) { deleteChild in
-						deleteChild?.parent = nil
+						Task {
+							await deleteChild?.setParent(nil)
+						}
 					}
 				}
 			}
-			visited.insert(board.hashValue)
+			visited.insert(await board.hashValue)
 		}
 		return nil
 	}

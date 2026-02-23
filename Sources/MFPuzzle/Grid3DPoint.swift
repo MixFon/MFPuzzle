@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Grid3DPoint: Equatable {
+public struct Grid3DPoint: Equatable, Sendable {
 	public let x: Int8
 	public let y: Int8
 	public let z: Int8

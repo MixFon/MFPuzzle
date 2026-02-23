@@ -8,12 +8,12 @@
 import Foundation
 
 // Класс предназначенный для поиска решения головоломки
-public final class Board: Sendable {
+public final actor Board {
 	public let grid: Grid<MatrixElement>
 	
 	nonisolated(unsafe) var f: Int
-	nonisolated(unsafe) var lavel: Int
-	nonisolated(unsafe) var parent: Board?
+	var lavel: Int
+	var parent: Board?
 	
 	var hashValue: Int {
 		self.grid.hashValue
@@ -35,8 +35,16 @@ public final class Board: Sendable {
 		}
 	}
 	
+	func setLavel(_ level: Int) {
+		self.lavel = level
+	}
+	
+	func setParent(_ parent: Board?) {
+		self.parent = parent
+	}
+	
 	/// Возвращает список смежных состояний. Состояний, в которые можно перейти
-	func getChildrens(calculateHeuristic: (MatrixElement, GridPoint) -> Int? ) -> [Board]? {
+	func getChildrens(calculateHeuristic: (MatrixElement, GridPoint) -> Int?) async -> [Board]? {
 		guard let neighbors = self.grid.getNeighbors(number: 0) else { return nil }
 		var childrens = [Board]()
 		let zeroPoint = self.grid.coordinats[0]!
@@ -55,8 +63,8 @@ public final class Board: Sendable {
 			
 			let f = self.f + (newHeuristicZero - heuristicCurrentZero) + (newHeuristicNumber - heuristicNumber)
 			let newBoard = Board(grid: newGrid)
-			newBoard.lavel = self.lavel + 1
-			newBoard.setF(heuristic: f)
+			await newBoard.setLavel(self.lavel + 1)
+			await newBoard.setF(heuristic: f)
 			childrens.append(newBoard)
 		}
 		return childrens

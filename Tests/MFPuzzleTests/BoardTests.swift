@@ -18,7 +18,7 @@ final class BoardTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-	func testSetF3x3() {
+	func testSetF3x3() async {
 		// Arrange
 		let matrix: Matrix =
 		[[1, 2, 3],
@@ -28,13 +28,13 @@ final class BoardTests: XCTestCase {
 		let board = Board(grid: grid)
 		
 		// Act
-		board.setF(heuristic: 10)
+		await board.setF(heuristic: 10)
 		
 		// Assert
 		XCTAssertEqual(board.f, 10)
 	}
 	
-	func testSetFRandomElements3x3() {
+	func testSetFRandomElements3x3() async {
 		// Arrange
 		let matrix: Matrix =
 		[[1, 2, 3],
@@ -46,13 +46,13 @@ final class BoardTests: XCTestCase {
 		// Act
 		for i in 1...100 {
 			let randomElement = Int.random(in: 0...100)
-			board.lavel = i
-			board.setF(heuristic: randomElement)
+			await board.setLavel(i)
+			await board.setF(heuristic: randomElement)
 			XCTAssertEqual(board.f, randomElement + i)
 		}
 	}
 	
-	func testSetF4x4() {
+	func testSetF4x4() async {
 		// Arrange
 		let matrix: Matrix =
 		[[ 1,  2,  3,  4],
@@ -63,13 +63,13 @@ final class BoardTests: XCTestCase {
 		let board = Board(grid: grid)
 		
 		// Act
-		board.setF(heuristic: 10)
+		await board.setF(heuristic: 10)
 		
 		// Assert
 		XCTAssertEqual(board.f, 10)
 	}
 	
-	func testSetFRandomElements4x4() {
+	func testSetFRandomElements4x4() async {
 		// Arrange
 		let matrix: Matrix =
 		[[ 1,  2,  3,  4],
@@ -83,12 +83,12 @@ final class BoardTests: XCTestCase {
 		for _ in 1...100 {
 			let randomElement = Int.random(in: 0...100)
 			let board = Board(grid: grid)
-			board.setF(heuristic: randomElement)
+			await board.setF(heuristic: randomElement)
 			XCTAssertEqual(board.f, randomElement)
 		}
 	}
 	
-	func testGetChildrens() {
+	func testGetChildrens() async {
 		// Arrange
 		let matrix: Matrix =
 		[[ 1,  2,  3,  4],
@@ -139,7 +139,7 @@ final class BoardTests: XCTestCase {
 		let boardError = Board(grid: gridError)
 		
 		// Act
-		let childrens = board.getChildrens(calculateHeuristic: { _ , _ in 1 })
+		let childrens = await board.getChildrens(calculateHeuristic: { _ , _ in 1 })
 		
 		// Assert
 		XCTAssertNotNil(childrens)
@@ -152,7 +152,7 @@ final class BoardTests: XCTestCase {
 		XCTAssertEqual(childrens?.contains(boardError), false)
 	}
 	
-	func testGetChildrensNil() {
+	func testGetChildrensNil() async {
 		// Arrange
 		let matrix: Matrix =
 		[[ 1,  2,  3,  4],
@@ -163,7 +163,7 @@ final class BoardTests: XCTestCase {
 		let board = Board(grid: grid)
 		
 		// Act
-		let childrens = board.getChildrens(calculateHeuristic: { _ , _ in 1 })
+		let childrens = await board.getChildrens(calculateHeuristic: { _ , _ in 1 })
 		
 		// Assert
 		XCTAssertNil(childrens)

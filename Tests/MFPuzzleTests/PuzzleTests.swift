@@ -49,7 +49,8 @@ final class PuzzleTest: XCTestCase {
 		
 		// Assert
 		XCTAssertNotNil(board)
-		XCTAssertEqual(board?.lavel, lavel)
+		let checkLavel = await board?.lavel
+		XCTAssertEqual(checkLavel, lavel)
 	}
 	
 	func testSolution18Iteration3x3() async throws {
@@ -80,7 +81,8 @@ final class PuzzleTest: XCTestCase {
 		
 		// Assert
 		XCTAssertNotNil(board)
-		XCTAssertEqual(board?.lavel, lavel)
+		let checkLavel = await board?.lavel
+		XCTAssertEqual(checkLavel, lavel)
 	}
 	
 	func testSolution23Iteration3x3() async throws {
@@ -111,7 +113,8 @@ final class PuzzleTest: XCTestCase {
 		
 		// Assert
 		XCTAssertNotNil(board)
-		XCTAssertEqual(board?.lavel, lavel)
+		let checkLavel = await board?.lavel
+		XCTAssertEqual(checkLavel, lavel)
 	}
 	
 	func testSolutionIteration4x4() async throws {
@@ -143,7 +146,8 @@ final class PuzzleTest: XCTestCase {
 		
 		// Assert
 		XCTAssertNotNil(board)
-		XCTAssertEqual(board?.lavel, lavel)
+		let checkLavel = await board?.lavel
+		XCTAssertEqual(checkLavel, lavel)
 	}
 	
 	
@@ -177,13 +181,13 @@ final class PuzzleTest: XCTestCase {
 		
 		// Assert
 		XCTAssertNotNil(board)
-		XCTAssertEqual(board?.lavel, lavel)
+		let checkLavel = await board?.lavel
+		XCTAssertEqual(checkLavel, lavel)
 	}
 	
 	func testCansaletionIteration5x5() async throws {
 		// Arrange
 		let size = 5
-		var board: Board?
 		let matrix =
 		"""
 		# This puzzle is solvable
@@ -206,15 +210,17 @@ final class PuzzleTest: XCTestCase {
 		let puzzle = self.puzzle
 		
 		// Act
-		let task = Task { @MainActor in
+		let task = Task { @Sendable in
 			do {
-				board = try await puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+				let board = try await puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
+				return board
 			} catch {
 				XCTAssertTrue(error is CancellationError)
+				return nil
 			}
 		}
 		task.cancel()
-		await task.value
+		let board = await task.value
 		// Assert
 		XCTAssertNil(board)
 	}
@@ -290,7 +296,8 @@ final class PuzzleTest: XCTestCase {
 				var board: Board? = nil
 				board = try await puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
 				XCTAssertNotNil(board)
-				XCTAssertEqual(board?.lavel, lavel)
+				let checkLavel = await board?.lavel
+				XCTAssertEqual(checkLavel, lavel)
 				expectation.fulfill()
 			}
 			wait(for: [expectation], timeout: 5)
@@ -331,14 +338,15 @@ final class PuzzleTest: XCTestCase {
 				// Executed 50 tests, with 0 failures (0 unexpected) in 6.732 (6.741) seconds
 				board = try await puzzle?.searchSolutionWithHeap(board: startBoard, boardTarget: targetBoard)
 				XCTAssertNotNil(board)
-				XCTAssertEqual(board?.lavel, lavel)
+				let checkLavel = await board?.lavel
+				XCTAssertEqual(checkLavel, lavel)
 				expectation.fulfill()
 			}
 			wait(for: [expectation], timeout: 5)
 		}
     }
 	
-	func testCreatePath() {
+	func testCreatePath() async {
 		// Arrange
 		let puzzle = Puzzle(heuristic: .manhattan)
 		let matrixes: [Matrix] = [
@@ -378,19 +386,19 @@ final class PuzzleTest: XCTestCase {
 		var board = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 		for matrix in matrixes {
 			let newBoard = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
-			newBoard.parent = board
+			await newBoard.setParent(board)
 			board = newBoard
 		}
 		let compassesAnswers: [Compass] = [.south, .south, .west, .west, .north, .east, .north, .east]
 		
 		// Act
-		let compasses = puzzle.createPath(board: board)
+		let compasses = await puzzle.createPath(board: board)
 		
 		// Assert
 		XCTAssertEqual(compasses, compassesAnswers)
 	}
 	
-	func testCreateEast() {
+	func testCreateEast() async {
 		// Arrange
 		let puzzle = Puzzle(heuristic: .manhattan)
 		let matrixes: [Matrix] = [
@@ -404,19 +412,19 @@ final class PuzzleTest: XCTestCase {
 		var board = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 		for matrix in matrixes {
 			let newBoard = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
-			newBoard.parent = board
+			await newBoard.setParent(board)
 			board = newBoard
 		}
 		let compassesAnswers: [Compass] = [.east]
 		
 		// Act
-		let compasses = puzzle.createPath(board: board)
+		let compasses = await puzzle.createPath(board: board)
 		
 		// Assert
 		XCTAssertEqual(compasses, compassesAnswers)
 	}
 	
-	func testCreateWest() {
+	func testCreateWest() async {
 		// Arrange
 		let puzzle = Puzzle(heuristic: .manhattan)
 		let matrixes: [Matrix] = [
@@ -430,19 +438,19 @@ final class PuzzleTest: XCTestCase {
 		var board = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 		for matrix in matrixes {
 			let newBoard = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
-			newBoard.parent = board
+			await newBoard.setParent(board)
 			board = newBoard
 		}
 		let compassesAnswers: [Compass] = [.west]
 		
 		// Act
-		let compasses = puzzle.createPath(board: board)
+		let compasses = await puzzle.createPath(board: board)
 		
 		// Assert
 		XCTAssertEqual(compasses, compassesAnswers)
 	}
 	
-	func testCreateNorth() {
+	func testCreateNorth() async {
 		// Arrange
 		let puzzle = Puzzle(heuristic: .manhattan)
 		let matrixes: [Matrix] = [
@@ -456,19 +464,19 @@ final class PuzzleTest: XCTestCase {
 		var board = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 		for matrix in matrixes {
 			let newBoard = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
-			newBoard.parent = board
+			await newBoard.setParent(board)
 			board = newBoard
 		}
 		let compassesAnswers: [Compass] = [.north]
 		
 		// Act
-		let compasses = puzzle.createPath(board: board)
+		let compasses = await puzzle.createPath(board: board)
 		
 		// Assert
 		XCTAssertEqual(compasses, compassesAnswers)
 	}
 	
-	func testCreateSouth() {
+	func testCreateSouth() async {
 		// Arrange
 		let puzzle = Puzzle(heuristic: .manhattan)
 		let matrixes: [Matrix] = [
@@ -482,13 +490,13 @@ final class PuzzleTest: XCTestCase {
 		var board = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
 		for matrix in matrixes {
 			let newBoard = Board(grid: Grid<MatrixElement>(matrix: matrix, zero: 0))
-			newBoard.parent = board
+			await newBoard.setParent(board)
 			board = newBoard
 		}
 		let compassesAnswers: [Compass] = [.south]
 		
 		// Act
-		let compasses = puzzle.createPath(board: board)
+		let compasses = await puzzle.createPath(board: board)
 		
 		// Assert
 		XCTAssertEqual(compasses, compassesAnswers)
